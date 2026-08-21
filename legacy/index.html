@@ -1,0 +1,590 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Steve Fest II — Downtown Lombard, Sept 11–13 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;600;700;800;900&family=Bitter:ital,wght@0,400;0,600;0,700;0,800&family=Anton&family=Archivo:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:#14100F;
+  --grape:#46184F;
+  --grape-deep:#280E2F;
+  --orange:#FF6A15;
+  --pink:#FF2E8B;
+  --yellow:#FFDE17;
+  --paper:#FFFFFF;
+  --paper-dim:#BDB2C4;
+  --green:#46C24A;
+  --rule:#14100F;
+  --display:'Big Shoulders Display','Anton',Impact,'Haettenschweiler',sans-serif;
+  --body:'Archivo',system-ui,-apple-system,sans-serif;
+  --news:'Bitter',Georgia,'Times New Roman',serif;
+  --mono:var(--news);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--grape-deep); color:var(--paper);
+  font-family:var(--body); font-size:16px; line-height:1.5;
+  background-image:radial-gradient(var(--grape) 1px, transparent 1.2px);
+  background-size:7px 7px;
+}
+img{max-width:100%}
+a{color:inherit}
+.wrap{width:min(1180px,92vw); margin:0 auto}
+
+/* ---------- nav: a strip of tape across the top ---------- */
+.tape{
+  position:sticky; top:0; z-index:60;
+  background:var(--yellow); color:var(--ink);
+  border-bottom:4px solid var(--ink);
+}
+.tape .wrap{display:flex; align-items:center; gap:1.5rem; min-height:58px; flex-wrap:wrap}
+.mark{
+  display:block; padding:.42rem .7rem; background:var(--ink); line-height:0;
+  transform:rotate(-1.5deg); flex:none;
+}
+.mark img{height:26px; width:auto; display:block}
+@media (max-width:520px){ .mark img{height:21px} }
+nav{display:flex; gap:.35rem; margin-left:auto; flex-wrap:wrap}
+nav button{
+  font-family:var(--display); font-weight:800; font-size:1.1rem; letter-spacing:.06em;
+  text-transform:uppercase; background:none; border:3px solid transparent; color:var(--ink);
+  padding:.25rem .7rem; cursor:pointer; line-height:1.2;
+}
+nav button:hover{border-color:var(--ink)}
+nav button[aria-current="page"]{background:var(--ink); color:var(--yellow)}
+nav button:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--pink); outline-offset:3px}
+
+/* ---------- shared page furniture ---------- */
+.view{display:none; padding:0 0 5rem}
+.view.on{display:block}
+.eyebrow{
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--orange);
+}
+.sheet{
+  background:var(--paper); color:var(--ink);
+  border:4px solid var(--ink);
+  box-shadow:10px 10px 0 rgba(0,0,0,.45);
+}
+h2.head{
+  font-family:var(--display); font-weight:900; text-transform:uppercase;
+  font-size:clamp(2.2rem,6vw,4rem); line-height:.9; letter-spacing:-.01em; margin:0;
+}
+
+/* ---------- HOME ---------- */
+.hero{padding:clamp(2rem,5vw,4rem) 0 0}
+.dateline{
+  display:flex; align-items:center; justify-content:center; gap:.75rem; flex-wrap:wrap;
+  width:fit-content; max-width:100%; margin:0 auto .3rem;
+  font-family:var(--news); font-weight:800; letter-spacing:.01em;
+  font-size:clamp(.9rem,2.1vw,1.35rem); color:var(--paper);
+  border-top:3px solid var(--paper); border-bottom:3px solid var(--paper);
+  padding:.4rem 1.4rem; text-align:center;
+}
+.dateline .ed{text-transform:uppercase; letter-spacing:.03em}
+.dateline .free{background:var(--green); color:var(--ink); padding:0 .5rem}
+
+/* calls to action */
+.cta{display:flex; gap:.9rem; justify-content:center; flex-wrap:wrap; margin:2.2rem 0 3rem}
+.cta button{
+  font-family:var(--display); font-weight:900; text-transform:uppercase; letter-spacing:.05em;
+  font-size:clamp(1.05rem,2.4vw,1.45rem); line-height:1; cursor:pointer;
+  padding:.85rem 1.6rem; border:4px solid var(--ink);
+  background:var(--pink); color:var(--paper); box-shadow:7px 7px 0 rgba(0,0,0,.45);
+  transition:transform .1s, box-shadow .1s;
+}
+.cta button.hollow{background:transparent; border-color:var(--paper); color:var(--paper); box-shadow:none}
+.cta button:hover{transform:translate(3px,3px); box-shadow:3px 3px 0 rgba(0,0,0,.45)}
+.cta button.hollow:hover{background:var(--paper); color:var(--ink); transform:none}
+
+/* countdown */
+.countdown{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:.9rem;
+  max-width:760px; margin:0 auto;
+}
+.tick{
+  background:var(--paper); color:var(--ink); border:4px solid var(--ink);
+  box-shadow:7px 7px 0 rgba(0,0,0,.45); text-align:center; padding:0 .4rem 1rem;
+  border-top-width:0;
+}
+.tick i{display:block; height:12px; margin:0 -.4rem .8rem; border-bottom:4px solid var(--ink)}
+.tick b{
+  display:block; font-family:var(--display); font-weight:900; font-variant-numeric:tabular-nums;
+  font-size:clamp(2.4rem,7vw,4.4rem); line-height:.9; letter-spacing:-.02em;
+}
+.tick span{
+  display:block; font-family:var(--mono); font-size:.66rem; letter-spacing:.22em;
+  text-transform:uppercase; color:#6E6873; margin-top:.5rem;
+}
+.count-note:empty{display:none}
+.count-note{
+  text-align:center; font-family:var(--mono); font-size:.76rem; letter-spacing:.08em;
+  color:var(--paper-dim); margin:1.1rem 0 0;
+}
+.count-note.live{color:var(--yellow)}
+.venue{text-align:center; margin:0 0 1.1rem}
+.venue a{
+  font-family:var(--news); font-weight:700; text-decoration:none; color:var(--paper);
+  font-size:clamp(.9rem,2vw,1.1rem); border-bottom:2px solid var(--pink); padding-bottom:.1rem;
+}
+.venue a:hover{background:var(--pink)}
+
+.wordmark{
+  margin:1.4rem auto 1.5rem; max-width:min(940px,94vw); line-height:0;
+  filter:drop-shadow(9px 10px 0 rgba(0,0,0,.45));
+}
+.wordmark img{width:100%; height:auto; display:block}
+.subhead{
+  font-family:var(--news); font-weight:800; text-transform:uppercase; text-align:center;
+  font-size:clamp(1.15rem,3.5vw,2.5rem); line-height:1.12; letter-spacing:.005em;
+  margin:0 auto .7rem; max-width:100%; text-wrap:balance;
+}
+.stats{
+  display:flex; justify-content:center; flex-wrap:wrap; gap:.2rem .9rem;
+  font-family:var(--display); font-weight:700; text-transform:uppercase;
+  font-size:clamp(.95rem,2.3vw,1.5rem); letter-spacing:.04em;
+  border-top:4px solid var(--paper); border-bottom:4px solid var(--paper);
+  padding:.4rem 0; margin-bottom:0;
+}
+.stats b{color:var(--yellow); font-weight:700}
+
+/* the lineup block — the poster's justified name grid, made live */
+.lineup{padding:1.6rem clamp(1rem,3vw,2.4rem) 1.8rem}
+.names{
+  font-family:var(--display); font-weight:800; text-transform:uppercase;
+  font-size:clamp(1.15rem,3.5vw,2.3rem); line-height:1.06; letter-spacing:-.005em;
+  display:flex; flex-wrap:wrap; align-items:baseline; justify-content:center;
+  gap:0 .55em; text-align:center;
+}
+.names a{
+  text-decoration:none; color:var(--ink); position:relative; padding:0 .05em;
+  transition:color .12s, background-color .12s;
+}
+.names a::after{
+  content:"■"; color:var(--pink); font-size:.42em; margin-left:.5em;
+  vertical-align:.28em; transition:color .12s;
+}
+.names a:last-of-type::after,
+.names a.eol::after{content:""}
+.names a:hover,.names a:focus-visible{background:var(--pink); color:var(--paper)}
+.names a:hover::after{color:var(--pink)}
+.names a[data-store="0"]{color:#8A8493}
+.names a[data-store="0"]:hover,
+.names a[data-store="0"]:focus-visible{color:var(--paper)}
+.tail{
+  font-family:var(--display); font-weight:700; text-transform:uppercase;
+  font-size:clamp(.85rem,2vw,1.15rem); letter-spacing:.03em;
+  border-top:3px solid var(--ink); margin-top:1.2rem; padding-top:.7rem; color:#4A4551;
+}
+
+.supporters{margin-top:3.4rem; padding:1.5rem 1.4rem 1.7rem; text-align:center}
+.supporters .eyebrow{color:#8E2F63; display:block; margin-bottom:1.1rem}
+.sup-row{display:flex; flex-wrap:wrap; gap:.9rem; justify-content:center; align-items:stretch}
+.sup{
+  display:flex; align-items:center; gap:.75rem;
+  border:3px solid var(--ink); background:var(--paper); color:var(--ink);
+  padding:.7rem 1.15rem; box-shadow:5px 5px 0 rgba(20,16,15,.22);
+}
+.sup img,.sup svg{height:46px; width:auto; display:block; flex:none}
+.sup.logo{padding:.65rem 1.5rem}
+.sup.logo img,.sup.logo svg{height:64px}
+.sup b{
+  font-family:var(--display); font-weight:900; text-transform:uppercase;
+  font-size:1.3rem; line-height:1; letter-spacing:.02em; white-space:nowrap;
+}
+.sup.host b{font-size:1.85rem}
+.sup.host small{
+  display:block; font-family:var(--mono); font-size:.58rem; letter-spacing:.2em;
+  font-weight:400; color:#6E6873; margin-top:.35rem; text-transform:uppercase;
+}
+@media (max-width:520px){ .sup{width:100%; justify-content:center} }
+
+/* ---------- SCHEDULE ---------- */
+.page-top{padding:clamp(2rem,5vw,3.5rem) 0 1.6rem}
+.days{display:flex; gap:.5rem; flex-wrap:wrap; margin:1.4rem 0 1rem}
+.day-btn{
+  font-family:var(--display); font-weight:900; text-transform:uppercase; letter-spacing:.03em;
+  font-size:clamp(1.1rem,3vw,1.7rem); line-height:1;
+  background:transparent; color:var(--paper); border:4px solid var(--paper);
+  padding:.5rem .9rem; cursor:pointer;
+}
+.day-btn small{display:block; font-family:var(--mono); font-size:.6rem; letter-spacing:.18em; font-weight:400; margin-top:.25rem}
+.day-btn[aria-pressed="true"]{background:var(--yellow); border-color:var(--yellow); color:var(--ink)}
+.draft{
+  font-family:var(--mono); font-size:.74rem; letter-spacing:.1em; text-transform:uppercase;
+  background:var(--pink); color:var(--paper); display:inline-block; padding:.35rem .7rem; margin-bottom:1rem;
+}
+.grid-scroll{overflow-x:auto; padding-bottom:.5rem}
+.grid{
+  display:grid; min-width:720px; background:var(--ink); border:4px solid var(--ink); gap:0;
+}
+.g-head{
+  font-family:var(--display); font-weight:900; text-transform:uppercase; font-size:1.15rem;
+  line-height:1; letter-spacing:.03em; color:var(--ink); background:var(--yellow);
+  padding:.7rem .5rem; text-align:center; border-left:3px solid var(--ink); position:sticky; top:58px; z-index:5;
+}
+.g-head.rail{background:var(--ink); color:var(--paper-dim); border-left:none; font-family:var(--mono); font-size:.62rem; letter-spacing:.16em}
+.g-time{
+  font-family:var(--mono); font-variant-numeric:tabular-nums; font-size:.7rem; color:var(--paper-dim); text-align:right;
+  padding:0 .55rem; grid-column:1; transform:translateY(-.45em); white-space:nowrap;
+}
+.g-lane{background:var(--grape); border-left:3px solid var(--ink)}
+.slot{
+  background:var(--paper); color:var(--ink); border:3px solid var(--ink);
+  margin:0 5px; padding:.4rem .5rem; display:flex; flex-direction:column; justify-content:center;
+  text-decoration:none; overflow:hidden;
+}
+.slot:hover{background:var(--yellow)}
+.slot .n{
+  font-family:var(--display); font-weight:900; text-transform:uppercase; line-height:.92;
+  font-size:clamp(.9rem,1.3vw,1.25rem); letter-spacing:-.005em;
+}
+.slot .t{font-family:var(--mono); font-variant-numeric:tabular-nums; font-size:.68rem; color:#5E5866; margin-top:.25rem}
+.slot.head-set{background:var(--orange)}
+.slot.head-set .t{color:#54250b}
+.legend{
+  display:flex; gap:1.2rem; flex-wrap:wrap; margin-top:1.2rem;
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; color:var(--paper-dim);
+}
+.legend i{display:inline-block; width:14px; height:14px; border:2px solid var(--ink); vertical-align:-2px; margin-right:.4rem}
+
+/* ---------- MERCH ---------- */
+.shelf{display:grid; grid-template-columns:repeat(auto-fill,minmax(255px,1fr)); gap:1.1rem}
+.band{
+  display:flex; flex-direction:column; padding:1rem 1.05rem 1.05rem; min-height:170px;
+  background:var(--paper); color:var(--ink); border:4px solid var(--ink);
+  box-shadow:7px 7px 0 rgba(0,0,0,.4);
+}
+.band h3{
+  font-family:var(--display); font-weight:900; text-transform:uppercase; line-height:.9;
+  font-size:1.55rem; margin:.5rem 0 .35rem; letter-spacing:-.01em;
+}
+.band .where{font-family:var(--mono); font-size:.66rem; color:#6E6873; letter-spacing:.06em}
+.band .blurb{font-size:.9rem; line-height:1.45; color:#33303A; margin:.5rem 0 0}
+.band .at-table{font-family:var(--mono); font-size:.74rem; color:#5E5866}
+.band .links{margin-top:auto; padding-top:.85rem; display:flex; gap:.4rem; flex-wrap:wrap}
+.band .links a{
+  font-family:var(--display); font-weight:800; text-transform:uppercase; font-size:.95rem;
+  letter-spacing:.04em; text-decoration:none; background:var(--ink); color:var(--paper);
+  padding:.22rem .6rem;
+}
+.band .links a:hover{background:var(--pink)}
+.band .links a.ghost{background:transparent; color:var(--ink); border:2px solid var(--ink); padding:.1rem .5rem}
+.band .links a.ghost:hover{background:var(--ink); color:var(--paper)}
+.band.dim{background:#EFEDF1}
+
+footer b{font-weight:700; letter-spacing:.12em}
+footer{
+  border-top:4px solid var(--paper); margin-top:3rem; padding:1.6rem 0 3rem;
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; color:var(--paper-dim);
+  display:flex; gap:1rem; justify-content:space-between; flex-wrap:wrap;
+}
+
+@media (max-width:640px){
+  .wordmark{filter:drop-shadow(5px 6px 0 rgba(0,0,0,.45))}
+  .g-head{position:static}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important; animation:none !important}}
+</style>
+
+<div class="tape">
+  <div class="wrap">
+    <a class="mark" href="#" data-go="home" aria-label="Steve Fest II — home"><img src="assets/wordmark-nav.png" alt="" width="760" height="187"></a>
+    <nav>
+      <button data-go="home" aria-current="page">Home</button>
+      <button data-go="schedule">Schedule</button>
+      <button data-go="merch">Bands</button>
+    </nav>
+  </div>
+</div>
+
+<!-- ============ HOME ============ -->
+<section id="home" class="view on">
+  <div class="wrap hero">
+    <div class="dateline">
+      <span class="ed">Downtown Lombard Edition</span>
+      <span>&ndash;</span>
+      <span>Sept. 11&ndash;13, 2026</span>
+      <span class="free">Free</span>
+    </div>
+    <h1 class="wordmark"><img src="assets/wordmark-hero.png" alt="Steve Fest II" width="1324" height="456" fetchpriority="high"></h1>
+    <p class="subhead">Shannon's Deli hosts the regional festival</p>
+    <p class="venue"><a href="https://www.google.com/maps/search/?api=1&amp;query=Shannon%27s+Deli+11+S+Park+Ave+Lombard+IL+60148&amp;query_place_id=ChIJIapJJ2FNDogRqQ7cDnSbWx4" target="_blank" rel="noopener">11 S Park Ave, Lombard, IL 60148</a></p>
+    <p class="stats">
+      <span><b>40</b> bands</span><span><b>3</b> stages</span><span><b>3</b> days</span>
+      <span>All ages</span><span>No cover</span>
+    </p>
+
+    <div class="cta">
+      <button data-go="schedule">See the schedule</button>
+      <button class="hollow" data-go="merch">Bands &amp; merch</button>
+    </div>
+
+    <div class="countdown" id="countdown">
+      <div class="tick"><i style="background:var(--yellow)"></i><b>--</b><span>Days</span></div>
+      <div class="tick"><i style="background:var(--orange)"></i><b>--</b><span>Hours</span></div>
+      <div class="tick"><i style="background:var(--pink)"></i><b>--</b><span>Min</span></div>
+      <div class="tick"><i style="background:var(--green)"></i><b>--</b><span>Sec</span></div>
+    </div>
+    <p class="count-note" id="count-note"></p>
+
+    <div style="height:3.2rem"></div>
+
+    <div class="sheet lineup">
+      <div class="names" id="names"></div>
+      <p class="tail">*Rooftop / acoustic stage lineup coming soon</p>
+    </div>
+
+    <div class="sheet supporters">
+      <span class="eyebrow">Presented by &amp; supported by</span>
+      <div class="sup-row">
+        <div class="sup host"><b>Shannon's Deli<small>Downtown Lombard</small></b></div>
+        <div class="sup logo"><img src="assets/logo-punk-rock-saves-lives.png" alt="Punk Rock Saves Lives" width="360" height="360"></div>
+        <div class="sup logo"><svg class="dtl" role="img" aria-label="I heart Downtown Lombard" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1254 1254"><defs><style>.cls-1 {fill: #14100F;}.cls-1, .cls-2 {fill-rule: evenodd;}.cls-2 {fill: #b084e8;}</style></defs><path class="cls-1" d="M838,751l-7,9-1,10,4,10,14,23,6,21,5,40,2,48-1,93-8,52-4,14-10,23,1,12,3,6,7,7,9,4,40-2,187,2,11-3,6-4,5-6,4-12v-84l-6-15-4-4-7-3-9,2-26,27-24,12-19,4-23,2h-31l-5-4-1-68,4-101,8-58,17-39-1-8-3-6-5-5-10-3-41,2-39-4h-27l-13,2-8,4ZM793,749l-7-3-27-2-69,2-164-1-9,3-7,6-4,9-3,17-3,41,4,19,8,11,8,3,7-1,37-25,23-9,13-1,3,4,4,22,2,31v76l-3,54-7,50-6,21-11,25,1,8,3,6,6,5,20,4,31-2,54,2,15-2,6-3,7-7,2-5v-12l-17-44-8-49-2-33v-101l4-39,2-7,4-4h10l22,9,38,24,11,1,5-2,7-8,2-6,1-35-3-38-5-10-5-4ZM161,746l-6,5-5,9v10l16,23,8,16,11,49,5,50v77l-2,24-5,30-7,27-17,31v11l5,9,11,6,132,1,29-2,26-5,25-8,23-11,22-15,25-25,19-29,14-37,6-34v-37l-6-36-11-32-9-18-16-24-29-30-22-16-23-12-34-10-28-4-78,1-40-2-24,2-15,6ZM288,820l22,1,18,5,9,4,18,13,13,14,9,13,9,21,4,19,1,24-2,21-7,28-9,19-10,14-15,13-14,7-25,5h-22l-3-4-1-62,2-63-2-60,1-28,4-4ZM201,212l-10,4-6,5-4,6-2,10,5,13,19,27,6,12,4,15,9,65,3,59-2,117-4,34-7,27-16,29-3,10v10l5,12,6,7,17,8h17l21-3h44l23,3,26-1,10-5,8-10,3-9v-13l-4-11-14-26-7-28-9-77v-78l5-76,8-57,5-16,17-32,2-9-1-8-6-10-8-4-45,3-60-4-55,1ZM1089,151l-7-7-12-6-12-1-9,2-12,7-11,11-9,14-6,14h-3l-6-9-12-9-9-3h-11l-15,7-11,13-5,14-1,11-3,2-40-17-31-6-37,1-28,7-24,11-22,15-16,15-20,27h-4l-12-17-18-19-20-15-25-12-28-7-35-1-30,6-27,11-29,20-14,14-13,18-10,19-7,19-5,20-3,23,1,30,3,20,14,45,23,43,31,41,42,44-1,5-21,38-17,36-14,46-2,16,4,1,12-9,63-65,25-22h3l107,84,8,4h7l34-20,43-30,45-35,41-36,44-46,25-32,16-24,19-36,13-38,4-24,3-3h27l14-4,15-9,8-9,5-10v-20l-13-22,24-11,11-8,11-13,5-12-1-18-7-12-11-9-10-4h-5l-2-2,9-17,4-15v-14l-7-16ZM1057,330v8l-5,6-11,6-11,2h-10l-23-4-41-14,1-4,18-9,34-9h18l13,3,5,5h4l8,10ZM1094,246l1,8-3,6-7,7-12,7-29,8-42,7-3-1,5-8,16-16,19-14,16-8,13-4h13l8,3,5,5ZM944,238l10,19,3,16v11l-6,28-14,27,18,5,14,8,13,14,4,9,1,11-1,5-9,15-12,10-10,5-19,5-37-1,12,15,6,17-1,12-9,13-18,11-17,5h-24l-20-5,1,27-5,23-12,22-10,10-8,5h-18l-8-4-9-8-14-21-5-13-3-18h-3l-15,8-20,6-23,4-41,17-19,14-63,59-3-1v-4l19-37,18-21,28-23,16-17,11-17,22-43-20-6-16-9-11-11-6-11-1-8,3-11,7-12,12-12,18-11,16-5,20-1,23,6-2-31,5-22,8-15,9-9,8-4h14l18,10,15,17,7,13,3,10h2l16-13-7-14-5-18,2-25,8-15,6-6,9-5,13-2,11,3,12,7,12,13,10-16,11-11,14-8,7-2h12l9,4,8,7ZM780,456l-5,4-11,20-5,18v18l5,17,7,12,7,8,8,3,6-5,9-15,5-18v-17l-4-15-5-10-10-14-7-6ZM758,438l-5-3-23,2-13,4-16,10-9,9-11,16-16,30-3,9,50-13,18-10,17-19,9-21,2-14ZM800,436v3l5,8,14,14,17,10,11,3h21l8-2,13-7,4-6-4-9-13-14-13-8-10-3-16-1-13,2-24,10ZM635,417l5,7,14,9,16,4h15l13-4,19-11,11-10v-4l-26-16-17-4h-12l-10,3-13,7-11,10-4,9ZM962,380l-10-11-7-4-11-3h-13l-20,8-20,15-5,7,4,1,1,3,4-1,14,5,29,3,17-4,9-5,7-7,1-7ZM855,341l-14-2-11,3-11,6-12,11-5,7-10,23-4,16,1,9,14-2,16-5,16-9,16-18,7-18,1-13-4-8ZM744,313l-9,10-4,10-2,11,1,19,3,10,8,14,18,19,4,1,7-13,6-24-1-18-3-10-7-13-9-10-12-6ZM830,268l-6,12-1,12,3,11,8,14,21-1,11,3,1-11-6-21-5-8-14-12-8-1-4,2ZM923,252l-9,1-8,5-12,15-5,12-3,29,2,37,8-4,16-15,12-16,6-12,4-15v-16l-5-15-6-6ZM973,189h6l7,6,4,7,3,14v12l-3,17-4,13-9,17h-2l-2-4-11-49,1-21,3-6,7-6ZM1064,162l8,9v11l-5,11-19,22-24,16-1-5,14-43,14-18,6-3h7Z"/><path class="cls-2" d="M1089,151l-7-7-12-6-12-1-9,2-12,7-11,11-9,14-6,14h-3l-6-9-12-9-9-3h-11l-15,7-11,13-5,14-1,11-3,2-40-17-31-6-37,1-28,7-24,11-22,15-16,15-20,27h-4l-12-17-18-19-20-15-25-12-28-7-35-1-30,6-27,11-29,20-14,14-13,18-10,19-7,19-5,20-3,23,1,30,3,20,14,45,23,43,31,41,42,44-1,5-21,38-17,36-14,46-2,16,4,1,12-9,63-65,25-22h3l107,84,8,4h7l34-20,43-30,45-35,41-36,44-46,25-32,16-24,19-36,13-38,4-24,3-3h27l14-4,15-9,8-9,5-10v-20l-13-22,24-11,11-8,11-13,5-12-1-18-7-12-11-9-10-4h-5l-2-2,9-17,4-15v-14l-7-16ZM1057,330v8l-5,6-11,6-11,2h-10l-23-4-41-14,1-4,18-9,34-9h18l13,3,5,5h4l8,10ZM1094,246l1,8-3,6-7,7-12,7-29,8-42,7-3-1,5-8,16-16,19-14,16-8,13-4h13l8,3,5,5ZM944,238l10,19,3,16v11l-6,28-14,27,18,5,14,8,13,14,4,9,1,11-1,5-9,15-12,10-10,5-19,5-37-1,12,15,6,17-1,12-9,13-18,11-17,5h-24l-20-5,1,27-5,23-12,22-10,10-8,5h-18l-8-4-9-8-14-21-5-13-3-18h-3l-15,8-20,6-23,4-41,17-19,14-63,59-3-1v-4l19-37,18-21,28-23,16-17,11-17,22-43-20-6-16-9-11-11-6-11-1-8,3-11,7-12,12-12,18-11,16-5,20-1,23,6-2-31,5-22,8-15,9-9,8-4h14l18,10,15,17,7,13,3,10h2l16-13-7-14-5-18,2-25,8-15,6-6,9-5,13-2,11,3,12,7,12,13,10-16,11-11,14-8,7-2h12l9,4,8,7ZM780,456l-5,4-11,20-5,18v18l5,17,7,12,7,8,8,3,6-5,9-15,5-18v-17l-4-15-5-10-10-14-7-6ZM758,438l-5-3-23,2-13,4-16,10-9,9-11,16-16,30-3,9,50-13,18-10,17-19,9-21,2-14ZM800,436v3l5,8,14,14,17,10,11,3h21l8-2,13-7,4-6-4-9-13-14-13-8-10-3-16-1-13,2-24,10ZM635,417l5,7,14,9,16,4h15l13-4,19-11,11-10v-4l-26-16-17-4h-12l-10,3-13,7-11,10-4,9ZM962,380l-10-11-7-4-11-3h-13l-20,8-20,15-5,7,4,1,1,3,4-1,14,5,29,3,17-4,9-5,7-7,1-7ZM855,341l-14-2-11,3-11,6-12,11-5,7-10,23-4,16,1,9,14-2,16-5,16-9,16-18,7-18,1-13-4-8ZM744,313l-9,10-4,10-2,11,1,19,3,10,8,14,18,19,4,1,7-13,6-24-1-18-3-10-7-13-9-10-12-6ZM830,268l-6,12-1,12,3,11,8,14,21-1,11,3,1-11-6-21-5-8-14-12-8-1-4,2ZM923,252l-9,1-8,5-12,15-5,12-3,29,2,37,8-4,16-15,12-16,6-12,4-15v-16l-5-15-6-6ZM973,189h6l7,6,4,7,3,14v12l-3,17-4,13-9,17h-2l-2-4-11-49,1-21,3-6,7-6ZM1064,162l8,9v11l-5,11-19,22-24,16-1-5,14-43,14-18,6-3h7Z"/></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCHEDULE ============ -->
+<section id="schedule" class="view">
+  <div class="wrap page-top">
+    <p class="eyebrow">Three days, three stages</p>
+    <h2 class="head">Who plays<br>when</h2>
+    <p class="draft">Draft — stage names and set times are placeholders</p>
+    <div class="days" id="days"></div>
+    <div class="grid-scroll"><div class="grid" id="grid"></div></div>
+    <p class="legend">
+      <span><i style="background:var(--paper)"></i>Set</span>
+      <span><i style="background:#FF6A15"></i>Closing set</span>
+      <span>Doors 30 minutes before first band</span>
+    </p>
+  </div>
+</section>
+
+<!-- ============ MERCH ============ -->
+<section id="merch" class="view">
+  <div class="wrap page-top">
+    <p class="eyebrow">Every act on the bill</p>
+    <h2 class="head">The bands</h2>
+    <div class="shelf" id="shelf"></div>
+  </div>
+</section>
+
+<div class="wrap"><footer>
+  <span><b>STEVE FEST II</b> · Shannon's Deli · 11 S Park Ave, Lombard, IL 60148</span>
+  <span>Sept 11–13, 2026 · Free · All ages</span>
+</footer></div>
+
+<script>
+/* =======================================================================
+   DATA — edit here. status: store | site | unknown | none
+   ======================================================================= */
+const BANDS = [
+ {n:"La Armada",           s:"store", base:"Chicago, IL",       kind:"Latino hardcore fury, formed in Santo Domingo and based in Chicago since 2008. Has toured with Sick of It All and Propagandhi.", u:"https://www.merchbar.com/rock-alternative/la-armada"},
+ {n:"Take the Reins",      s:"store", base:"Chicago, IL",       kind:"Chicago rock fronted by Courtney Boyers, on Flat Aht Records. Compared to Joan Jett by way of the Pretenders.",       u:"https://takethereins.bandcamp.com/merch", u2:"https://linktr.ee/takethereins", l2:"Links"},
+ {n:"The Horrids",         s:"unknown", base:"—",               kind:"No links confirmed — the name is shared with a French psytrance duo who dominate every search."},
+ {n:"Steve's in the Band", s:"store", base:"West Chicago, IL",  kind:"Drummer-fronted punk trio from West Chicago, recorded at the Blasting Room with Bill Stevenson producing.",      u:"https://stevesintheband.bandcamp.com/", u2:"https://www.sitb.org/home", l2:"Site"},
+ {n:"The Steves",          s:"unknown", base:"—",               kind:"Unconfirmed — the Bandcamp page under this name belongs to a band from Regina, Saskatchewan.", u:"https://thestevesss.bandcamp.com/"},
+ {n:"S.M.F.C.",            s:"store", base:"Joliet, IL",        kind:"The solo project of Chicago guitarist Steev Custer, also of Death and Memphis and Space Age Zeros.",                  u:"https://smfc.bandcamp.com/"},
+ {n:"Bill Nelson",         s:"unknown", base:"—",               kind:"Unconfirmed — search results are swamped by the Be-Bop Deluxe guitarist of the same name."},
+ {n:"Dead Freddie",        s:"store", base:"Chicago, IL",       kind:"Punk-pop with roots in Chicago's South Side scene of 1979, reformed in 2013. Yes, there is an accordion.",   u:"https://deadfreddie.bandcamp.com/"},
+ {n:"From the Start",      s:"unknown", base:"—",               kind:"Unconfirmed — too many bands share the name to pin this one down."},
+ {n:"The Turdles",         s:"none",  base:"St. Charles, IL",   kind:"Midwestern punk from St. Charles, cheerfully self-described as old, bald and unbothered.",     u:"https://www.reverbnation.com/theturdles", l1:"ReverbNation"},
+ {n:"Sex Dream",           s:"store", base:"Chicago suburbs",   kind:"Ramonescore with a twee streak from the Chicago suburbs, fronted by Maria Surfinbird since 2018.",                  u:"https://sexxdream.bandcamp.com", u2:"https://linktr.ee/sex.dream", l2:"Links"},
+ {n:"Anger.",              s:"store", base:"Chicago, IL",       kind:"Chicago hardcore on Punk Rock Tacos Records. Their self-titled LP is dedicated to drummer Matt Meuzelaar.",    u:"https://angerchicago.bandcamp.com/album/anger"},
+ {n:"James the Boneless",  s:"store", base:"Downers Grove, IL", kind:"Downers Grove rock built on an overhand guitar style, with funk bass and saxophone.",       u:"https://jamestheboneless.bandcamp.com/merch"},
+ {n:"The Larvettes",       s:"store", base:"Chicago, IL",       kind:"Chicagoland garage rock and roll, going since the early 2020s.",      u:"https://thelarvettes.bandcamp.com/", u2:"https://www.the-larvettes.com/", l2:"Site"},
+ {n:"The Jobodys",         s:"none",  base:"—",                 kind:"No links found. Ask at the merch table."},
+ {n:"Tone Zone Skam",      s:"store", base:"Chicago area",      kind:"Chicago-area ska, playing Berwyn halls and Burlington Bar bills since 2013.",                  u:"https://tonezoneskam.bandcamp.com/"},
+ {n:"The Come Alongs",     s:"site",  base:"Central Indiana",   kind:"Central Indiana trio moving between classic rock, rockabilly, indie and punk.", u:"https://www.thecomealongsband.com", l1:"Site"},
+ {n:"Tiger Uppercut",      s:"unknown", base:"—",               kind:"Unconfirmed — the Bandcamp page under this name is a grunge-pop band from Kingston, Ontario.", u:"https://tigeruppercut.bandcamp.com/", u2:"https://www.facebook.com/TigerUppercutBand/", l2:"Facebook"},
+ {n:"Deadfoot",            s:"store", base:"Indianapolis, IN",  kind:"Indianapolis punk trio writing about political corruption, greed, and the occasional love ballad.",      u:"https://deadfoot.bandcamp.com/", u2:"https://deadfootpunk.com", l2:"Site"},
+ {n:"Acton's Dictum",      s:"store", base:"Berwyn, IL",        kind:"Berwyn hardcore punk, releasing through Punk Rock Tacos Records.",                  u:"https://actonsdictum.bandcamp.com/"},
+ {n:"The Rip Ups",         s:"store", base:"Chicago, IL",       kind:"Garage-a-billy punk out of Chicago's alleys — you can mosh to it or dance to it.",                  u:"https://ripups.bandcamp.com/music"},
+ {n:"Jukebox Rejects",     s:"none",  base:"—",                 kind:"No links found. Ask at the merch table."},
+ {n:"Tÿre Fÿre",           s:"store", base:"Chicago, IL",       kind:"Chicago punk born at the Alley, played entirely by fifty-year-old men from Elk Grove Village.",u:"https://tyrefyre.bandcamp.com/", u2:"https://www.tyre-fyre.com/", l2:"Site"},
+ {n:"Alex Kasznel & the Board of Directors", s:"store", base:"Cincinnati, OH", kind:"Cincinnati punk with vinyl on Air Quotes Records. Note the poster spells the name Kesznel.", u:"https://alexkasznel.bandcamp.com/"},
+ {n:"Cherry Phox",         s:"none",  base:"—",                 kind:"No links found. Ask at the merch table."},
+ {n:"MG Bailey",           s:"store", base:"Homewood, IL",      kind:"Homewood one-man band, six albums deep, blending punk, blues, pop and soul.",    u:"https://mgbailey7.bandcamp.com/", u2:"https://mgbailey.com", l2:"Site"},
+ {n:"After the Fight",     s:"store", base:"Elgin, IL",         kind:"Melodic punk from Elgin since 2004 — four married guys, not hardcore, as they put it.", u:"https://afterthefight.bandcamp.com/", u2:"http://www.afterthefight.com", l2:"Site"},
+ {n:"The Foley's",         s:"store", base:"South Bend, IN",    kind:"Wrestlepunk from South Bend: punk rock, professional wrestling and bad decisions.", u:"https://wreckedhooliganshop.com", l1:"Shop", u2:"https://wreckedhooligan.bandcamp.com/album/truth-or-consequences", l2:"Bandcamp"},
+ {n:"Tongan Death Grip",   s:"store", base:"Waukegan, IL",      kind:"Waukegan metal formed in 2012 out of a shared love of pro wrestling.",            u:"https://tdg316.bandcamp.com/"},
+ {n:"Counterfeit Goods",   s:"none",  base:"Oxford, OH",        kind:"Four-piece punk from Oxford, Ohio, pulling from rockabilly, soul, ska and jazz."},
+ {n:"Low Range",           s:"none",  base:"—",                 kind:"No links found. Ask at the merch table."},
+ {n:"Rabid Wreck",         s:"none",  base:"—",                 kind:"Instagram is the only trace of them online.",            u:"https://www.instagram.com/rabid_wreck/", l1:"Instagram"},
+ {n:"Misunderstood",       s:"store", base:"Richmond, IN",      kind:"Richmond, Indiana punk, started in 2006 by Lyn-Z when she was fifteen.", u:"https://misunderstood.bandcamp.com/"},
+ {n:"Dracula Johnson",     s:"none",  base:"—",                 kind:"No links found. Ask at the merch table."},
+ {n:"13-Monsters",         s:"store", base:"West Chicago, IL",  kind:"West Chicago rock that went on hiatus back in 2017 — this looks like a reunion.",                  u:"https://13-monsters.bandcamp.com", u2:"https://13-monsters.tumblr.com/", l2:"Tumblr"},
+ {n:"Noodle Brain",        s:"store", base:"Chicago, IL",       kind:"Illinois pop-punk duo releasing through Outloud! Records and Laptop Punk Records.", u:"https://noodlebrain.bandcamp.com/", u2:"https://storefrontier.com", l2:"Shop"},
+ {n:"Cinema Violence",     s:"none",  base:"—",                 kind:"No links found. Ask at the merch table."},
+ {n:"Los Kausas",          s:"none",  base:"—",                 kind:"No links found. Ask at the merch table."},
+ {n:"Shukin & the Ramblers",s:"store",base:"Chicago, IL",       kind:"Chicago blues, R&B, roots country and gypsy jazz played with a punk edge.",      u:"https://shukinandtheramblers.bandcamp.com/", u2:"https://shukinandtheramblers.com/", l2:"Site"},
+ {n:"The Helsings",        s:"site",  base:"Indianapolis, IN",  kind:"Indianapolis rock and roll, mixing Ramones energy with Motörhead fury.", u:"https://www.thehelsings.com/", l1:"Site"},
+ {n:"Graygarden",          s:"none",  base:"—",                 kind:"No links found. Ask at the merch table."},
+ {n:"Fishfood",            s:"store", base:"North Freedom, WI", kind:"Silly pop punk rock, as they call it, from North Freedom, Wisconsin.",      u:"https://fishfood.bandcamp.com/", u2:"https://redbubble.com", l2:"Redbubble"},
+ {n:"Zbyszko Cracker",     s:"store", base:"Wauconda, IL",      kind:"Wauconda experimental noise — including field recordings of mowing the lawn and shovelling snow.", u:"https://seasonalmenswear.bandcamp.com/album/im-wont-to-believe", u2:"https://cattailmilitia.bandcamp.com/", l2:"Cattail Militia"},
+ {n:"Goodbye Sunshine",    s:"store", base:"Chicago, IL",       kind:"Chicago pop-punk produced by Joe Queer, with records on River Monster.", u:"https://goodbyesunshine.bandcamp.com/", u2:"https://rivermonsterrecords.bandcamp.com", l2:"Label"},
+ {n:"Narwhal Express",     s:"none",  base:"Indianapolis, IN",  kind:"An Indianapolis band with only an Instagram to go on.",            u:"https://www.instagram.com/narwhal_express/", l1:"Instagram"},
+ {n:"SITB",                s:"store", base:"West Chicago, IL",  kind:"Shorthand for Steve's in the Band, who are also billed in full.", u:"https://stevesintheband.bandcamp.com/"}
+];
+
+/* Draft running order. Swap names between stages freely. */
+const STAGES = ["Deli Stage","Alley Stage","Lot Stage"];
+const DAYS = [
+  {label:"Friday", date:"Sept 11", start:"17:00", lanes:[
+    ["Zbyszko Cracker","The Turdles","The Rip Ups","Dead Freddie"],
+    ["Cherry Phox","Jukebox Rejects","Noodle Brain","Tÿre Fÿre"],
+    []
+  ]},
+  {label:"Saturday", date:"Sept 12", start:"12:00", lanes:[
+    ["Graygarden","Low Range","13-Monsters","Sex Dream","The Larvettes","Acton's Dictum","Anger.","La Armada"],
+    ["Narwhal Express","Cinema Violence","The Jobodys","Misunderstood","The Helsings","After the Fight","Tongan Death Grip","Take the Reins"],
+    ["Dracula Johnson","Rabid Wreck","Los Kausas","The Come Alongs","Fishfood","Goodbye Sunshine","Tone Zone Skam","Steve's in the Band"]
+  ]},
+  {label:"Sunday", date:"Sept 13", start:"12:00", lanes:[
+    ["Bill Nelson","MG Bailey","Shukin & the Ramblers","The Foley's","Deadfoot"],
+    ["From the Start","Counterfeit Goods","Tiger Uppercut","James the Boneless","S.M.F.C."],
+    ["The Horrids","The Steves","Alex Kasznel & the Board of Directors","SITB"]
+  ]}
+];
+
+/* ---------------- home: lineup block ---------------- */
+const byName = Object.fromEntries(BANDS.map(b=>[b.n,b]));
+document.getElementById("names").innerHTML = BANDS.map(b=>{
+  const href = b.u || "#merch";
+  const live = b.u ? 1 : 0;
+  return `<a href="${href}"${b.u?' target="_blank" rel="noopener"':''} data-store="${live}">${b.n}</a>`;
+}).join("");
+
+/* squares separate names, so drop the one at each line's end */
+function trimSquares(){
+  const links=[...document.querySelectorAll("#names a")];
+  links.forEach(a=>a.classList.remove("eol"));
+  links.forEach((a,i)=>{
+    const next=links[i+1];
+    if(!next || next.offsetTop > a.offsetTop) a.classList.add("eol");
+  });
+}
+trimSquares();
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(trimSquares);
+let rz; addEventListener("resize",()=>{clearTimeout(rz); rz=setTimeout(trimSquares,120)});
+
+/* ---------------- schedule ---------------- */
+const SET=45, GAP=15, UNIT=15;
+const toMin = t => (+t.split(":")[0])*60 + (+t.split(":")[1]);
+const fmt = m => {
+  let h=Math.floor(m/60), mm=String(m%60).padStart(2,"0");
+  const ap = h>=12 ? "PM":"AM"; h = h%12===0 ? 12 : h%12;
+  return `${h}:${mm} ${ap}`;
+};
+let dayIx = 1;
+
+document.getElementById("days").innerHTML = DAYS.map((d,i)=>
+  `<button class="day-btn" data-day="${i}" aria-pressed="${i===dayIx}">${d.label}<small>${d.date}</small></button>`
+).join("");
+
+function drawGrid(){
+  const d = DAYS[dayIx];
+  const s0 = toMin(d.start);
+  const longest = Math.max(...d.lanes.map(l=>l.length));
+  const end = s0 + longest*(SET+GAP) + 30;
+  const rows = Math.ceil((end-s0)/UNIT);
+  const g = document.getElementById("grid");
+  g.style.gridTemplateColumns = `62px repeat(${STAGES.length},1fr)`;
+  g.style.gridTemplateRows = `auto repeat(${rows},22px)`;
+
+  let html = `<div class="g-head rail">2026</div>` +
+    STAGES.map(s=>`<div class="g-head">${s}</div>`).join("");
+
+  for(let r=0;r<rows;r++){
+    const m = s0 + r*UNIT;
+    html += `<div class="g-time" style="grid-row:${r+2}">${m%60===0?fmt(m):""}</div>`;
+  }
+  STAGES.forEach((_,si)=>{
+    html += `<div class="g-lane" style="grid-column:${si+2}; grid-row:2 / span ${rows}"></div>`;
+  });
+  d.lanes.forEach((lane,si)=>{
+    lane.forEach((name,k)=>{
+      const st = s0 + k*(SET+GAP);
+      const row = (st-s0)/UNIT + 2;
+      const span = SET/UNIT;
+      const b = byName[name] || {};
+      const closer = k===lane.length-1 && lane.length>1;
+      const tag = b.u ? "a" : "div";
+      const attr = b.u ? ` href="${b.u}" target="_blank" rel="noopener"` : "";
+      html += `<${tag} class="slot${closer?" head-set":""}"${attr}
+        style="grid-column:${si+2}; grid-row:${row} / span ${span}">
+        <span class="n">${name}</span>
+        <span class="t">${fmt(st)} – ${fmt(st+SET)}</span></${tag}>`;
+    });
+    if(!lane.length){
+      html += `<div class="g-lane" style="grid-column:${si+2}; grid-row:2 / span ${rows};
+        display:flex; align-items:center; justify-content:center; font-family:var(--mono);
+        font-size:.7rem; letter-spacing:.2em; color:#9b86a4">STAGE DARK</div>`;
+    }
+  });
+  g.innerHTML = html;
+}
+drawGrid();
+document.getElementById("days").addEventListener("click",e=>{
+  const b=e.target.closest("[data-day]"); if(!b) return;
+  dayIx = +b.dataset.day;
+  document.querySelectorAll("[data-day]").forEach(x=>x.setAttribute("aria-pressed", x===b));
+  drawGrid();
+});
+
+/* ---------------- merch ---------------- */
+document.getElementById("shelf").innerHTML = BANDS.map(b=>{
+  const links = [];
+  if(b.u)  links.push(`<a href="${b.u}" target="_blank" rel="noopener">${b.l1||"Buy"}</a>`);
+  if(b.u2) links.push(`<a class="ghost" href="${b.u2}" target="_blank" rel="noopener">${b.l2||"More"}</a>`);
+  return `<article class="band${b.u?"":" dim"}">
+    <h3>${b.n}</h3>
+    <span class="where">${b.base}</span>
+    <p class="blurb">${b.kind}</p>
+    <div class="links">${links.join("") ||
+      '<span class="at-table">Catch them at the merch table</span>'}</div>
+  </article>`;
+}).join("");
+
+/* ---------------- routing ---------------- */
+function go(id){
+  document.querySelectorAll(".view").forEach(v=>v.classList.toggle("on", v.id===id));
+  document.querySelectorAll("[data-go]").forEach(b=>{
+    if(b.dataset.go===id) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current");
+  });
+  window.scrollTo({top:0});
+}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-go]");
+  if(b){ e.preventDefault(); go(b.dataset.go); }
+});
+
+/* ---------------- countdown to doors ---------------- */
+const DOORS = new Date("2026-09-11T17:00:00");
+const ticks = document.querySelectorAll("#countdown b");
+const note = document.getElementById("count-note");
+function tick(){
+  let d = DOORS - new Date();
+  if(d <= 0){
+    const over = new Date() > new Date("2026-09-14T00:00:00");
+    ticks.forEach(t=>t.textContent="00");
+    note.className = "count-note live";
+    note.textContent = over
+      ? "That's a wrap on Steve Fest II — see you next year"
+      : "Steve Fest II is happening right now in Downtown Lombard";
+    return;
+  }
+  const s=Math.floor(d/1000), v=[Math.floor(s/86400),Math.floor(s/3600)%24,Math.floor(s/60)%60,s%60];
+  ticks.forEach((t,i)=>t.textContent=String(v[i]).padStart(2,"0"));
+}
+tick(); setInterval(tick,1000);
+document.getElementById("names").addEventListener("click",e=>{
+  const a=e.target.closest("a");
+  if(a && a.getAttribute("href")==="#merch"){ e.preventDefault(); go("merch"); }
+});
+</script>
