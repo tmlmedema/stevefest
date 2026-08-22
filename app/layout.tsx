@@ -47,16 +47,18 @@ export default function RootLayout({
       className={`${shoulders.variable} ${anton.variable} ${archivo.variable} ${bitter.variable}`}
     >
       <body>
-        <Nav />
-        {children}
-        <div className="wrap">
-          <footer>
-            <span>
-              <b>STEVE FEST II</b> · Shannon&apos;s Deli · 11 S Park Ave,
-              Lombard, IL 60148
-            </span>
-            <span>Sept 11–13, 2026 · Free · All ages</span>
-          </footer>
+        <div className="page-shell">
+          <Nav />
+          <main>{children}</main>
+          <div className="wrap">
+            <footer>
+              <span>
+                <b>STEVE FEST II</b> · Shannon&apos;s Deli · 11 S Park Ave,
+                Lombard, IL 60148
+              </span>
+              <span>Sept 11–13, 2026 · Free · All ages</span>
+            </footer>
+          </div>
         </div>
       </body>
     </html>

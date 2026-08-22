@@ -11,7 +11,6 @@ export default function Bands() {
   return (
     <section id="merch" className="view">
       <div className="wrap page-top">
-        <p className="eyebrow">Every act on the bill</p>
         <h2 className="head">The bands</h2>
         <BandShelf />
       </div>

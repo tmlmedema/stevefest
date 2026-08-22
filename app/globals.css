@@ -25,6 +25,8 @@ body{
 img{max-width:100%}
 a{color:inherit}
 .wrap{width:min(1180px,92vw); margin:0 auto}
+.page-shell{display:flex; flex-direction:column; min-height:100vh}
+.page-shell main{flex:1}
 
 /* ---------- nav: a strip of tape across the top ---------- */
 .tape{
@@ -38,7 +40,10 @@ a{color:inherit}
   transform:rotate(-1.5deg); flex:none;
 }
 .mark img{height:26px; width:auto; display:block}
-@media (max-width:520px){ .mark img{height:21px} }
+@media (max-width:520px){
+  .mark img{height:21px}
+  .tape .wrap{padding:.7rem 0}
+}
 nav{display:flex; gap:.35rem; margin-left:auto; flex-wrap:wrap}
 nav a{
   font-family:var(--display); font-weight:800; font-size:1.1rem; letter-spacing:.06em;
@@ -195,6 +200,19 @@ h2.head{
 }
 @media (max-width:520px){ .sup{width:100%; justify-content:center} }
 
+/* ---------- SCHEDULE (coming soon) ---------- */
+.coming-soon{
+  min-height:50vh; display:flex; align-items:center; justify-content:center;
+  padding:clamp(2rem,5vw,3.5rem) 0;
+}
+.coming-box{
+  background:var(--pink); color:var(--paper);
+  border:4px solid var(--ink); box-shadow:10px 10px 0 rgba(0,0,0,.45);
+  padding:2.5rem 3rem; max-width:640px; text-align:center;
+  font-family:var(--display); font-weight:900; text-transform:uppercase;
+  font-size:clamp(1.3rem,4vw,2rem); line-height:1.3; letter-spacing:-.01em;
+}
+
 /* ---------- SCHEDULE ---------- */
 .page-top{padding:clamp(2rem,5vw,3.5rem) 0 1.6rem}
 .days{display:flex; gap:.5rem; flex-wrap:wrap; margin:1.4rem 0 1rem}
@@ -245,7 +263,7 @@ h2.head{
 .legend i{display:inline-block; width:14px; height:14px; border:2px solid var(--ink); vertical-align:-2px; margin-right:.4rem}
 
 /* ---------- MERCH ---------- */
-.shelf{display:grid; grid-template-columns:repeat(auto-fill,minmax(255px,1fr)); gap:1.1rem}
+.shelf{display:grid; grid-template-columns:repeat(auto-fill,minmax(255px,1fr)); gap:1.1rem; margin-top:4.9rem}
 .band{
   display:flex; flex-direction:column; padding:1rem 1.05rem 1.05rem; min-height:170px;
   background:var(--paper); color:var(--ink); border:4px solid var(--ink);

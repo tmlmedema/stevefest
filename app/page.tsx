@@ -3,9 +3,6 @@ import Link from "next/link";
 import Countdown from "./components/Countdown";
 import Lineup from "./components/Lineup";
 
-const MAP_URL =
-  "https://www.google.com/maps/search/?api=1&query=Shannon%27s+Deli+11+S+Park+Ave+Lombard+IL+60148&query_place_id=ChIJIapJJ2FNDogRqQ7cDnSbWx4";
-
 export default function Home() {
   return (
     <section id="home" className="view">
@@ -28,11 +25,6 @@ export default function Home() {
         </h1>
 
         <p className="subhead">Shannon&apos;s Deli hosts the regional festival</p>
-        <p className="venue">
-          <a href={MAP_URL} target="_blank" rel="noopener">
-            11 S Park Ave, Lombard, IL 60148
-          </a>
-        </p>
         <p className="stats">
           <span>
             <b>40</b> bands

@@ -22,14 +22,8 @@ export default function BandShelf() {
           <article className={b.u ? "band" : "band dim"} key={b.n}>
             <h3>{b.n}</h3>
             <span className="where">{b.base}</span>
-            <p className="blurb">{b.kind}</p>
-            <div className="links">
-              {links.length ? (
-                links
-              ) : (
-                <span className="at-table">Catch them at the merch table</span>
-              )}
-            </div>
+            {b.kind && <p className="blurb">{b.kind}</p>}
+            {links.length > 0 && <div className="links">{links}</div>}
           </article>
         );
       })}
