@@ -9,6 +9,9 @@ export const metadata: Metadata = {
 export default function Schedule() {
   return (
     <section id="schedule" className="view">
+      <div className="wrap page-top">
+        <h2 className="head">Who plays when</h2>
+      </div>
       <div className="wrap coming-soon">
         <div className="coming-box">
           Steve is still arguing with the calendar.
