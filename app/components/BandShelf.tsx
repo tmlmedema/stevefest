@@ -17,6 +17,12 @@ export default function BandShelf() {
               {b.l2 || "More"}
             </a>
           );
+        if (b.u3)
+          links.push(
+            <a key="u3" className="ghost" href={b.u3} target="_blank" rel="noopener">
+              {b.l3 || "More"}
+            </a>
+          );
 
         return (
           <article className={b.u ? "band" : "band dim"} key={b.n}>

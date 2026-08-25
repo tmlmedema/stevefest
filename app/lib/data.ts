@@ -19,6 +19,10 @@ export type Band = {
   u2?: string;
   /** label for the second link (defaults to "More") */
   l2?: string;
+  /** an optional third link */
+  u3?: string;
+  /** label for the third link (defaults to "More") */
+  l3?: string;
 };
 
 export type Day = {
@@ -33,7 +37,7 @@ export type Day = {
 export const BANDS: Band[] = [
  {n:"La Armada",           s:"store", base:"Chicago, IL",       kind:"Latino hardcore fury, formed in Santo Domingo and based in Chicago since 2008. Has toured with Sick of It All and Propagandhi.", u:"https://www.merchbar.com/rock-alternative/la-armada"},
  {n:"Take the Reins",      s:"store", base:"Chicago, IL",       kind:"Chicago rock fronted by Courtney Boyers, on Flat Aht Records. Compared to Joan Jett by way of the Pretenders.",       u:"https://takethereins.bandcamp.com/merch", u2:"https://linktr.ee/takethereins", l2:"Links"},
- {n:"The Horrids",         s:"unknown", base:"—",               kind:""},
+ {n:"The Horrids",         s:"unknown", base:"Lombard, IL",     kind:"Horror-fueled street punk from the gutters of Lombard, Illinois, raising hell since 2003. Has bled on stages alongside with Misfits, Michale Graves, The Casualties, GWAR, The Unseen, Lower Class Brats, Flatfoot 56, Nekromantix, and Blitzkid.", u:"https://open.spotify.com/album/5iSImthAyZD3dBSoAZpcE0?si=Azv5wbcoR7yGg8TQ16Fl8A", l1:"Music"},
  {n:"Steve's in the Band", s:"store", base:"West Chicago, IL",  kind:"Drummer-fronted punk trio from West Chicago, recorded at the Blasting Room with Bill Stevenson producing.",      u:"https://stevesintheband.bandcamp.com/", l1:"Music", u2:"https://www.sitb.org/home", l2:"Site"},
  {n:"The Steves",          s:"unknown", base:"—",               kind:"", u:"https://thestevesss.bandcamp.com/", l1:"Music"},
  {n:"S.M.F.C.",            s:"store", base:"Joliet, IL",        kind:"The solo project of Chicago guitarist Steev Custer, also of Death and Memphis and Space Age Zeros.",                  u:"https://smfc.bandcamp.com/merch"},
@@ -44,8 +48,8 @@ export const BANDS: Band[] = [
  {n:"Sex Dream",           s:"store", base:"Chicago suburbs",   kind:"Ramonescore with a twee streak from the Chicago suburbs, fronted by Maria Surfinbird since 2018.",                  u:"https://sexxdream.bandcamp.com/merch/mad-kitties-in-space", u2:"https://linktr.ee/sex.dream", l2:"Links"},
  {n:"Anger.",              s:"store", base:"Chicago, IL",       kind:"Chicago hardcore on Punk Rock Tacos Records. Their self-titled LP is dedicated to drummer Matt Meuzelaar.",    u:"https://angerchicago.bandcamp.com/album/anger", l1:"Music"},
  {n:"James the Boneless",  s:"store", base:"Downers Grove, IL", kind:"Downers Grove rock built on an overhand guitar style, with funk bass and saxophone.",       u:"https://jamestheboneless.bandcamp.com/merch"},
- {n:"The Larvettes",       s:"store", base:"Chicago, IL",       kind:"Chicagoland garage rock and roll, going since the early 2020s.",      u:"https://merch.the-larvettes.com/", u2:"https://thelarvettes.bandcamp.com/", l2:"Music"},
- {n:"The Jobodys",         s:"none",  base:"—",                 kind:""},
+ {n:"The Larvettes",       s:"store", base:"Chicago, IL",       kind:"Chicagoland garage rock and roll, going since the early 2020s.",      u:"https://thelarvettes.bandcamp.com/", l1:"Music", u2:"https://merch.the-larvettes.com/", l2:"Buy"},
+ {n:"The Nobodies",        s:"none",  base:"—",                 kind:"We will be performing as a duo for this fest. FitzGerald's will be hosting our annual Toys for Tots event and album release party on 12/05, which will feature performances by New Heartaches, The Nobodies, Los Gallos, and Torpedo Los.", u:"https://open.spotify.com/artist/6hWys8p2m6T7h4kqaolUSh?si=b4L771NTTn-N-U8ZyXk-zA", l1:"Music", u2:"https://thenobodieschicagousa.hearnow.com/", l2:"Site"},
  {n:"Tone Zone Skam",      s:"store", base:"Chicago area",      kind:"Chicago-area ska, playing Berwyn halls and Burlington Bar bills since 2013.",                  u:"https://tonezoneskam.bandcamp.com/", l1:"Music"},
  {n:"The Come Alongs",     s:"site",  base:"Central Indiana",   kind:"Central Indiana trio moving between classic rock, rockabilly, indie and punk.", u:"https://www.thecomealongsband.com", l1:"Site"},
  {n:"Tiger Uppercut",      s:"unknown", base:"—",               kind:"", u:"https://tigeruppercut.bandcamp.com/", l1:"Music", u2:"https://www.facebook.com/TigerUppercutBand/", l2:"Facebook"},
@@ -54,11 +58,11 @@ export const BANDS: Band[] = [
  {n:"The Rip Ups",         s:"store", base:"Chicago, IL",       kind:"Garage-a-billy punk out of Chicago's alleys — you can mosh to it or dance to it.",                  u:"https://ripups.bandcamp.com/music", l1:"Music"},
  {n:"Jukebox Rejects",     s:"none",  base:"—",                 kind:""},
  {n:"Tÿre Fÿre",           s:"store", base:"Chicago, IL",       kind:"Chicago punk born at the Alley, played entirely by fifty-year-old men from Elk Grove Village.",u:"https://tyrefyre.bandcamp.com/merch", u2:"https://www.tyre-fyre.com/", l2:"Site"},
- {n:"Alex Kasznel & the Board of Directors", s:"store", base:"Cincinnati, OH", kind:"Cincinnati punk with vinyl on Air Quotes Records. Note the poster spells the name Kesznel.", u:"https://alexkasznel.bandcamp.com/merch"},
+ {n:"Alex Kasznel & the Board of Directors", s:"store", base:"Cincinnati, OH", kind:"Cincinnati punk with vinyl on Air Quotes Records. Note the poster spells the name Kesznel.", u:"https://alexkasznel.bandcamp.com/", l1:"Music", u2:"https://alexkasznel.bandcamp.com/merch", l2:"Buy"},
  {n:"Cherry Phox",         s:"none",  base:"—",                 kind:""},
  {n:"MG Bailey",           s:"store", base:"Homewood, IL",      kind:"Homewood one-man band, six albums deep, blending punk, blues, pop and soul.",    u:"https://mgbailey7.bandcamp.com/", l1:"Music", u2:"https://mgbailey.com", l2:"Site"},
- {n:"After the Fight",     s:"store", base:"Elgin, IL",         kind:"Melodic punk from Elgin since 2004 — four married guys, not hardcore, as they put it.", u:"https://afterthefight.bandcamp.com/", l1:"Music", u2:"http://www.afterthefight.com", l2:"Site"},
- {n:"The Foley's",         s:"store", base:"South Bend, IN",    kind:"Wrestlepunk from South Bend: punk rock, professional wrestling and bad decisions.", u:"https://wreckedhooliganshop.com", l1:"Shop", u2:"https://wreckedhooligan.bandcamp.com/album/truth-or-consequences", l2:"Bandcamp"},
+ {n:"After the Fight",     s:"store", base:"Elgin, IL",         kind:"Chicago-area punk rock - melodic and loud, intense and un-serious, not hardcore since 2004.", u:"https://afterthefight.bandcamp.com/", l1:"Music", u2:"http://www.afterthefight.com", l2:"Site"},
+ {n:"The Foleys",          s:"store", base:"South Bend, IN",    kind:"Wrestlepunk from South Bend: punk rock, professional wrestling and bad decisions.", u:"https://wreckedhooligan.bandcamp.com/album/truth-or-consequences", l1:"Music", u2:"https://thefoleys574.com/listen", l2:"Site", u3:"https://wreckedhooliganshop.com", l3:"Shop"},
  {n:"Tongan Death Grip",   s:"store", base:"Waukegan, IL",      kind:"Waukegan metal formed in 2012 out of a shared love of pro wrestling.",            u:"https://tdg316.bandcamp.com/merch"},
  {n:"Counterfeit Goods",   s:"none",  base:"Oxford, OH",        kind:"Four-piece punk from Oxford, Ohio, pulling from rockabilly, soul, ska and jazz."},
  {n:"Low Range",           s:"none",  base:"—",                 kind:""},
@@ -66,7 +70,7 @@ export const BANDS: Band[] = [
  {n:"Misunderstood",       s:"store", base:"Richmond, IN",      kind:"Richmond, Indiana punk, started in 2006 by Lyn-Z when she was fifteen.", u:"https://misunderstood.bandcamp.com/merch"},
  {n:"Dracula Johnson",     s:"none",  base:"—",                 kind:""},
  {n:"13-Monsters",         s:"store", base:"West Chicago, IL",  kind:"West Chicago rock that went on hiatus back in 2017 — this looks like a reunion.",                  u:"https://13-monsters.bandcamp.com/merch", u2:"https://13-monsters.tumblr.com/", l2:"Tumblr"},
- {n:"Noodle Brain",        s:"store", base:"Chicago, IL",       kind:"Illinois pop-punk duo releasing through Outloud! Records and Laptop Punk Records.", u:"https://noodlebrain.bandcamp.com/merch", u2:"https://storefrontier.com", l2:"Shop"},
+ {n:"Noodle Brain",        s:"store", base:"Chicago, IL",       kind:"Illinois pop-punk duo releasing through Outloud! Records and Laptop Punk Records.", u:"https://noodlebrain.bandcamp.com/music", l1:"Music"},
  {n:"Cinema Violence",     s:"none",  base:"—",                 kind:""},
  {n:"Los Kausas",          s:"none",  base:"—",                 kind:""},
  {n:"Shukin & the Ramblers",s:"store",base:"Chicago, IL",       kind:"Chicago blues, R&B, roots country and gypsy jazz played with a punk edge.",      u:"https://shukinandtheramblers.bandcamp.com/", l1:"Music", u2:"https://shukinandtheramblers.com/", l2:"Site"},
@@ -75,7 +79,7 @@ export const BANDS: Band[] = [
  {n:"Fishfood",            s:"store", base:"North Freedom, WI", kind:"Silly pop punk rock, as they call it, from North Freedom, Wisconsin.",      u:"https://fishfood.bandcamp.com/", l1:"Music"},
  {n:"Zbyszko Cracker",     s:"store", base:"Wauconda, IL",      kind:"Wauconda experimental noise — including field recordings of mowing the lawn and shovelling snow.", u:"https://seasonalmenswear.bandcamp.com/merch"},
  {n:"Goodbye Sunshine",    s:"store", base:"Chicago, IL",       kind:"Chicago pop-punk produced by Joe Queer, with records on River Monster.", u:"https://goodbyesunshine.bandcamp.com/", l1:"Music", u2:"https://rivermonsterrecords.bandcamp.com", l2:"Label"},
- {n:"Narwhal Express",     s:"none",  base:"Indianapolis, IN",  kind:"",            u:"https://www.instagram.com/narwhal_express/", l1:"Instagram"}
+ {n:"Narwhal Express",     s:"none",  base:"Indianapolis, IN",  kind:"Anti-fa punk/alt-rock band out of Indy.", u:"https://open.spotify.com/artist/2naBgDMwE0cANdZQzXIEva?si=hD_81wimRLOVahLXM76UTQ", l1:"Music", u2:"https://www.instagram.com/narwhal_express/", l2:"Instagram"}
 ];
 
 /* Draft running order. Swap names between stages freely. */
@@ -89,11 +93,11 @@ export const DAYS: Day[] = [
   ]},
   {label:"Saturday", date:"Sept 12", start:"12:00", lanes:[
     ["Graygarden","Low Range","13-Monsters","Sex Dream","The Larvettes","Acton's Dictum","Anger.","La Armada"],
-    ["Narwhal Express","Cinema Violence","The Jobodys","Misunderstood","The Helsings","After the Fight","Tongan Death Grip","Take the Reins"],
+    ["Narwhal Express","Cinema Violence","The Nobodies","Misunderstood","The Helsings","After the Fight","Tongan Death Grip","Take the Reins"],
     ["Dracula Johnson","Rabid Wreck","Los Kausas","The Come Alongs","Fishfood","Goodbye Sunshine","Tone Zone Skam","Steve's in the Band"]
   ]},
   {label:"Sunday", date:"Sept 13", start:"12:00", lanes:[
-    ["Bill Nelson","MG Bailey","Shukin & the Ramblers","The Foley's","Deadfoot"],
+    ["Bill Nelson","MG Bailey","Shukin & the Ramblers","The Foleys","Deadfoot"],
     ["From the Start","Counterfeit Goods","Tiger Uppercut","James the Boneless","S.M.F.C."],
     ["The Horrids","The Steves","Alex Kasznel & the Board of Directors"]
   ]}
