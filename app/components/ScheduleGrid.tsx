@@ -56,7 +56,7 @@ export default function ScheduleGrid() {
             gridTemplateRows: `auto repeat(${rows},${ROW_PX}px)`,
           }}
         >
-          <div className="g-head rail">2026</div>
+          <div className="g-head rail" />
           {STAGES.map((s) => (
             <div className="g-head" key={s}>
               {s}
