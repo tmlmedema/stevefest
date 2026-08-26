@@ -99,9 +99,11 @@ export default function ScheduleGrid() {
               );
             }
 
+            const isRooftop = STAGES[si] === "Rooftop Stage";
+
             return lane.map((slot, k) => {
               const st = toMin(slot.t);
-              const len = slot.len ?? DEFAULT_LEN;
+              const len = isRooftop ? 60 : slot.len ?? DEFAULT_LEN;
               const b = byName[slot.n] ?? {};
               const closer = k === lane.length - 1 && lane.length > 1;
               const cls = closer ? "slot head-set" : "slot";
@@ -113,7 +115,7 @@ export default function ScheduleGrid() {
                 <>
                   <span className="n">{slot.n}</span>
                   <span className="t">
-                    {fmt(st)} – {fmt(st + len)}
+                    {isRooftop ? fmt(st) : `${fmt(st)} – ${fmt(st + len)}`}
                   </span>
                 </>
               );

@@ -25,6 +25,11 @@ export default function Schedule() {
             Closing set
           </span>
         </p>
+        <p className="note">
+          Steve runs the rooftop by vibes, not a stopwatch. Acts go up
+          around the top of the hour, setup included, and sets run
+          anywhere from 20 minutes to a full hour.
+        </p>
       </div>
     </section>
   );
