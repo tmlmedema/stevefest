@@ -27,7 +27,7 @@ export default function Home() {
         <p className="subhead">Shannon&apos;s Deli hosts the regional festival</p>
         <p className="stats">
           <span>
-            <b>54</b> bands
+            <b>57</b> bands
           </span>
           <span>
             <b>3</b> stages

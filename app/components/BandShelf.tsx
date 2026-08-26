@@ -1,9 +1,11 @@
 import { BANDS } from "../lib/data";
 
+const SORTED_BANDS = [...BANDS].sort((a, b) => a.n.localeCompare(b.n));
+
 export default function BandShelf() {
   return (
     <div className="shelf" id="shelf">
-      {BANDS.map((b) => {
+      {SORTED_BANDS.map((b) => {
         const links = [];
         if (b.u)
           links.push(

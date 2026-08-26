@@ -97,25 +97,28 @@ export const BANDS: Band[] = [
  {n:"Trevor Hill",         s:"unknown", base:"—",               kind:""},
  {n:"Davey Jay",           s:"unknown", base:"—",               kind:""},
  {n:"A FrompyKnot",        s:"unknown", base:"—",               kind:""},
- {n:"MfoV",                s:"none",  base:"Maywood, IL",       kind:"Chicago-area punk trio — self-described, tongue firmly in cheek, as \"3 pambazo specials from MayHood IL.\"", u:"https://mfov123.bandcamp.com/album/early-shit", l1:"Music", u2:"https://www.instagram.com/mfov123.band", l2:"Instagram"}
+ {n:"MfoV",                s:"none",  base:"Maywood, IL",       kind:"Chicago-area punk trio — self-described, tongue firmly in cheek, as \"3 pambazo specials from MayHood IL.\"", u:"https://mfov123.bandcamp.com/album/early-shit", l1:"Music", u2:"https://www.instagram.com/mfov123.band", l2:"Instagram"},
+ {n:"Keith Bondi",         s:"unknown", base:"—",               kind:""},
+ {n:"EL Fa",                s:"unknown", base:"—",               kind:""},
+ {n:"Hesterménage à Trois", s:"unknown", base:"—",               kind:""}
 ];
 
 /* Source: Schedule_SFII_with_acoustic.pdf (the poster), transcribed via
    steve_fest_ii_schedule sheet. "SITB" and "the Nobodies"/"The Jobodys"
    are the same acts as "Steve's in the Band" and "The Nobodies" under
    the names printed on the poster — normalized here to one name each. */
-export const STAGES = ["Main Stage", "Side Stage", "Acoustic Stage"];
+export const STAGES = ["Main Stage", "Side Stage", "Rooftop Stage"];
 
 export const DAYS: Day[] = [
   {label:"Friday", date:"Sept 11", start:"16:00", lanes:[
     [{t:"17:00",n:"From the Start"},{t:"18:00",n:"S.M.F.C."},{t:"19:00",n:"The Come Alongs"},{t:"20:00",n:"Steve's in the Band"},{t:"21:00",n:"The Horrids"},{t:"22:00",n:"La Armada"}],
     [{t:"17:30",n:"Cherry Phox"},{t:"18:30",n:"Low Range"},{t:"19:30",n:"Alex Kasznel & the Board of Directors"},{t:"20:30",n:"Acton's Dictum"},{t:"21:30",n:"Anger."}],
-    [{t:"19:00",n:"S.M.F.C."},{t:"20:00",n:"Bill Nelson"},{t:"21:00",n:"Ass Managers"}]
+    [{t:"17:00",n:"Keith Bondi"},{t:"18:00",n:"EL Fa"},{t:"19:00",n:"S.M.F.C."},{t:"20:00",n:"Bill Nelson"},{t:"21:00",n:"Ass Managers"}]
   ]},
   {label:"Saturday", date:"Sept 12", start:"11:00", lanes:[
     [{t:"12:00",n:"Dead Freddie"},{t:"13:10",n:"13-Monsters",len:25},{t:"14:00",n:"Graygarden",len:25},{t:"14:50",n:"Dracula Johnson",len:30},{t:"15:45",n:"The Helsings",len:30},{t:"16:40",n:"The Foleys",len:30},{t:"17:35",n:"After the Fight",len:30},{t:"18:30",n:"The Larvettes",len:25},{t:"19:20",n:"The Steves",len:30},{t:"20:10",n:"Sex Dream",len:30},{t:"21:10",n:"Jukebox Rejects",len:30},{t:"22:10",n:"Bill Nelson",len:45}],
     [{t:"12:45",n:"Fishfood",len:25},{t:"13:40",n:"Narwhal Express",len:25},{t:"14:25",n:"The Rip Ups",len:25},{t:"15:20",n:"Misunderstood",len:25},{t:"16:15",n:"Goodbye Sunshine",len:25},{t:"17:10",n:"Tongan Death Grip",len:25},{t:"18:05",n:"Noodle Brain",len:25},{t:"18:55",n:"Tÿre Fÿre",len:25},{t:"19:50",n:"Zbyszko Cracker",len:20},{t:"20:40",n:"Rabid Wreck",len:30},{t:"21:40",n:"The Turdles",len:30}],
-    [{t:"13:00",n:"Dead End On Sarah"},{t:"14:00",n:"Gunnar Linden"},{t:"15:00",n:"PUGZ"},{t:"17:00",n:"The Wooz"},{t:"18:00",n:"Dracula Johnson"},{t:"19:00",n:"The Nobodies"},{t:"20:00",n:"Cherry Phox"}]
+    [{t:"13:00",n:"Dead End On Sarah"},{t:"14:00",n:"Gunnar Linden"},{t:"15:00",n:"PUGZ"},{t:"16:00",n:"Hesterménage à Trois"},{t:"17:00",n:"The Wooz"},{t:"18:00",n:"Dracula Johnson"},{t:"19:00",n:"The Nobodies"},{t:"20:00",n:"Cherry Phox"}]
   ]},
   {label:"Sunday", date:"Sept 13", start:"11:00", lanes:[
     [{t:"12:30",n:"Take the Reins"},{t:"13:30",n:"James the Boneless"},{t:"14:30",n:"Shukin & the Ramblers"},{t:"15:30",n:"Tone Zone Skam"},{t:"16:30",n:"Los Kausas"},{t:"17:30",n:"Tiger Uppercut"}],
