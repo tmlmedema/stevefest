@@ -17,10 +17,10 @@ const fmt = (m: number) => {
 const ROW_PX = 14;
 
 const ROOFTOP_NOTE = (
-  <>
+  <p>
     <b>The rooftop runs on Steve time.</b> Acts go up around the hour;
     sets run 20–60 minutes.
-  </>
+  </p>
 );
 
 export default function ScheduleGrid() {
