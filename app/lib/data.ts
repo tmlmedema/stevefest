@@ -84,7 +84,7 @@ export const BANDS: Band[] = [
  {n:"Los Kausas",          s:"none",  base:"—",                 kind:""},
  {n:"Shukin & the Ramblers",s:"store",base:"Chicago, IL",       kind:"Chicago blues, R&B, roots country and gypsy jazz played with a punk edge.",      u:"https://shukinandtheramblers.bandcamp.com/", l1:"Music", u2:"https://shukinandtheramblers.com/", l2:"Site"},
  {n:"The Helsings",        s:"site",  base:"Indianapolis, IN",  kind:"Indianapolis rock and roll, mixing Ramones energy with Motörhead fury.", u:"https://www.thehelsings.com/", l1:"Site"},
- {n:"Graygarden",          s:"none",  base:"—",                 kind:""},
+ {n:"Graygarden",          s:"site",  base:"Central Indiana",   kind:"Alt/pop punk with a tinge of post-hardcore edge from Central Indiana. Formed in 2019 with the goal of writing fun, intricate, strong music with melodic and catchy vocals.", u:"http://distrokid.com/hyperfollow/graygarden/for-your-consideration/", l1:"Music", u2:"https://graygardenmusic.com", l2:"Site"},
  {n:"Fishfood",            s:"store", base:"North Freedom, WI", kind:"Silly pop punk rock, as they call it, from North Freedom, Wisconsin.",      u:"https://fishfood.bandcamp.com/", l1:"Music"},
  {n:"Zbyszko Cracker",     s:"store", base:"Wauconda, IL",      kind:"As if Jack Benny led a band that combined Rage Against The Machine with Atom & His Package but built the whole thing using glow-in-the-dark Better Blocks and a kalimba.", u:"https://seasonalmenswear.bandcamp.com/merch"},
  {n:"Goodbye Sunshine",    s:"store", base:"Chicago, IL",       kind:"Chicago pop-punk produced by Joe Queer, with records on River Monster.", u:"https://goodbyesunshine.bandcamp.com/", l1:"Music", u2:"https://rivermonsterrecords.bandcamp.com", l2:"Label"},
