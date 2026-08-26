@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Big_Shoulders, Anton, Archivo, Bitter } from "next/font/google";
 import Nav from "./components/Nav";
 import "./globals.css";
@@ -53,8 +54,14 @@ export default function RootLayout({
           <div className="wrap">
             <footer>
               <span>
-                <b>STEVE FEST II</b> · Shannon&apos;s Deli · 11 S Park Ave,
-                Lombard, IL 60148
+                <Image
+                  className="footer-logo"
+                  src="/assets/wordmark-nav.png"
+                  alt="Steve Fest II"
+                  width={760}
+                  height={187}
+                />
+                Shannon&apos;s Deli · 11 S Park Ave, Lombard, IL 60148
               </span>
               <span>Sept 11–13, 2026 · Free · All ages</span>
             </footer>
