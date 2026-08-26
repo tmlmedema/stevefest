@@ -14,7 +14,7 @@ const fmt = (m: number) => {
   return `${h}:${mm} ${ap}`;
 };
 
-const ROW_PX = 9;
+const ROW_PX = 14;
 
 export default function ScheduleGrid() {
   const [dayIx, setDayIx] = useState(1);
@@ -44,6 +44,9 @@ export default function ScheduleGrid() {
       </div>
 
       <div className="grid-scroll">
+        <p className="swipe-hint">
+          Swipe to see more <span>→</span>
+        </p>
         <div
           className="grid"
           id="grid"

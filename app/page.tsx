@@ -27,7 +27,7 @@ export default function Home() {
         <p className="subhead">Shannon&apos;s Deli hosts the regional festival</p>
         <p className="stats">
           <span>
-            <b>40</b> bands
+            <b>54</b> bands
           </span>
           <span>
             <b>3</b> stages
@@ -52,7 +52,6 @@ export default function Home() {
 
         <div className="sheet lineup">
           <Lineup />
-          <p className="tail">*Rooftop / acoustic stage lineup coming soon</p>
         </div>
 
         <div className="sheet supporters">

@@ -88,7 +88,16 @@ export const BANDS: Band[] = [
  {n:"Fishfood",            s:"store", base:"North Freedom, WI", kind:"Silly pop punk rock, as they call it, from North Freedom, Wisconsin.",      u:"https://fishfood.bandcamp.com/", l1:"Music"},
  {n:"Zbyszko Cracker",     s:"store", base:"Wauconda, IL",      kind:"As if Jack Benny led a band that combined Rage Against The Machine with Atom & His Package but built the whole thing using glow-in-the-dark Better Blocks and a kalimba.", u:"https://seasonalmenswear.bandcamp.com/merch"},
  {n:"Goodbye Sunshine",    s:"store", base:"Chicago, IL",       kind:"Chicago pop-punk produced by Joe Queer, with records on River Monster.", u:"https://goodbyesunshine.bandcamp.com/", l1:"Music", u2:"https://rivermonsterrecords.bandcamp.com", l2:"Label"},
- {n:"Narwhal Express",     s:"none",  base:"Indianapolis, IN",  kind:"Anti-fa punk/alt-rock band out of Indy.", u:"https://open.spotify.com/artist/2naBgDMwE0cANdZQzXIEva?si=hD_81wimRLOVahLXM76UTQ", l1:"Music", u2:"https://www.instagram.com/narwhal_express/", l2:"Instagram"}
+ {n:"Narwhal Express",     s:"none",  base:"Indianapolis, IN",  kind:"Anti-fa punk/alt-rock band out of Indy.", u:"https://open.spotify.com/artist/2naBgDMwE0cANdZQzXIEva?si=hD_81wimRLOVahLXM76UTQ", l1:"Music", u2:"https://www.instagram.com/narwhal_express/", l2:"Instagram"},
+ {n:"Ass Managers",        s:"unknown", base:"—",               kind:""},
+ {n:"Dead End On Sarah",   s:"unknown", base:"—",               kind:""},
+ {n:"Gunnar Linden",       s:"unknown", base:"—",               kind:"", u:"https://www.instagram.com/gunnar_linden_music/", l1:"Instagram"},
+ {n:"PUGZ",                s:"unknown", base:"—",               kind:""},
+ {n:"The Wooz",            s:"unknown", base:"—",               kind:""},
+ {n:"Trevor Hill",         s:"unknown", base:"—",               kind:""},
+ {n:"Davey Jay",           s:"unknown", base:"—",               kind:""},
+ {n:"A FrompyKnot",        s:"unknown", base:"—",               kind:""},
+ {n:"MfoV",                s:"none",  base:"Maywood, IL",       kind:"Chicago-area punk trio — self-described, tongue firmly in cheek, as \"3 pambazo specials from MayHood IL.\"", u:"https://mfov123.bandcamp.com/album/early-shit", l1:"Music", u2:"https://www.instagram.com/mfov123.band", l2:"Instagram"}
 ];
 
 /* Source: Schedule_SFII_with_acoustic.pdf (the poster), transcribed via
