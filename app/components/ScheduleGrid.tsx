@@ -16,6 +16,13 @@ const fmt = (m: number) => {
 
 const ROW_PX = 14;
 
+const ROOFTOP_NOTE = (
+  <>
+    <b>The rooftop runs on Steve time.</b> Acts go up around the hour;
+    sets run 20–60 minutes.
+  </>
+);
+
 export default function ScheduleGrid() {
   const [dayIx, setDayIx] = useState(1);
 
@@ -100,8 +107,22 @@ export default function ScheduleGrid() {
             }
 
             const isRooftop = STAGES[si] === "Rooftop Stage";
+            const leadRows = isRooftop
+              ? Math.round((toMin(lane[0].t) - s0) / UNIT)
+              : 0;
 
-            return lane.map((slot, k) => {
+            const noteEl =
+              leadRows > 0 ? (
+                <div
+                  className="rooftop-note"
+                  key={`note-${si}`}
+                  style={{ gridColumn: si + 2, gridRow: `2 / span ${leadRows}` }}
+                >
+                  {ROOFTOP_NOTE}
+                </div>
+              ) : null;
+
+            const slotEls = lane.map((slot, k) => {
               const st = toMin(slot.t);
               const len = isRooftop ? 60 : slot.len ?? DEFAULT_LEN;
               const b = byName[slot.n] ?? {};
@@ -137,6 +158,8 @@ export default function ScheduleGrid() {
                 </div>
               );
             });
+
+            return [noteEl, ...slotEls];
           })}
         </div>
       </div>
