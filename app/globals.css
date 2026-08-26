@@ -251,10 +251,11 @@ h2.head{
   line-height:1; letter-spacing:.03em; color:var(--ink); background:var(--yellow);
   padding:.7rem .5rem; text-align:center; border-left:3px solid var(--ink);
 }
-.g-head.rail{background:var(--ink); color:var(--paper-dim); border-left:none; font-family:var(--mono); font-size:.62rem; letter-spacing:.16em}
+.g-head.rail{background:var(--ink); color:var(--paper-dim); border-left:none; font-family:var(--mono); font-size:.62rem; letter-spacing:.16em; position:sticky; left:0; z-index:6}
 .g-time{
   font-family:var(--mono); font-variant-numeric:tabular-nums; font-size:.7rem; color:var(--paper-dim); text-align:right;
   padding:0 .55rem; grid-column:1; transform:translateY(-.45em); white-space:nowrap;
+  position:sticky; left:0; background:var(--ink); z-index:6;
 }
 .g-lane{background:var(--grape); border-left:3px solid var(--ink)}
 .slot{
