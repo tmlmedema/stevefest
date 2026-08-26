@@ -215,32 +215,56 @@ h2.head{
 
 /* ---------- SCHEDULE ---------- */
 .page-top{padding:clamp(2rem,5vw,3.5rem) 0 1.6rem}
-.upload-box{margin-top:1.7rem; display:flex; flex-direction:column; gap:.7rem; align-items:flex-start}
-.upload-box button{
-  font-family:var(--display); font-weight:900; text-transform:uppercase; letter-spacing:.05em;
-  font-size:1.1rem; padding:.85rem 1.6rem; border:4px solid var(--ink);
-  background:var(--pink); color:var(--paper); box-shadow:7px 7px 0 rgba(0,0,0,.45);
-  cursor:pointer; transition:transform .1s, box-shadow .1s;
-}
-.upload-box button:disabled{opacity:.5; cursor:not-allowed; box-shadow:none}
-.upload-box button:not(:disabled):hover{transform:translate(3px,3px); box-shadow:3px 3px 0 rgba(0,0,0,.45)}
-.upload-error{color:var(--pink); font-family:var(--mono); font-size:.78rem}
+.upload-error{color:var(--pink); font-family:var(--mono); font-size:.78rem; margin-top:.8rem}
 
-.photo-empty{
-  font-family:var(--mono); font-size:.8rem; color:var(--paper-dim); margin-top:2.5rem;
-}
 .photo-grid{
   display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
   gap:2.4rem 1.8rem; margin-top:2.8rem;
 }
+.upload-tile{
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.7rem;
+  aspect-ratio:1/1; width:100%; max-width:140px; background:var(--pink); border:none; cursor:pointer;
+  box-shadow:0 10px 20px rgba(0,0,0,.4); justify-self:center; align-self:center;
+  font-family:var(--display); font-weight:900; text-transform:uppercase; letter-spacing:.03em;
+  color:var(--paper); font-size:.72rem; padding:.8rem; transition:transform .15s;
+}
+.upload-tile:hover{transform:scale(1.04)}
+.upload-tile:disabled{opacity:.6; cursor:not-allowed; transform:none}
+.upload-tile .plus-circle{
+  width:36px; height:36px; border-radius:50%; background:var(--paper); flex:none;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.5rem; line-height:1; color:var(--pink); font-weight:900;
+}
+@media (max-width:640px){
+  .photo-grid{grid-template-columns:1fr}
+  .upload-tile{
+    flex-direction:row; aspect-ratio:auto; max-width:none; width:100%;
+    padding:.9rem 1.2rem; font-size:.85rem; gap:.7rem; white-space:nowrap;
+  }
+  .upload-tile .plus-circle{width:32px; height:32px; font-size:1.3rem}
+}
 .polaroid{
-  background:var(--paper); padding:.6rem .6rem 2.4rem;
-  box-shadow:0 10px 20px rgba(0,0,0,.4);
+  display:block; width:100%; background:var(--paper); padding:.6rem .6rem 2.4rem;
+  border:none; box-shadow:0 10px 20px rgba(0,0,0,.4); cursor:pointer;
   transform:rotate(var(--r,0deg));
   transition:transform .15s;
 }
 .polaroid:hover{transform:rotate(0deg) scale(1.04); z-index:2}
 .polaroid img{width:100%; aspect-ratio:1/1; object-fit:cover; display:block; background:var(--grape)}
+
+.lightbox{
+  position:fixed; inset:0; z-index:100; background:rgba(0,0,0,.88);
+  display:flex; align-items:center; justify-content:center; padding:2rem;
+  cursor:zoom-out;
+}
+.lightbox img{
+  max-width:100%; max-height:100%; object-fit:contain; cursor:default;
+  box-shadow:0 20px 40px rgba(0,0,0,.6);
+}
+.lightbox-close{
+  position:absolute; top:1.2rem; right:1.4rem; background:none; border:none;
+  color:var(--paper); font-size:2.5rem; line-height:1; cursor:pointer; padding:.4rem;
+}
 .lede{
   font-family:var(--body); font-size:1.05rem; line-height:1.5; color:var(--paper);
   max-width:520px; margin-top:1rem;

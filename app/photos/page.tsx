@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { list } from "@vercel/blob";
-import PhotoUpload from "../components/PhotoUpload";
 import PhotoGrid from "../components/PhotoGrid";
 
 export const metadata: Metadata = {
@@ -8,14 +7,18 @@ export const metadata: Metadata = {
   description: "Share your Steve Fest II photos.",
 };
 
+/* Seeded example so the wall isn't empty on day one. */
+const EXAMPLE_PHOTO = { url: "/photo-example.png", pathname: "example" };
+
 async function getPhotos() {
   try {
     const { blobs } = await list({ prefix: "photos/" });
-    return [...blobs].sort(
+    const sorted = [...blobs].sort(
       (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
     );
+    return [EXAMPLE_PHOTO, ...sorted];
   } catch {
-    return [];
+    return [EXAMPLE_PHOTO];
   }
 }
 
@@ -31,7 +34,6 @@ export default async function Photos() {
           to the pile.
         </p>
 
-        <PhotoUpload />
         <PhotoGrid photos={photos} />
       </div>
     </section>
