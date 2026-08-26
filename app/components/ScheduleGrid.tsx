@@ -43,10 +43,11 @@ export default function ScheduleGrid() {
         ))}
       </div>
 
+      <p className="swipe-hint">
+        Swipe to see more <span>→</span>
+      </p>
+
       <div className="grid-scroll">
-        <p className="swipe-hint">
-          Swipe to see more <span>→</span>
-        </p>
         <div
           className="grid"
           id="grid"
