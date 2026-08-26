@@ -63,7 +63,7 @@ export const BANDS: Band[] = [
  {n:"The Come Alongs",     s:"site",  base:"Central Indiana",   kind:"Central Indiana trio moving between classic rock, rockabilly, indie and punk.", u:"https://www.thecomealongsband.com", l1:"Site"},
  {n:"Tiger Uppercut",      s:"unknown", base:"—",               kind:"", u:"https://tigeruppercut.bandcamp.com/", l1:"Music", u2:"https://www.facebook.com/TigerUppercutBand/", l2:"Facebook"},
  {n:"Deadfoot",            s:"store", base:"Indianapolis, IN",  kind:"Indianapolis punk trio writing about political corruption, greed, and the occasional love ballad.",      u:"https://deadfoot.bandcamp.com/", l1:"Music", u2:"https://deadfootpunk.com", l2:"Site"},
- {n:"Acton's Dictum",      s:"store", base:"Berwyn, IL",        kind:"Berwyn hardcore punk, releasing through Punk Rock Tacos Records.",                  u:"https://actonsdictum.bandcamp.com/", l1:"Music"},
+ {n:"Acton's Dictum",      s:"site",  base:"Berwyn, IL | Valparaiso, IN", kind:"Wobbly stoner anarcho-prog-punk from Berwyn, IL / Valparaiso, IN.",                  u:"https://linktr.ee/actonsdictum", l1:"Links"},
  {n:"The Rip Ups",         s:"store", base:"Chicago, IL",       kind:"Garage-a-billy punk out of Chicago's alleys — you can mosh to it or dance to it.",                  u:"https://ripups.bandcamp.com/music", l1:"Music"},
  {n:"Jukebox Rejects",     s:"none",  base:"—",                 kind:""},
  {n:"Tÿre Fÿre",           s:"store", base:"Chicago, IL",       kind:"Chicago punk born at the Alley, played entirely by fifty-year-old men from Elk Grove Village.",u:"https://tyrefyre.bandcamp.com/merch", u2:"https://www.tyre-fyre.com/", l2:"Site"},
