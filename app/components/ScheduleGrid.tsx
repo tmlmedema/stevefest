@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DAYS, GAP, SET, STAGES, UNIT, byName } from "../lib/data";
+import { DAYS, DEFAULT_LEN, STAGES, UNIT, byName } from "../lib/data";
 
 const toMin = (t: string) =>
   +t.split(":")[0] * 60 + +t.split(":")[1];
@@ -14,13 +14,17 @@ const fmt = (m: number) => {
   return `${h}:${mm} ${ap}`;
 };
 
+const ROW_PX = 9;
+
 export default function ScheduleGrid() {
   const [dayIx, setDayIx] = useState(1);
 
   const d = DAYS[dayIx];
   const s0 = toMin(d.start);
-  const longest = Math.max(...d.lanes.map((l) => l.length));
-  const end = s0 + longest * (SET + GAP) + 30;
+  const end =
+    Math.max(
+      ...d.lanes.flat().map((slot) => toMin(slot.t) + (slot.len ?? DEFAULT_LEN))
+    ) + 30;
   const rows = Math.ceil((end - s0) / UNIT);
 
   return (
@@ -45,7 +49,7 @@ export default function ScheduleGrid() {
           id="grid"
           style={{
             gridTemplateColumns: `62px repeat(${STAGES.length},1fr)`,
-            gridTemplateRows: `auto repeat(${rows},22px)`,
+            gridTemplateRows: `auto repeat(${rows},${ROW_PX}px)`,
           }}
         >
           <div className="g-head rail">2026</div>
@@ -95,27 +99,28 @@ export default function ScheduleGrid() {
               );
             }
 
-            return lane.map((name, k) => {
-              const st = s0 + k * (SET + GAP);
-              const b = byName[name] ?? {};
+            return lane.map((slot, k) => {
+              const st = toMin(slot.t);
+              const len = slot.len ?? DEFAULT_LEN;
+              const b = byName[slot.n] ?? {};
               const closer = k === lane.length - 1 && lane.length > 1;
               const cls = closer ? "slot head-set" : "slot";
               const style = {
                 gridColumn: si + 2,
-                gridRow: `${(st - s0) / UNIT + 2} / span ${SET / UNIT}`,
+                gridRow: `${(st - s0) / UNIT + 2} / span ${Math.round(len / UNIT)}`,
               };
               const inner = (
                 <>
-                  <span className="n">{name}</span>
+                  <span className="n">{slot.n}</span>
                   <span className="t">
-                    {fmt(st)} – {fmt(st + SET)}
+                    {fmt(st)} – {fmt(st + len)}
                   </span>
                 </>
               );
 
               return b.u ? (
                 <a
-                  key={`${si}-${name}`}
+                  key={`${si}-${slot.n}-${slot.t}`}
                   className={cls}
                   style={style}
                   href={b.u}
@@ -125,7 +130,7 @@ export default function ScheduleGrid() {
                   {inner}
                 </a>
               ) : (
-                <div key={`${si}-${name}`} className={cls} style={style}>
+                <div key={`${si}-${slot.n}-${slot.t}`} className={cls} style={style}>
                   {inner}
                 </div>
               );

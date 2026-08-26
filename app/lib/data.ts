@@ -25,13 +25,22 @@ export type Band = {
   l3?: string;
 };
 
+export type Slot = {
+  /** 24-hour "HH:MM" start time */
+  t: string;
+  /** band name */
+  n: string;
+  /** set length in minutes (defaults to DEFAULT_LEN) */
+  len?: number;
+};
+
 export type Day = {
   label: string;
   date: string;
-  /** 24-hour "HH:MM" — when the first band starts */
+  /** 24-hour "HH:MM" — where the grid's time axis starts */
   start: string;
-  /** one list of band names per stage, in playing order */
-  lanes: string[][];
+  /** one list of slots per stage, in playing order */
+  lanes: Slot[][];
 };
 
 export const BANDS: Band[] = [
@@ -58,7 +67,7 @@ export const BANDS: Band[] = [
  {n:"The Rip Ups",         s:"store", base:"Chicago, IL",       kind:"Garage-a-billy punk out of Chicago's alleys — you can mosh to it or dance to it.",                  u:"https://ripups.bandcamp.com/music", l1:"Music"},
  {n:"Jukebox Rejects",     s:"none",  base:"—",                 kind:""},
  {n:"Tÿre Fÿre",           s:"store", base:"Chicago, IL",       kind:"Chicago punk born at the Alley, played entirely by fifty-year-old men from Elk Grove Village.",u:"https://tyrefyre.bandcamp.com/merch", u2:"https://www.tyre-fyre.com/", l2:"Site"},
- {n:"Alex Kasznel & the Board of Directors", s:"store", base:"Cincinnati, OH", kind:"Cincinnati punk with vinyl on Air Quotes Records. Note the poster spells the name Kesznel.", u:"https://alexkasznel.bandcamp.com/", l1:"Music", u2:"https://alexkasznel.bandcamp.com/merch", l2:"Buy"},
+ {n:"Alex Kasznel & the Board of Directors", s:"store", base:"Cincinnati, OH", kind:"Cincinnati pop-punk trio formed in 2023, calling their sound \"pop punk for grownups.\"", u:"https://alexkasznel.bandcamp.com/", l1:"Music", u2:"https://akandthebod.com/", l2:"Site"},
  {n:"Cherry Phox",         s:"none",  base:"—",                 kind:""},
  {n:"MG Bailey",           s:"store", base:"Homewood, IL",      kind:"Homewood one-man band, six albums deep, blending punk, blues, pop and soul.",    u:"https://mgbailey7.bandcamp.com/", l1:"Music", u2:"https://mgbailey.com", l2:"Site"},
  {n:"After the Fight",     s:"store", base:"Elgin, IL",         kind:"Chicago-area punk rock - melodic and loud, intense and un-serious, not hardcore since 2004.", u:"https://afterthefight.bandcamp.com/", l1:"Music", u2:"http://www.afterthefight.com", l2:"Site"},
@@ -77,29 +86,32 @@ export const BANDS: Band[] = [
  {n:"The Helsings",        s:"site",  base:"Indianapolis, IN",  kind:"Indianapolis rock and roll, mixing Ramones energy with Motörhead fury.", u:"https://www.thehelsings.com/", l1:"Site"},
  {n:"Graygarden",          s:"none",  base:"—",                 kind:""},
  {n:"Fishfood",            s:"store", base:"North Freedom, WI", kind:"Silly pop punk rock, as they call it, from North Freedom, Wisconsin.",      u:"https://fishfood.bandcamp.com/", l1:"Music"},
- {n:"Zbyszko Cracker",     s:"store", base:"Wauconda, IL",      kind:"Wauconda experimental noise — including field recordings of mowing the lawn and shovelling snow.", u:"https://seasonalmenswear.bandcamp.com/merch"},
+ {n:"Zbyszko Cracker",     s:"store", base:"Wauconda, IL",      kind:"As if Jack Benny led a band that combined Rage Against The Machine with Atom & His Package but built the whole thing using glow-in-the-dark Better Blocks and a kalimba.", u:"https://seasonalmenswear.bandcamp.com/merch"},
  {n:"Goodbye Sunshine",    s:"store", base:"Chicago, IL",       kind:"Chicago pop-punk produced by Joe Queer, with records on River Monster.", u:"https://goodbyesunshine.bandcamp.com/", l1:"Music", u2:"https://rivermonsterrecords.bandcamp.com", l2:"Label"},
  {n:"Narwhal Express",     s:"none",  base:"Indianapolis, IN",  kind:"Anti-fa punk/alt-rock band out of Indy.", u:"https://open.spotify.com/artist/2naBgDMwE0cANdZQzXIEva?si=hD_81wimRLOVahLXM76UTQ", l1:"Music", u2:"https://www.instagram.com/narwhal_express/", l2:"Instagram"}
 ];
 
-/* Draft running order. Swap names between stages freely. */
-export const STAGES = ["Deli Stage", "Alley Stage", "Lot Stage"];
+/* Source: Schedule_SFII_with_acoustic.pdf (the poster), transcribed via
+   steve_fest_ii_schedule sheet. "SITB" and "the Nobodies"/"The Jobodys"
+   are the same acts as "Steve's in the Band" and "The Nobodies" under
+   the names printed on the poster — normalized here to one name each. */
+export const STAGES = ["Main Stage", "Side Stage", "Acoustic Stage"];
 
 export const DAYS: Day[] = [
-  {label:"Friday", date:"Sept 11", start:"17:00", lanes:[
-    ["Zbyszko Cracker","The Turdles","The Rip Ups","Dead Freddie"],
-    ["Cherry Phox","Jukebox Rejects","Noodle Brain","Tÿre Fÿre"],
-    []
+  {label:"Friday", date:"Sept 11", start:"16:00", lanes:[
+    [{t:"17:00",n:"From the Start"},{t:"18:00",n:"S.M.F.C."},{t:"19:00",n:"The Come Alongs"},{t:"20:00",n:"Steve's in the Band"},{t:"21:00",n:"The Horrids"},{t:"22:00",n:"La Armada"}],
+    [{t:"17:30",n:"Cherry Phox"},{t:"18:30",n:"Low Range"},{t:"19:30",n:"Alex Kasznel & the Board of Directors"},{t:"20:30",n:"Acton's Dictum"},{t:"21:30",n:"Anger."}],
+    [{t:"19:00",n:"S.M.F.C."},{t:"20:00",n:"Bill Nelson"},{t:"21:00",n:"Ass Managers"}]
   ]},
-  {label:"Saturday", date:"Sept 12", start:"12:00", lanes:[
-    ["Graygarden","Low Range","13-Monsters","Sex Dream","The Larvettes","Acton's Dictum","Anger.","La Armada"],
-    ["Narwhal Express","Cinema Violence","The Nobodies","Misunderstood","The Helsings","After the Fight","Tongan Death Grip","Take the Reins"],
-    ["Dracula Johnson","Rabid Wreck","Los Kausas","The Come Alongs","Fishfood","Goodbye Sunshine","Tone Zone Skam","Steve's in the Band"]
+  {label:"Saturday", date:"Sept 12", start:"11:00", lanes:[
+    [{t:"12:00",n:"Dead Freddie"},{t:"13:10",n:"13-Monsters",len:25},{t:"14:00",n:"Graygarden",len:25},{t:"14:50",n:"Dracula Johnson",len:30},{t:"15:45",n:"The Helsings",len:30},{t:"16:40",n:"The Foleys",len:30},{t:"17:35",n:"After the Fight",len:30},{t:"18:30",n:"The Larvettes",len:25},{t:"19:20",n:"The Steves",len:30},{t:"20:10",n:"Sex Dream",len:30},{t:"21:10",n:"Jukebox Rejects",len:30},{t:"22:10",n:"Bill Nelson",len:45}],
+    [{t:"12:45",n:"Fishfood",len:25},{t:"13:40",n:"Narwhal Express",len:25},{t:"14:25",n:"The Rip Ups",len:25},{t:"15:20",n:"Misunderstood",len:25},{t:"16:15",n:"Goodbye Sunshine",len:25},{t:"17:10",n:"Tongan Death Grip",len:25},{t:"18:05",n:"Noodle Brain",len:25},{t:"18:55",n:"Tÿre Fÿre",len:25},{t:"19:50",n:"Zbyszko Cracker",len:20},{t:"20:40",n:"Rabid Wreck",len:30},{t:"21:40",n:"The Turdles",len:30}],
+    [{t:"13:00",n:"Dead End On Sarah"},{t:"14:00",n:"Gunnar Linden"},{t:"15:00",n:"PUGZ"},{t:"17:00",n:"The Wooz"},{t:"18:00",n:"Dracula Johnson"},{t:"19:00",n:"The Nobodies"},{t:"20:00",n:"Cherry Phox"}]
   ]},
-  {label:"Sunday", date:"Sept 13", start:"12:00", lanes:[
-    ["Bill Nelson","MG Bailey","Shukin & the Ramblers","The Foleys","Deadfoot"],
-    ["From the Start","Counterfeit Goods","Tiger Uppercut","James the Boneless","S.M.F.C."],
-    ["The Horrids","The Steves","Alex Kasznel & the Board of Directors"]
+  {label:"Sunday", date:"Sept 13", start:"11:00", lanes:[
+    [{t:"12:30",n:"Take the Reins"},{t:"13:30",n:"James the Boneless"},{t:"14:30",n:"Shukin & the Ramblers"},{t:"15:30",n:"Tone Zone Skam"},{t:"16:30",n:"Los Kausas"},{t:"17:30",n:"Tiger Uppercut"}],
+    [{t:"12:00",n:"Steve's in the Band"},{t:"13:00",n:"MG Bailey"},{t:"14:00",n:"The Nobodies"},{t:"15:00",n:"Counterfeit Goods"},{t:"16:00",n:"Deadfoot"},{t:"17:00",n:"MfoV"}],
+    [{t:"13:00",n:"Trevor Hill"},{t:"14:00",n:"Davey Jay"},{t:"15:00",n:"Noodle Brain"},{t:"16:00",n:"A FrompyKnot"}]
   ]}
 ];
 
@@ -108,10 +120,9 @@ export const DOORS = "2026-09-11T17:00:00";
 /* When the countdown flips from "happening right now" to "that's a wrap". */
 export const OVER = "2026-09-14T00:00:00";
 
-/* Set length, gap between sets, and the grid's row size — all in minutes. */
-export const SET = 45;
-export const GAP = 15;
-export const UNIT = 15;
+/* Default set length when a slot doesn't specify one, and the grid's row size — both in minutes. */
+export const DEFAULT_LEN = 45;
+export const UNIT = 5;
 
 export const byName: Record<string, Band> = Object.fromEntries(
   BANDS.map((b) => [b.n, b])

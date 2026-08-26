@@ -200,19 +200,6 @@ h2.head{
 }
 @media (max-width:520px){ .sup{width:100%; justify-content:center} }
 
-/* ---------- SCHEDULE (coming soon) ---------- */
-.coming-soon{
-  min-height:50vh; display:flex; align-items:center; justify-content:center;
-  padding:clamp(2rem,5vw,3.5rem) 0;
-}
-.coming-box{
-  background:var(--pink); color:var(--paper);
-  border:4px solid var(--ink); box-shadow:10px 10px 0 rgba(0,0,0,.45);
-  padding:2.5rem 3rem; max-width:640px; text-align:center;
-  font-family:var(--display); font-weight:900; text-transform:uppercase;
-  font-size:clamp(1.3rem,4vw,2rem); line-height:1.3; letter-spacing:-.01em;
-}
-
 /* ---------- SCHEDULE ---------- */
 .page-top{padding:clamp(2rem,5vw,3.5rem) 0 1.6rem}
 .days{display:flex; gap:.5rem; flex-wrap:wrap; margin:1.4rem 0 1rem}

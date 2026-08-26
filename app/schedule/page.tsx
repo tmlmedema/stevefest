@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import ScheduleGrid from "../components/ScheduleGrid";
 
 export const metadata: Metadata = {
   title: "Schedule — Steve Fest II",
   description:
-    "The Steve Fest II schedule is coming soon. Sept 11–13 2026 in Downtown Lombard.",
+    "Who plays when at Steve Fest II: three days, three stages, Sept 11–13 2026 in Downtown Lombard.",
 };
 
 export default function Schedule() {
@@ -11,13 +12,19 @@ export default function Schedule() {
     <section id="schedule" className="view">
       <div className="wrap page-top">
         <h2 className="head">Who plays when</h2>
-      </div>
-      <div className="wrap coming-soon">
-        <div className="coming-box">
-          Steve is still arguing with the calendar.
-          <br />
-          Check back soon.
-        </div>
+
+        <ScheduleGrid />
+
+        <p className="legend">
+          <span>
+            <i style={{ background: "var(--paper)" }} />
+            Set
+          </span>
+          <span>
+            <i style={{ background: "#FF6A15" }} />
+            Closing set
+          </span>
+        </p>
       </div>
     </section>
   );
