@@ -43,18 +43,12 @@ export default function ScheduleGrid() {
         ))}
       </div>
 
-      <p className="swipe-hint">
-        <span className="swipe-hint-text">
-          Swipe to see more <span>→</span>
-        </span>
-      </p>
-
       <div className="grid-scroll">
         <div
           className="grid"
           id="grid"
           style={{
-            gridTemplateColumns: `62px repeat(${STAGES.length},1fr)`,
+            gridTemplateColumns: `var(--rail-w) repeat(${STAGES.length},1fr)`,
             gridTemplateRows: `auto repeat(${rows},${ROW_PX}px)`,
           }}
         >
