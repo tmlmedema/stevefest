@@ -21,13 +21,15 @@ npm run dev
 
 Open http://localhost:3000. Edits show up in the browser as you save.
 
-## The three pages
+## The pages
 
 | URL         | What's on it                                                        |
 |-------------|---------------------------------------------------------------------|
 | `/`         | Countdown and the full 46-band bill. Every band name links to their music; names in grey have nothing online. |
 | `/schedule` | Who plays when, by day and stage.                                    |
 | `/bands`    | One card per act, with a short blurb and where to buy from them.     |
+| `/photos`   | The photo wall. Anyone can add a shot; no sign-in.                   |
+| `/admin`    | Who uploaded what to the wall. Google sign-in, invited accounts only. |
 
 ## How to change things
 
@@ -83,10 +85,60 @@ app/
   bands/page.tsx        Bands page
   layout.tsx            The bit every page shares: fonts, nav, footer
   globals.css           All the styling
+  photos/page.tsx       Photo wall
+  admin/                Admin panel (sign-in page + upload listing)
+  api/photos/route.ts   Signs the browser's upload straight to Blob storage
+  api/auth/             Google sign-in, handled by Auth.js
   lib/data.ts           THE BAND LIST AND RUNNING ORDER — edit here
+  lib/compressImage.ts  Shrinks a photo in the browser before it's uploaded
+  lib/framePhoto.ts     Draws the polaroid frame for the download button
   components/           The moving parts: countdown, lineup, schedule grid
+auth.ts                 Who's allowed into /admin
+proxy.ts                Turns anyone else away at the door
 public/assets/          Logos
 legacy/                 The original single-file version of this site
+```
+
+## The admin panel
+
+`/admin` shows every photo uploaded to the wall — a thumbnail, when it landed
+and how big it is — so the wall can be checked without digging through Blob
+storage. Getting in takes a Google account that's on the list.
+
+### Adding someone
+
+Open `.env.local` and add their Google address to `ADMIN_EMAILS`, separated by
+a comma:
+
+```
+ADMIN_EMAILS=chip@themainlobby.com,someone.else@gmail.com
+```
+
+Set the same variable in the Vercel project settings for the live site.
+Anyone signing in with an address that isn't on the list is turned away — they
+never get a session, so a stale login can't outlive being taken off the list.
+
+### What has to be set
+
+| Variable               | What it's for                                         |
+|------------------------|-------------------------------------------------------|
+| `GOOGLE_CLIENT_ID`     | From the Google Cloud OAuth client                     |
+| `GOOGLE_CLIENT_SECRET` | Same place                                             |
+| `AUTH_SECRET`          | Signs the login cookie. `openssl rand -base64 33`      |
+| `ADMIN_EMAILS`         | Who's allowed in                                       |
+| `BLOB_READ_WRITE_TOKEN`| Reads the wall. Already needed by `/photos`            |
+
+`.env.local` is for your machine only and is never committed. The live site
+reads the same names from the Vercel project's environment variables.
+
+### Google Cloud setup
+
+The OAuth client needs both callback URLs listed under **Authorised redirect
+URIs**, or sign-in fails with a redirect mismatch:
+
+```
+http://localhost:3000/api/auth/callback/google
+https://YOUR-DOMAIN/api/auth/callback/google
 ```
 
 ## Putting it online
