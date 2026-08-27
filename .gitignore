@@ -3,6 +3,7 @@ node_modules/
 out/
 .DS_Store
 *.log
-.env*.local
+.env*
 next-env.d.ts
-.vercel/
+tsconfig.tsbuildinfo
+.vercel

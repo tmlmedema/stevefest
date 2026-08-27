@@ -13,7 +13,13 @@ type Upload = {
 
 async function getUploads(): Promise<{ uploads: Upload[]; failed: boolean }> {
   try {
-    const { blobs } = await list({ prefix: "photos/" });
+    /* Same explicit token as the public wall: `vercel env pull` also drops a
+       VERCEL_OIDC_TOKEN into .env.local, and the SDK prefers it over the
+       read/write token — then fails, because OIDC is off for development. */
+    const { blobs } = await list({
+      prefix: "wall/",
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    });
     const uploads = [...blobs]
       .map((b) => ({
         url: b.url,
@@ -23,7 +29,8 @@ async function getUploads(): Promise<{ uploads: Upload[]; failed: boolean }> {
       }))
       .sort((a, b) => b.uploadedAt.getTime() - a.uploadedAt.getTime());
     return { uploads, failed: false };
-  } catch {
+  } catch (error) {
+    console.error("Couldn't list uploads:", error);
     return { uploads: [], failed: true };
   }
 }
@@ -32,11 +39,6 @@ function fileSize(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-}
-
-/* "photos/1756312800000-beer-garden.jpg" -> "beer-garden.jpg" */
-function originalName(pathname: string): string {
-  return pathname.replace(/^photos\//, "").replace(/^\d+-/, "");
 }
 
 const WHEN = new Intl.DateTimeFormat("en-US", {
@@ -117,9 +119,11 @@ export default async function Admin() {
                 <img src={u.url} alt="" loading="lazy" />
               </a>
               <div className="admin-meta">
-                <b>{originalName(u.pathname)}</b>
-                <span>{WHEN.format(u.uploadedAt)}</span>
+                {/* PhotoGrid drops the uploader's filename on purpose, so
+                    there's nothing to show but when it landed. */}
+                <b>{WHEN.format(u.uploadedAt)}</b>
                 <span>{fileSize(u.size)}</span>
+                <span className="admin-id">{u.pathname.replace(/^wall\//, "")}</span>
               </div>
             </li>
           ))}

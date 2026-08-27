@@ -1,12 +1,15 @@
 "use client";
 
+import Image from "next/image";
 import { upload } from "@vercel/blob/client";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { compressImage, MAX_INPUT_BYTES } from "../lib/compressImage";
+import { framePhoto } from "../lib/framePhoto";
 
 const ROTATIONS = [-3, 2, -2, 3, -1, 1];
 
-type Status = "idle" | "uploading" | "error";
+type Status = "idle" | "compressing" | "uploading" | "error";
 
 export default function PhotoGrid({
   photos,
@@ -18,6 +21,13 @@ export default function PhotoGrid({
   const [error, setError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const busy = status === "compressing" || status === "uploading";
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState("");
+
+  useEffect(() => {
+    setSaveError("");
+  }, [active]);
 
   useEffect(() => {
     if (!active) return;
@@ -28,24 +38,81 @@ export default function PhotoGrid({
     return () => removeEventListener("keydown", onKey);
   }, [active]);
 
+  const reset = () => {
+    if (inputRef.current) inputRef.current.value = "";
+  };
+
+  const fail = (message: string) => {
+    setStatus("error");
+    setError(message);
+    reset();
+  };
+
+  const onDownload = async () => {
+    if (!active) return;
+    setSaving(true);
+    setSaveError("");
+
+    try {
+      const blob = await framePhoto(active);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `steve-fest-${Date.now()}.jpg`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } catch {
+      setSaveError("Couldn't save that one.");
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setStatus("uploading");
+    /* Some Android pickers ignore the accept attribute, so check again here.
+       An empty type comes back from a few of them too — let the decoder
+       be the judge in that case rather than rejecting a real photo. */
+    if (file.type && !file.type.startsWith("image/")) {
+      fail("Photos only — that looks like a video or a document.");
+      return;
+    }
+
+    if (file.size > MAX_INPUT_BYTES) {
+      fail("That file is too big. Try a photo straight off your phone.");
+      return;
+    }
+
+    setStatus("compressing");
     setError("");
 
+    let photo: File;
     try {
-      await upload(`photos/${Date.now()}-${file.name}`, file, {
+      photo = await compressImage(file);
+    } catch {
+      fail("Couldn't read that image. Try a JPEG or PNG.");
+      return;
+    }
+
+    setStatus("uploading");
+
+    try {
+      /* Deliberately not photo.name — the uploader's original filename
+         would end up in a public URL. The random suffix the server adds is
+         what makes this unique; the timestamp just keeps it readable. */
+      await upload(`wall/${Date.now()}.jpg`, photo, {
         access: "public",
         handleUploadUrl: "/api/photos",
       });
       setStatus("idle");
-      if (inputRef.current) inputRef.current.value = "";
+      reset();
       router.refresh();
     } catch (err) {
-      setStatus("error");
-      setError(err instanceof Error ? err.message : "Upload failed.");
+      fail(err instanceof Error ? err.message : "Upload failed.");
     }
   };
 
@@ -55,16 +122,18 @@ export default function PhotoGrid({
         <button
           type="button"
           className="upload-tile"
-          disabled={status === "uploading"}
+          disabled={busy}
           onClick={() => inputRef.current?.click()}
         >
           <span className="plus-circle">+</span>
-          {status === "uploading" ? "Uploading…" : "Upload Photos"}
+          {status === "compressing" && "Shrinking…"}
+          {status === "uploading" && "Uploading…"}
+          {!busy && "Upload Photos"}
         </button>
         <input
           ref={inputRef}
           type="file"
-          accept="image/*"
+          accept="image/jpeg,image/png,image/webp,image/heic,image/heif"
           onChange={onChange}
           hidden
         />
@@ -87,16 +156,50 @@ export default function PhotoGrid({
 
       {active && (
         <div className="lightbox" onClick={() => setActive(null)}>
-          <button
-            type="button"
-            className="lightbox-close"
-            aria-label="Close"
-            onClick={() => setActive(null)}
+          <div
+            className="lightbox-actions"
+            onClick={(e) => e.stopPropagation()}
           >
-            ×
-          </button>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={active} alt="" onClick={(e) => e.stopPropagation()} />
+            {saveError && <span className="lightbox-error">{saveError}</span>}
+            <button
+              type="button"
+              className="lightbox-close"
+              aria-label="Close"
+              onClick={() => setActive(null)}
+            >
+              ×
+            </button>
+          </div>
+          <figure
+            className="lightbox-frame"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={active} alt="" />
+            {/* The wordmark is yellow on transparent, so it gets the same
+                black block the nav gives it — on bare paper it disappears.
+                The sizes hint keeps Next from fetching the 1920px variant
+                for a slot that renders about 145px wide. */}
+            <span className="lightbox-mark">
+              <Image
+                src="/assets/wordmark-nav.png"
+                alt=""
+                width={760}
+                height={187}
+                sizes="150px"
+              />
+            </span>
+            {/* Lives inside the frame, but it's DOM only — the download is a
+                fresh canvas render, so the button never lands in the file. */}
+            <button
+              type="button"
+              className="lightbox-save"
+              onClick={onDownload}
+              disabled={saving}
+            >
+              {saving ? "Preparing…" : "Download"}
+            </button>
+          </figure>
         </div>
       )}
     </>
