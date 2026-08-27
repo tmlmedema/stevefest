@@ -12,12 +12,21 @@ const EXAMPLE_PHOTO = { url: "/photo-example.png", pathname: "example" };
 
 async function getPhotos() {
   try {
-    const { blobs } = await list({ prefix: "photos/" });
+    /* Passed explicitly on purpose: `vercel env pull` also drops a
+       VERCEL_OIDC_TOKEN into .env.local, and the SDK prefers it over the
+       read/write token — then fails, because OIDC is off for development. */
+    const { blobs } = await list({
+      prefix: "wall/",
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    });
     const sorted = [...blobs].sort(
       (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
     );
     return [EXAMPLE_PHOTO, ...sorted];
-  } catch {
+  } catch (error) {
+    /* Don't take the whole page down over this, but don't hide it either —
+       an empty wall and a broken token look identical from the outside. */
+    console.error("Couldn't list photos:", error);
     return [EXAMPLE_PHOTO];
   }
 }

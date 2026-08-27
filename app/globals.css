@@ -257,13 +257,63 @@ h2.head{
   display:flex; align-items:center; justify-content:center; padding:2rem;
   cursor:zoom-out;
 }
-.lightbox img{
-  max-width:100%; max-height:100%; object-fit:contain; cursor:default;
+/* Enlarged shots get the same polaroid treatment as the grid tiles, but
+   sized to the photo's own proportions instead of cropped square. */
+.lightbox-frame{
+  position:relative; margin:0; cursor:default;
+  background:var(--paper); padding:.9rem .9rem 6rem;
   box-shadow:0 20px 40px rgba(0,0,0,.6);
 }
+.lightbox-frame > img{
+  display:block; width:auto; height:auto; background:var(--grape);
+  /* Leave room for the overlay's padding plus the frame's own border. */
+  max-width:calc(100vw - 5.8rem);
+  max-height:calc(100vh - 10.9rem);
+}
+.lightbox-mark{
+  position:absolute; left:.9rem; bottom:1.5rem; z-index:1;
+  display:block; background:var(--ink); padding:.4rem .6rem; line-height:0;
+  transform:rotate(-1.5deg); pointer-events:none;
+}
+.lightbox-mark img{height:36px; width:auto; display:block}
+@media (max-width:640px){
+  /* Give the photo back the width the overlay's padding was eating. */
+  .lightbox{padding:1rem}
+  .lightbox-frame{padding:.6rem .6rem 4.5rem}
+  .lightbox-frame > img{
+    max-width:calc(100vw - 3.2rem);
+    max-height:calc(100vh - 7.1rem);
+  }
+  .lightbox-mark{left:.6rem; bottom:1.1rem; padding:.3rem .45rem}
+  .lightbox-mark img{height:26px}
+}
+/* Close and download share a bar; close used to position itself. */
+.lightbox-actions{
+  position:absolute; top:1.2rem; right:1.4rem; z-index:2;
+  display:flex; align-items:center; gap:.9rem;
+}
 .lightbox-close{
-  position:absolute; top:1.2rem; right:1.4rem; background:none; border:none;
-  color:var(--paper); font-size:2.5rem; line-height:1; cursor:pointer; padding:.4rem;
+  background:none; border:none;
+  color:var(--paper); font-size:2.5rem; line-height:1; cursor:pointer; padding:0 .3rem;
+}
+/* Sits in the frame's bottom band, mirroring the wordmark across the width. */
+.lightbox-save{
+  position:absolute; right:.9rem; bottom:1.5rem; z-index:1;
+  font-family:var(--display); font-weight:900; text-transform:uppercase;
+  letter-spacing:.05em; font-size:.85rem; line-height:1;
+  background:var(--pink); color:var(--paper); border:none;
+  padding:.6rem .95rem; cursor:pointer; transition:transform .15s;
+}
+.lightbox-save:hover:not(:disabled){transform:scale(1.05)}
+.lightbox-save:disabled{opacity:.6; cursor:not-allowed}
+.lightbox-error{
+  font-family:var(--mono); font-size:.75rem; color:var(--pink);
+  background:rgba(0,0,0,.6); padding:.35rem .6rem;
+}
+@media (max-width:640px){
+  .lightbox-actions{top:.7rem; right:.8rem; gap:.5rem}
+  .lightbox-save{right:.6rem; bottom:1.1rem; font-size:.72rem; padding:.5rem .7rem}
+  .lightbox-close{font-size:2rem}
 }
 .lede{
   font-family:var(--body); font-size:1.05rem; line-height:1.5; color:var(--paper);
