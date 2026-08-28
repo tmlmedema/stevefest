@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { Big_Shoulders, Anton, Archivo, Bitter } from "next/font/google";
 import Nav from "./components/Nav";
 import "./globals.css";
@@ -63,7 +64,10 @@ export default function RootLayout({
                 />
                 Shannon&apos;s Deli · 11 S Park Ave, Lombard, IL 60148
               </span>
-              <span>Sept 11–13, 2026 · Free · All ages</span>
+              <span>
+                Sept 11–13, 2026 · Free · All ages ·{" "}
+                <Link href="/privacy">Privacy</Link>
+              </span>
             </footer>
           </div>
         </div>
