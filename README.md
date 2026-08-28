@@ -163,3 +163,19 @@ deploys on its own. Netlify works the same way.
 4. Rooftop / acoustic stage is still marked "coming soon."
 5. Shannon's Deli is normally closed Sundays. Festival runs Fri–Sun, so it may
    be worth saying something about food on day three.
+6. Admin sign-in is fine for the handful of people who need it, but two things
+   are parked until more do:
+   - Google's sign-in screen says "to continue to **WWBP**." That name belongs
+     to an unrelated app sharing the same Google Cloud project, and it's set
+     per project rather than per login. Fixing it properly means a Google
+     Cloud project of Steve Fest's own and a fresh client ID and secret —
+     nothing in the code changes, just the two values in the environment.
+   - If that OAuth app is still in **Testing** mode, Google only lets accounts
+     on its own test-user list through, *after* they've signed in. That looks
+     nothing like being left off `ADMIN_EMAILS`, so it's the first thing to
+     check if someone who's on our list still can't get in. Publishing the app
+     removes the limit; it asks for no sensitive permissions, so there's no
+     review to sit through.
+
+   Past a handful of people, `ADMIN_EMAILS` stops being the right shape — a
+   list you edit and redeploy is not something you want to do weekly.
