@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DAYS, DEFAULT_LEN, STAGES, UNIT, byName } from "../lib/data";
+import { defaultDayIndex } from "../lib/schedule";
 
 const toMin = (t: string) =>
   +t.split(":")[0] * 60 + +t.split(":")[1];
@@ -24,7 +25,13 @@ const ROOFTOP_NOTE = (
 );
 
 export default function ScheduleGrid() {
-  const [dayIx, setDayIx] = useState(1);
+  /* Opens on the first day so the server and the browser agree on the first
+     paint, then moves to today if today is one of the three. */
+  const [dayIx, setDayIx] = useState(0);
+
+  useEffect(() => {
+    setDayIx(defaultDayIndex());
+  }, []);
 
   const d = DAYS[dayIx];
   const s0 = toMin(d.start);
