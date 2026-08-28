@@ -122,8 +122,11 @@ Open `.env.local` and add their Google address to `ADMIN_EMAILS`, separated by
 a comma:
 
 ```
-ADMIN_EMAILS=chip@themainlobby.com,someone.else@gmail.com
+ADMIN_EMAILS=you@example.com,someone.else@gmail.com
 ```
+
+(The real list lives in `.env.local` and in Vercel, not in this file — this
+repository is public.)
 
 Set the same variable in the Vercel project settings for the live site.
 Anyone signing in with an address that isn't on the list is turned away — they
