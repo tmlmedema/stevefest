@@ -28,7 +28,9 @@ export default function BandShelf() {
 
         return (
           <article className={b.u ? "band" : "band dim"} key={b.n}>
-            <h3>{b.n}</h3>
+            <h3 style={b.n === "A FrumpyKnot" ? { textTransform: "none" } : undefined}>
+              {b.n}
+            </h3>
             <span className="where">{b.base}</span>
             {b.kind && <p className="blurb">{b.kind}</p>}
             {links.length > 0 && <div className="links">{links}</div>}

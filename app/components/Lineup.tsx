@@ -35,23 +35,26 @@ export default function Lineup() {
 
   return (
     <div className="names" id="names" ref={box}>
-      {BANDS.map((b) =>
-        b.u ? (
+      {BANDS.map((b) => {
+        const style =
+          b.n === "A FrumpyKnot" ? { textTransform: "none" as const } : undefined;
+        return b.u ? (
           <a
             key={b.n}
             href={b.u}
             target="_blank"
             rel="noopener"
             data-store="1"
+            style={style}
           >
             {b.n}
           </a>
         ) : (
-          <Link key={b.n} href="/bands" data-store="0">
+          <Link key={b.n} href="/bands" data-store="0" style={style}>
             {b.n}
           </Link>
-        )
-      )}
+        );
+      })}
     </div>
   );
 }

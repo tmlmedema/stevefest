@@ -96,7 +96,7 @@ export const BANDS: Band[] = [
  {n:"The Wooz",            s:"unknown", base:"—",               kind:""},
  {n:"Trevor Hill",         s:"unknown", base:"—",               kind:""},
  {n:"Davey Jay",           s:"unknown", base:"—",               kind:""},
- {n:"A FrompyKnot",        s:"unknown", base:"—",               kind:""},
+ {n:"A FrumpyKnot",        s:"unknown", base:"—",               kind:""},
  {n:"MfoV",                s:"none",  base:"Maywood, IL",       kind:"Chicago-area punk trio — self-described, tongue firmly in cheek, as \"3 pambazo specials from MayHood IL.\"", u:"https://mfov123.bandcamp.com/album/early-shit", l1:"Music", u2:"https://www.instagram.com/mfov123.band", l2:"Instagram"},
  {n:"Keith Bondi",         s:"unknown", base:"—",               kind:""},
  {n:"EL Fa",                s:"unknown", base:"—",               kind:""},
@@ -123,7 +123,7 @@ export const DAYS: Day[] = [
   {label:"Sunday", date:"Sept 13", start:"11:00", lanes:[
     [{t:"12:30",n:"Take the Reins"},{t:"13:30",n:"James the Boneless"},{t:"14:30",n:"Shukin & the Ramblers"},{t:"15:30",n:"Tone Zone Skam"},{t:"16:30",n:"Los Kausas"},{t:"17:30",n:"Tiger Uppercut"}],
     [{t:"12:00",n:"Steve's in the Band"},{t:"13:00",n:"MG Bailey"},{t:"14:00",n:"The Nobodies"},{t:"15:00",n:"Counterfeit Goods"},{t:"16:00",n:"Deadfoot"},{t:"17:00",n:"MfoV"}],
-    [{t:"13:00",n:"Trevor Hill"},{t:"14:00",n:"Davey Jay"},{t:"15:00",n:"Noodle Brain"},{t:"16:00",n:"A FrompyKnot"}]
+    [{t:"13:00",n:"Trevor Hill"},{t:"14:00",n:"Davey Jay"},{t:"15:00",n:"Noodle Brain"},{t:"16:00",n:"A FrumpyKnot"}]
   ]}
 ];
 

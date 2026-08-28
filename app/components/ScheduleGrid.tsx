@@ -134,7 +134,12 @@ export default function ScheduleGrid() {
               };
               const inner = (
                 <>
-                  <span className="n">{slot.n}</span>
+                  <span
+                    className="n"
+                    style={slot.n === "A FrumpyKnot" ? { textTransform: "none" } : undefined}
+                  >
+                    {slot.n}
+                  </span>
                   <span className="t">
                     {isRooftop ? fmt(st) : `${fmt(st)} – ${fmt(st + len)}`}
                   </span>
