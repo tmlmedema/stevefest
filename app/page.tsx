@@ -3,6 +3,17 @@ import Link from "next/link";
 import Countdown from "./components/Countdown";
 import Lineup from "./components/Lineup";
 
+const SPONSORS = [
+  { name: "Shannon's Deli", src: "/assets/sponsors/shannons-deli.png", w: 2560, h: 806, href: "https://shannonsdeli.net/" },
+  { name: "Blind Corner Brewery", src: "/assets/sponsors/blind-corner-brewery.png", w: 1460, h: 1268, href: "https://www.blindcornerbrewery.com/" },
+  { name: "Punk Rock Saves Lives", src: "/assets/logo-punk-rock-saves-lives.png", w: 360, h: 360, href: "https://www.punkrocksaveslives.org/" },
+  { name: "Carpool", src: "/assets/sponsors/carpool.png", w: 336, h: 336, href: null },
+  { name: "Dobies Printing LLC", src: "/assets/sponsors/dobies-printing.png", w: 500, h: 500, href: "https://dobiesprinting.com/" },
+  { name: "Eating Soup Daily", src: "/assets/sponsors/eating-soup-daily.jpg", w: 1080, h: 1080, href: "https://www.tiktok.com/@nagernadnerb" },
+  { name: "JL Vintage", src: "/assets/sponsors/jl-vintage.jpg", w: 1304, h: 1600, href: "https://www.jlvintage.com/" },
+  { name: "I Heart DTL", src: "/assets/dtl-heart.svg", w: 1254, h: 1254, href: "https://iheartdtl.com/" },
+];
+
 export default function Home() {
   return (
     <section id="home" className="view">
@@ -55,31 +66,29 @@ export default function Home() {
         </div>
 
         <div className="sheet supporters">
-          <span className="eyebrow">Presented by &amp; supported by</span>
+          <span className="supporters-title">Steve Couldn&apos;t Do It Without Our Sponsors</span>
           <div className="sup-row">
-            <div className="sup host">
-              <b>
-                Shannon&apos;s Deli<small>Downtown Lombard</small>
-              </b>
-            </div>
-            <div className="sup logo">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/assets/logo-punk-rock-saves-lives.png"
-                alt="Punk Rock Saves Lives"
-                width={360}
-                height={360}
-              />
-            </div>
-            <div className="sup logo">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/assets/dtl-heart.svg"
-                alt="I heart Downtown Lombard"
-                width={1254}
-                height={1254}
-              />
-            </div>
+            {SPONSORS.map((sp) => {
+              const img = (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={sp.src} alt={sp.name} width={sp.w} height={sp.h} />
+              );
+              return sp.href ? (
+                <a
+                  className="sup logo"
+                  key={sp.name}
+                  href={sp.href}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  {img}
+                </a>
+              ) : (
+                <div className="sup logo" key={sp.name}>
+                  {img}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
