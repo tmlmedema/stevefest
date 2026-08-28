@@ -2,6 +2,7 @@ import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 import { NextResponse } from "next/server";
 import { auth, isAdmin } from "@/auth";
 import { canUpload } from "../../lib/wall";
+import { recordUpload } from "../../lib/db";
 
 /* wall/<timestamp>.jpg — no slashes or dots can sneak through \d+, so this
    also rules out traversal and uploads outside the wall/ prefix. */
@@ -49,8 +50,12 @@ export async function POST(request: Request): Promise<NextResponse> {
           maximumSizeInBytes: 5 * 1024 * 1024,
         };
       },
-      onUploadCompleted: async () => {
-        // Nothing to persist — Blob storage is the source of truth.
+      onUploadCompleted: async ({ blob }) => {
+        /* Vercel calls this from its own servers once the file has landed.
+           It's the authoritative record, but it can't reach a laptop, so on
+           localhost it never fires and the browser's confirm below stands in.
+           Both write the same row, and the insert ignores duplicates. */
+        await recordUpload(blob.pathname, blob.url);
       },
     });
 

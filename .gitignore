@@ -7,3 +7,5 @@ out/
 next-env.d.ts
 tsconfig.tsbuildinfo
 .vercel
+wall.db
+wall.db-*

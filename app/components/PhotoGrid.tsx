@@ -9,7 +9,7 @@ import { framePhoto } from "../lib/framePhoto";
 
 const ROTATIONS = [-3, 2, -2, 3, -1, 1];
 
-type Status = "idle" | "compressing" | "uploading" | "error";
+type Status = "idle" | "compressing" | "uploading" | "done" | "error";
 
 export default function PhotoGrid({
   photos,
@@ -112,11 +112,26 @@ export default function PhotoGrid({
       /* Deliberately not photo.name — the uploader's original filename
          would end up in a public URL. The random suffix the server adds is
          what makes this unique; the timestamp just keeps it readable. */
-      await upload(`wall/${Date.now()}.jpg`, photo, {
+      const blob = await upload(`wall/${Date.now()}.jpg`, photo, {
         access: "public",
         handleUploadUrl: "/api/wall",
       });
-      setStatus("idle");
+
+      /* Get it into the review queue now rather than waiting on Vercel's
+         completion callback, which doesn't reach localhost at all. If this
+         fails the photo is still safely uploaded — the callback will catch
+         it in production — so it isn't worth an error in the visitor's face. */
+      try {
+        await fetch("/api/wall/record", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ pathname: blob.pathname }),
+        });
+      } catch {
+        /* Left to the server-side callback. */
+      }
+
+      setStatus("done");
       reset();
       router.refresh();
     } catch (err) {
@@ -170,6 +185,13 @@ export default function PhotoGrid({
         <p className="wall-admin-note">
           The wall is shut to the public right now — you can post because
           you&apos;re signed in.
+        </p>
+      )}
+
+      {status === "done" && (
+        <p className="upload-done">
+          Thanks — that's in. It goes up once one of the organisers has had a
+          look at it.
         </p>
       )}
 

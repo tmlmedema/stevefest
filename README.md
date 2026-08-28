@@ -112,9 +112,21 @@ legacy/                 The original single-file version of this site
 
 ## The admin panel
 
-`/admin` shows every photo uploaded to the wall — a thumbnail, when it landed
-and how big it is — so the wall can be checked without digging through Blob
-storage. Getting in takes a Google account that's on the list.
+`/admin` is where uploads get approved. Nothing reaches the public wall on its
+own: a photo lands in storage, appears under **Waiting on you**, and stays
+invisible to everyone else until an admin approves it. Getting in takes a
+Google account that's on the list.
+
+Three buckets, and every photo sits in one of them:
+
+- **Waiting on you** — uploaded, nobody has looked yet. Not public.
+- **On the wall** — approved. This, and only this, is what `/photos` shows.
+- **Turned down** — rejected. Hidden, but still in storage, so it can be put
+  back with **Undo** if it was turned down by mistake.
+
+The verdicts live in a [Turso](https://turso.tech) database, not in Blob
+storage. Deleting a photo isn't part of this — rejecting hides it, which is
+undoable; deleting wouldn't be.
 
 ### Adding someone
 
@@ -141,6 +153,8 @@ never get a session, so a stale login can't outlive being taken off the list.
 | `AUTH_SECRET`          | Signs the login cookie. `openssl rand -base64 33`      |
 | `ADMIN_EMAILS`         | Who's allowed in                                       |
 | `BLOB_READ_WRITE_TOKEN`| Reads the wall. Already needed by `/photos`            |
+| `TURSO_DATABASE_URL`   | The approval ledger                                    |
+| `TURSO_AUTH_TOKEN`     | Same place                                             |
 
 `.env.local` is for your machine only and is never committed. The live site
 reads the same names from the Vercel project's environment variables.

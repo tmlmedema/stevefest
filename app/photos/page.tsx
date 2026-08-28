@@ -3,6 +3,7 @@ import { list } from "@vercel/blob";
 import PhotoGrid from "../components/PhotoGrid";
 import { auth, isAdmin } from "@/auth";
 import { canUpload, closedNotice, publicWallState } from "../lib/wall";
+import { approvedPathnames } from "../lib/db";
 
 export const metadata: Metadata = {
   title: "Steve Was There. Were You? — Steve Fest II",
@@ -17,17 +18,27 @@ async function getPhotos() {
     /* Passed explicitly on purpose: `vercel env pull` also drops a
        VERCEL_OIDC_TOKEN into .env.local, and the SDK prefers it over the
        read/write token — then fails, because OIDC is off for development. */
-    const { blobs } = await list({
-      prefix: "wall/",
-      token: process.env.BLOB_READ_WRITE_TOKEN,
-    });
-    const sorted = [...blobs].sort(
-      (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
-    );
+    const [{ blobs }, approved] = await Promise.all([
+      list({ prefix: "wall/", token: process.env.BLOB_READ_WRITE_TOKEN }),
+      approvedPathnames(),
+    ]);
+
+    /* The wall shows what an admin has approved and nothing else. A photo
+       with no verdict yet isn't public, so a file sitting in Blob storage
+       is not on its own enough to get it onto this page. */
+    const sorted = blobs
+      .filter((b) => approved.has(b.pathname))
+      .sort(
+        (a, b) =>
+          new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
+      );
+
     return [EXAMPLE_PHOTO, ...sorted];
   } catch (error) {
     /* Don't take the whole page down over this, but don't hide it either —
-       an empty wall and a broken token look identical from the outside. */
+       an empty wall and a broken token look identical from the outside.
+       Failing closed matters here: if the ledger is unreachable we show
+       nothing rather than falling back to showing everything. */
     console.error("Couldn't list photos:", error);
     return [EXAMPLE_PHOTO];
   }

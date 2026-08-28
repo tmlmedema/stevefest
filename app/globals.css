@@ -492,6 +492,36 @@ h2.head{
 }
 .admin-meta .admin-id{font-size:.62rem; opacity:.7; overflow-wrap:anywhere}
 
+.queue{margin-top:3rem}
+.queue h3{
+  font-family:var(--display); font-weight:900; text-transform:uppercase;
+  font-size:1.5rem; letter-spacing:.02em; margin:0; color:var(--paper);
+  display:flex; align-items:baseline; gap:.7rem; flex-wrap:wrap;
+}
+.queue h3 span{
+  font-family:var(--mono); font-weight:400; font-size:.7rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--paper-dim);
+}
+.queue .admin-list{margin-top:1.4rem}
+
+.verdict{display:flex; border-top:4px solid var(--ink)}
+.verdict form{flex:1; display:flex}
+.verdict form + form{border-left:4px solid var(--ink)}
+.verdict button{
+  flex:1; cursor:pointer; border:none; padding:.55rem .4rem;
+  font-family:var(--display); font-weight:900; text-transform:uppercase;
+  font-size:.9rem; letter-spacing:.04em; color:var(--ink); background:var(--paper);
+}
+.verdict button:hover{color:var(--paper)}
+.btn-approve:hover{background:var(--green)}
+.btn-reject:hover{background:var(--pink)}
+.btn-undo:hover{background:var(--grape)}
+
+.upload-done{
+  font-family:var(--mono); font-size:.78rem; color:var(--green);
+  margin-top:.8rem; letter-spacing:.04em;
+}
+
 footer{
   border-top:4px solid var(--paper); margin-top:3rem; padding:1.6rem 0 3rem;
   font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; color:var(--paper-dim);
