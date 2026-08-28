@@ -8,6 +8,56 @@ import { WALL_OPENS, WALL_CLOSES } from "./data";
  * button and the server can't disagree about the answer.
  */
 
+export const ZONE = "America/Chicago";
+
+/* How far the zone is from UTC at a given instant, in milliseconds. Asks Intl
+   what the clock in Chicago reads at that moment and measures the gap, so
+   daylight saving is whatever the zone database says it is rather than
+   something we hardcode and have to remember to change. */
+function offsetAt(instant: Date): number {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: ZONE,
+    hour12: false,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  }).formatToParts(instant);
+
+  const at = (type: string) =>
+    Number(parts.find((p) => p.type === type)?.value ?? "0");
+
+  const asIfUTC = Date.UTC(
+    at("year"),
+    at("month") - 1,
+    at("day"),
+    /* Some engines render midnight as hour 24 rather than 0. */
+    at("hour") % 24,
+    at("minute"),
+    at("second")
+  );
+
+  return asIfUTC - instant.getTime();
+}
+
+/* "2026-09-11T00:00:00" as read off a clock in Chicago -> the actual instant.
+   Deliberately not `new Date(str)`, which would use whatever zone the machine
+   happens to be in — Chicago on a laptop here, UTC on Vercel. */
+export function chicagoTime(local: string): Date {
+  const naive = new Date(`${local}Z`);
+  if (Number.isNaN(naive.getTime())) {
+    throw new Error(`Bad date in data.ts: "${local}" (want YYYY-MM-DDTHH:MM:SS)`);
+  }
+
+  /* Subtract the offset, then check it again from where we landed: near a
+     daylight-saving jump the first guess can sit on the wrong side of the
+     change and be an hour out. */
+  const guess = new Date(naive.getTime() - offsetAt(naive));
+  return new Date(naive.getTime() - offsetAt(guess));
+}
+
 export type WallState = {
   open: boolean;
   /* Why it's shut, for the page to explain. */
@@ -17,12 +67,12 @@ export type WallState = {
 
 const WHEN = new Intl.DateTimeFormat("en-US", {
   dateStyle: "long",
-  timeZone: "America/Chicago",
+  timeZone: ZONE,
 });
 
 export function publicWallState(now: Date = new Date()): WallState {
-  const opens = WALL_OPENS ? new Date(WALL_OPENS) : null;
-  const closes = WALL_CLOSES ? new Date(WALL_CLOSES) : null;
+  const opens = WALL_OPENS ? chicagoTime(WALL_OPENS) : null;
+  const closes = WALL_CLOSES ? chicagoTime(WALL_CLOSES) : null;
 
   if (!opens && !closes) {
     return { open: false, reason: "admins-only", opensAt: null };

@@ -70,9 +70,10 @@ Find `WALL_OPENS` and `WALL_CLOSES`. Between those two moments anyone can add
 to `/photos`; outside them only signed-in admins can, and everyone else sees a
 note saying when it opens. They're set to the three festival days.
 
-Keep the `-05:00` on the end of each — that's Chicago time, and without it the
-server reads them five hours out. Setting both to `null` shuts the wall to
-everyone but admins.
+Write them as Chicago time — the time you'd read off a clock at the deli — in
+the form `2026-09-11T00:00:00`. Daylight saving is worked out for you, so a
+window set in December works the same as one in July. Setting both to `null`
+shuts the wall to everyone but admins.
 
 ### To change the countdown
 

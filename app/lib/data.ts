@@ -139,12 +139,11 @@ export const OVER = "2026-09-14T00:00:00";
    Sunday the 13th. Set either to null to shut that end of the window — both
    null means admins only, always.
 
-   Keep the -05:00 on the end. Unlike DOORS and OVER, which are read in the
-   visitor's browser, these are checked on the server — and the server's own
-   clock is on UTC, so a bare time would be five hours out. -05:00 is Chicago
-   in September; it's -06:00 between November and March. */
-export const WALL_OPENS: string | null = "2026-09-11T00:00:00-05:00";
-export const WALL_CLOSES: string | null = "2026-09-13T23:59:59-05:00";
+   These are Chicago wall-clock times — write the time you'd read off a clock
+   at the deli, and daylight saving is worked out for you. The format is
+   YYYY-MM-DDTHH:MM:SS, 24-hour, no offset on the end. */
+export const WALL_OPENS: string | null = "2026-09-11T00:00:00";
+export const WALL_CLOSES: string | null = "2026-09-13T23:59:59";
 
 /* Default set length when a slot doesn't specify one, and the grid's row size — both in minutes. */
 export const DEFAULT_LEN = 45;
