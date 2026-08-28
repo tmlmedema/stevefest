@@ -64,6 +64,16 @@ one per stage, in playing order. Set times are worked out automatically:
 45-minute sets on the hour. Move a name between lists to move that band to a
 different stage.
 
+### To change when the photo wall is open
+
+Find `WALL_OPENS` and `WALL_CLOSES`. Between those two moments anyone can add
+to `/photos`; outside them only signed-in admins can, and everyone else sees a
+note saying when it opens. They're set to the three festival days.
+
+Keep the `-05:00` on the end of each — that's Chicago time, and without it the
+server reads them five hours out. Setting both to `null` shuts the wall to
+everyone but admins.
+
 ### To change the countdown
 
 Find `DOORS`. It's set to Friday Sept 11, 5:00 PM. During the festival the
@@ -87,7 +97,7 @@ app/
   globals.css           All the styling
   photos/page.tsx       Photo wall
   admin/                Admin panel (sign-in page + upload listing)
-  api/photos/route.ts   Signs the browser's upload straight to Blob storage
+  api/wall/route.ts     Signs the browser's upload, if the wall is open to you
   api/auth/             Google sign-in, handled by Auth.js
   lib/data.ts           THE BAND LIST AND RUNNING ORDER — edit here
   lib/compressImage.ts  Shrinks a photo in the browser before it's uploaded

@@ -13,8 +13,16 @@ type Status = "idle" | "compressing" | "uploading" | "error";
 
 export default function PhotoGrid({
   photos,
+  canUpload,
+  notice,
+  adminOverride,
 }: {
   photos: { url: string; pathname: string }[];
+  /* Decided on the server. The upload route enforces the same rule, so this
+     only decides what's drawn — losing the argument here costs nothing. */
+  canUpload: boolean;
+  notice: string | null;
+  adminOverride: boolean;
 }) {
   const [active, setActive] = useState<string | null>(null);
   const [status, setStatus] = useState<Status>("idle");
@@ -106,7 +114,7 @@ export default function PhotoGrid({
          what makes this unique; the timestamp just keeps it readable. */
       await upload(`wall/${Date.now()}.jpg`, photo, {
         access: "public",
-        handleUploadUrl: "/api/photos",
+        handleUploadUrl: "/api/wall",
       });
       setStatus("idle");
       reset();
@@ -118,25 +126,31 @@ export default function PhotoGrid({
 
   return (
     <>
+      {!canUpload && notice && <p className="wall-closed">{notice}</p>}
+
       <div className="photo-grid">
-        <button
-          type="button"
-          className="upload-tile"
-          disabled={busy}
-          onClick={() => inputRef.current?.click()}
-        >
-          <span className="plus-circle">+</span>
-          {status === "compressing" && "Shrinking…"}
-          {status === "uploading" && "Uploading…"}
-          {!busy && "Upload Photos"}
-        </button>
-        <input
-          ref={inputRef}
-          type="file"
-          accept="image/jpeg,image/png,image/webp,image/heic,image/heif"
-          onChange={onChange}
-          hidden
-        />
+        {canUpload && (
+          <>
+            <button
+              type="button"
+              className="upload-tile"
+              disabled={busy}
+              onClick={() => inputRef.current?.click()}
+            >
+              <span className="plus-circle">+</span>
+              {status === "compressing" && "Shrinking…"}
+              {status === "uploading" && "Uploading…"}
+              {!busy && "Upload Photos"}
+            </button>
+            <input
+              ref={inputRef}
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/heic,image/heif"
+              onChange={onChange}
+              hidden
+            />
+          </>
+        )}
 
         {photos.map((p, i) => (
           <button
@@ -151,6 +165,13 @@ export default function PhotoGrid({
           </button>
         ))}
       </div>
+
+      {adminOverride && (
+        <p className="wall-admin-note">
+          The wall is shut to the public right now — you can post because
+          you&apos;re signed in.
+        </p>
+      )}
 
       {status === "error" && <p className="upload-error">{error}</p>}
 

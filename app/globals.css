@@ -216,6 +216,15 @@ h2.head{
 /* ---------- SCHEDULE ---------- */
 .page-top{padding:clamp(2rem,5vw,3.5rem) 0 1.6rem}
 .upload-error{color:var(--pink); font-family:var(--mono); font-size:.78rem; margin-top:.8rem}
+.wall-closed{
+  font-family:var(--mono); font-size:.8rem; letter-spacing:.06em; color:var(--paper-dim);
+  border-left:4px solid var(--orange); padding:.5rem 0 .5rem .9rem; margin:1.8rem 0 0;
+}
+.wall-admin-note{
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.06em;
+  color:var(--ink); background:var(--yellow); display:inline-block;
+  padding:.4rem .7rem; margin-top:1.6rem;
+}
 
 .photo-grid{
   display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr));

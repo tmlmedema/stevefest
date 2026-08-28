@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { list } from "@vercel/blob";
 import PhotoGrid from "../components/PhotoGrid";
+import { auth, isAdmin } from "@/auth";
+import { canUpload, closedNotice, publicWallState } from "../lib/wall";
 
 export const metadata: Metadata = {
   title: "Steve Was There. Were You? — Steve Fest II",
@@ -32,6 +34,15 @@ async function getPhotos() {
 }
 
 export default async function Photos() {
+  const session = await auth();
+  const admin = isAdmin(session?.user?.email);
+
+  /* Worked out here rather than in the browser: the window is checked against
+     the server's clock, so a visitor can't open the wall early by changing
+     their own. The route checks it again anyway. */
+  const uploadsOpen = canUpload(admin);
+  const notice = uploadsOpen ? null : closedNotice(publicWallState());
+
   const photos = await getPhotos();
 
   return (
@@ -39,11 +50,19 @@ export default async function Photos() {
       <div className="wrap page-top">
         <h2 className="head">Steve Was There. Were You?</h2>
         <p className="lede">
-          Got shots from the fest? Drop one below and we&apos;ll add it
-          to the pile.
+          {uploadsOpen
+            ? "Got shots from the fest? Drop one below and we'll add it to the pile."
+            : "Shots from the fest, all in one pile."}
         </p>
 
-        <PhotoGrid photos={photos} />
+        <PhotoGrid
+          photos={photos}
+          canUpload={uploadsOpen}
+          notice={notice}
+          /* Admins get in outside the window; say so, so an admin doesn't
+             assume the wall is open to everyone when it isn't. */
+          adminOverride={admin && !publicWallState().open}
+        />
       </div>
     </section>
   );
