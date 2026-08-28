@@ -16,6 +16,11 @@ type Item = {
   reviewedBy: string | null;
 };
 
+/* Which half of the panel you're looking at. The two counters at the top are
+   the switch, so the numbers and the tabs are the same thing rather than two
+   controls that have to agree. */
+type View = "waiting" | "wall";
+
 /*
  * Blob storage says what exists; the ledger says what's allowed. Reconciling
  * the two means a photo that lost its row — the completion callback missed it,
@@ -68,14 +73,22 @@ const REJECT_ASK =
   "It gets deleted for good: removed from the wall and erased from storage. " +
   "This cannot be undone.";
 
+/* Deleting something already on the wall is the same button doing more damage,
+   so say so. Taking it down first is the reversible way out. */
+const DELETE_ASK =
+  "Hey — this photo is on the wall right now.\n\n" +
+  "Deleting erases it from storage for good and it cannot be undone. " +
+  "To just get it off the wall, use Take down instead.";
+
 function Verdict({ item }: { item: Item }) {
-  /* Approving and unapproving are the same switch either way round. Rejecting
+  /* Approving and unapproving are the same switch either way round. Deleting
      is a different thing entirely — it destroys the photo — so it gets its own
      action and the only confirmation on the page. */
-  const move: { to: Status; label: string; className: string } =
-    item.status === "approved"
-      ? { to: "pending", label: "Take down", className: "btn-undo" }
-      : { to: "approved", label: "Approve", className: "btn-approve" };
+  const live = item.status === "approved";
+
+  const move: { to: Status; label: string; className: string } = live
+    ? { to: "pending", label: "Take down", className: "btn-undo" }
+    : { to: "approved", label: "Approve", className: "btn-approve" };
 
   return (
     <div className="verdict">
@@ -91,8 +104,11 @@ function Verdict({ item }: { item: Item }) {
       <form action={reject}>
         <input type="hidden" name="pathname" value={item.pathname} />
         <input type="hidden" name="url" value={item.url} />
-        <ConfirmButton className="btn-reject" ask={REJECT_ASK}>
-          Reject
+        <ConfirmButton
+          className="btn-reject"
+          ask={live ? DELETE_ASK : REJECT_ASK}
+        >
+          {live ? "Delete" : "Reject"}
         </ConfirmButton>
       </form>
     </div>
@@ -120,17 +136,53 @@ function Grid({ of }: { of: Item[] }) {
   );
 }
 
-export default async function Admin() {
+/* A counter you can press. Plain links, so the current tab is in the URL —
+   a verdict posts back to the same address and lands you where you were,
+   and an admin can bookmark or reload the half they were working on. */
+function Tab({
+  view,
+  current,
+  label,
+  count,
+}: {
+  view: View;
+  current: View;
+  label: string;
+  count: number;
+}) {
+  const on = view === current;
+
+  return (
+    <a
+      href={view === "waiting" ? "/admin" : `/admin?view=${view}`}
+      className={on ? "stat is-on" : "stat"}
+      aria-current={on ? "page" : undefined}
+    >
+      <span className="stat-label">{label}</span>
+      <span className="stat-count">{count}</span>
+    </a>
+  );
+}
+
+export default async function Admin({
+  searchParams,
+}: {
+  searchParams: Promise<{ view?: string }>;
+}) {
   const session = await auth();
 
   /* The proxy already turned everyone else away; this is the backstop for
      any request that somehow skips it. */
   if (!isAdmin(session?.user?.email)) redirect("/admin/signin");
 
+  const { view: asked } = await searchParams;
+  const view: View = asked === "wall" ? "wall" : "waiting";
+
   const { items, failed } = await getItems();
 
   const pending = items.filter((i) => i.status === "pending");
   const approved = items.filter((i) => i.status === "approved");
+  const showing = view === "wall" ? approved : pending;
 
   return (
     <>
@@ -154,16 +206,22 @@ export default async function Admin() {
         </div>
       </div>
 
-      <dl className="admin-stats">
-        <div>
-          <dt>Waiting</dt>
-          <dd>{pending.length}</dd>
-        </div>
-        <div>
-          <dt>On the wall</dt>
-          <dd>{approved.length}</dd>
-        </div>
-      </dl>
+      {/* Deliberately not a <nav>: the site's header nav styles every <nav a>
+          on the page, and these are counters first. */}
+      <div className="admin-stats">
+        <Tab
+          view="waiting"
+          current={view}
+          label="Waiting"
+          count={pending.length}
+        />
+        <Tab
+          view="wall"
+          current={view}
+          label="On the wall"
+          count={approved.length}
+        />
+      </div>
 
       {failed && (
         <p className="admin-note">
@@ -180,34 +238,32 @@ export default async function Admin() {
         </p>
       )}
 
-      {/* The queue is only what still needs a decision. Everything already
-          dealt with is out of the way below, not gone — a rejection made by
-          mistake still needs somewhere to be undone from. */}
-      {!failed && pending.length > 0 && (
+      {/* Nothing is ever out of reach: a photo is in one tab or the other, and
+          both halves offer the way back out. An approval made by mistake is
+          undone from the wall side, not hunted for. */}
+      {!failed && items.length > 0 && showing.length > 0 && (
         <section className="queue">
           <h3>
-            Waiting on you <span>Nobody can see these yet</span>
+            {view === "wall" ? (
+              <>
+                On the wall <span>Live at /photos</span>
+              </>
+            ) : (
+              <>
+                Waiting on you <span>Nobody can see these yet</span>
+              </>
+            )}
           </h3>
-          <Grid of={pending} />
+          <Grid of={showing} />
         </section>
       )}
 
-      {!failed && items.length > 0 && pending.length === 0 && (
+      {!failed && items.length > 0 && showing.length === 0 && (
         <p className="admin-note admin-clear">
-          All caught up — nothing waiting on you.
+          {view === "wall"
+            ? "Nothing on the wall yet — approve a photo and it shows up here."
+            : "All caught up — nothing waiting on you."}
         </p>
-      )}
-
-      {approved.length > 0 && (
-        <details className="reviewed">
-          <summary>
-            Already on the wall
-            <span>{approved.length} live at /photos</span>
-          </summary>
-          <section className="queue">
-            <Grid of={approved} />
-          </section>
-        </details>
       )}
     </>
   );
