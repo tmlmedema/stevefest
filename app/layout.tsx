@@ -66,7 +66,7 @@ export default function RootLayout({
               </span>
               <span>
                 Sept 11–13, 2026 · Free · All ages ·{" "}
-                <Link href="/privacy">Privacy Policy</Link>
+                <Link href="/privacy">Privacy</Link>
               </span>
             </footer>
           </div>
