@@ -132,6 +132,19 @@ export const DOORS = "2026-09-11T17:00:00";
 /* When the countdown flips from "happening right now" to "that's a wrap". */
 export const OVER = "2026-09-14T00:00:00";
 
+/* When the photo wall accepts uploads from the public. Outside this window
+   only signed-in admins can add to it — see app/lib/wall.ts.
+
+   Set to the three festival days: all of Friday the 11th through the end of
+   Sunday the 13th. Set either to null to shut that end of the window — both
+   null means admins only, always.
+
+   These are Chicago wall-clock times — write the time you'd read off a clock
+   at the deli, and daylight saving is worked out for you. The format is
+   YYYY-MM-DDTHH:MM:SS, 24-hour, no offset on the end. */
+export const WALL_OPENS: string | null = "2026-09-11T00:00:00";
+export const WALL_CLOSES: string | null = "2026-09-13T23:59:59";
+
 /* Default set length when a slot doesn't specify one, and the grid's row size — both in minutes. */
 export const DEFAULT_LEN = 45;
 export const UNIT = 5;
