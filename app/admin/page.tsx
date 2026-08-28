@@ -2,7 +2,8 @@ import { redirect } from "next/navigation";
 import { list } from "@vercel/blob";
 import { auth, isAdmin, signOut } from "@/auth";
 import { allUploads, type Status } from "../lib/db";
-import { review } from "./actions";
+import { review, reject } from "./actions";
+import ConfirmButton from "./ConfirmButton";
 
 export const dynamic = "force-dynamic";
 
@@ -62,28 +63,60 @@ const WHEN = new Intl.DateTimeFormat("en-US", {
   timeZone: "America/Chicago",
 });
 
+const REJECT_ASK =
+  "Hey — are you sure you want to reject this photo?\n\n" +
+  "It gets deleted for good: removed from the wall and erased from storage. " +
+  "This cannot be undone.";
+
 function Verdict({ item }: { item: Item }) {
-  /* Whatever the photo isn't right now is what the buttons offer. */
-  const all: { to: Status; label: string; className: string }[] = [
-    { to: "approved", label: "Approve", className: "btn-approve" },
-    { to: "rejected", label: "Reject", className: "btn-reject" },
-    { to: "pending", label: "Undo", className: "btn-undo" },
-  ];
-  const options = all.filter((o) => o.to !== item.status);
+  /* Approving and unapproving are the same switch either way round. Rejecting
+     is a different thing entirely — it destroys the photo — so it gets its own
+     action and the only confirmation on the page. */
+  const move: { to: Status; label: string; className: string } =
+    item.status === "approved"
+      ? { to: "pending", label: "Take down", className: "btn-undo" }
+      : { to: "approved", label: "Approve", className: "btn-approve" };
 
   return (
     <div className="verdict">
-      {options.map((o) => (
-        <form action={review} key={o.to}>
-          <input type="hidden" name="pathname" value={item.pathname} />
-          <input type="hidden" name="url" value={item.url} />
-          <input type="hidden" name="status" value={o.to} />
-          <button type="submit" className={o.className}>
-            {o.label}
-          </button>
-        </form>
-      ))}
+      <form action={review}>
+        <input type="hidden" name="pathname" value={item.pathname} />
+        <input type="hidden" name="url" value={item.url} />
+        <input type="hidden" name="status" value={move.to} />
+        <button type="submit" className={move.className}>
+          {move.label}
+        </button>
+      </form>
+
+      <form action={reject}>
+        <input type="hidden" name="pathname" value={item.pathname} />
+        <input type="hidden" name="url" value={item.url} />
+        <ConfirmButton className="btn-reject" ask={REJECT_ASK}>
+          Reject
+        </ConfirmButton>
+      </form>
     </div>
+  );
+}
+
+function Grid({ of }: { of: Item[] }) {
+  return (
+    <ul className="admin-list">
+      {of.map((i) => (
+        <li key={i.pathname}>
+          <a href={i.url} target="_blank" rel="noreferrer">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={i.url} alt="" loading="lazy" />
+          </a>
+          <div className="admin-meta">
+            <b>{WHEN.format(i.uploadedAt)}</b>
+            <span>{fileSize(i.size)}</span>
+            {i.reviewedBy && <span className="admin-id">by {i.reviewedBy}</span>}
+          </div>
+          <Verdict item={i} />
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -98,17 +131,6 @@ export default async function Admin() {
 
   const pending = items.filter((i) => i.status === "pending");
   const approved = items.filter((i) => i.status === "approved");
-  const rejected = items.filter((i) => i.status === "rejected");
-
-  const groups: { title: string; note: string; of: Item[] }[] = [
-    {
-      title: "Waiting on you",
-      note: "Nobody can see these yet.",
-      of: pending,
-    },
-    { title: "On the wall", note: "Live at /photos.", of: approved },
-    { title: "Turned down", note: "Hidden. Still in storage.", of: rejected },
-  ];
 
   return (
     <>
@@ -141,10 +163,6 @@ export default async function Admin() {
           <dt>On the wall</dt>
           <dd>{approved.length}</dd>
         </div>
-        <div>
-          <dt>Turned down</dt>
-          <dd>{rejected.length}</dd>
-        </div>
       </dl>
 
       {failed && (
@@ -162,33 +180,34 @@ export default async function Admin() {
         </p>
       )}
 
-      {groups.map(
-        (g) =>
-          g.of.length > 0 && (
-            <section className="queue" key={g.title}>
-              <h3>
-                {g.title} <span>{g.note}</span>
-              </h3>
-              <ul className="admin-list">
-                {g.of.map((i) => (
-                  <li key={i.pathname}>
-                    <a href={i.url} target="_blank" rel="noreferrer">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={i.url} alt="" loading="lazy" />
-                    </a>
-                    <div className="admin-meta">
-                      <b>{WHEN.format(i.uploadedAt)}</b>
-                      <span>{fileSize(i.size)}</span>
-                      {i.reviewedBy && (
-                        <span className="admin-id">by {i.reviewedBy}</span>
-                      )}
-                    </div>
-                    <Verdict item={i} />
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )
+      {/* The queue is only what still needs a decision. Everything already
+          dealt with is out of the way below, not gone — a rejection made by
+          mistake still needs somewhere to be undone from. */}
+      {!failed && pending.length > 0 && (
+        <section className="queue">
+          <h3>
+            Waiting on you <span>Nobody can see these yet</span>
+          </h3>
+          <Grid of={pending} />
+        </section>
+      )}
+
+      {!failed && items.length > 0 && pending.length === 0 && (
+        <p className="admin-note admin-clear">
+          All caught up — nothing waiting on you.
+        </p>
+      )}
+
+      {approved.length > 0 && (
+        <details className="reviewed">
+          <summary>
+            Already on the wall
+            <span>{approved.length} live at /photos</span>
+          </summary>
+          <section className="queue">
+            <Grid of={approved} />
+          </section>
+        </details>
       )}
     </>
   );

@@ -117,16 +117,21 @@ own: a photo lands in storage, appears under **Waiting on you**, and stays
 invisible to everyone else until an admin approves it. Getting in takes a
 Google account that's on the list.
 
-Three buckets, and every photo sits in one of them:
+The queue shows only what still needs deciding, so there's nothing to scroll
+past. Photos already approved are tucked under **Already on the wall**, folded
+shut, in case one needs taking down later.
 
-- **Waiting on you** — uploaded, nobody has looked yet. Not public.
-- **On the wall** — approved. This, and only this, is what `/photos` shows.
-- **Turned down** — rejected. Hidden, but still in storage, so it can be put
-  back with **Undo** if it was turned down by mistake.
+Two buttons on each photo:
 
-The verdicts live in a [Turso](https://turso.tech) database, not in Blob
-storage. Deleting a photo isn't part of this — rejecting hides it, which is
-undoable; deleting wouldn't be.
+- **Approve** puts it on the wall. `/photos` shows approved photos and nothing
+  else. On something already approved this button reads **Take down** instead,
+  which returns it to the queue — nothing is lost.
+- **Reject** deletes it. The file is erased from storage and the row from the
+  database. It asks first, because there is no undo and nothing to restore
+  from.
+
+The verdicts live in a [Turso](https://turso.tech) database; the photos stay in
+Blob storage.
 
 ### Adding someone
 

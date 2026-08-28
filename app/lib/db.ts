@@ -13,7 +13,7 @@ import { createClient, type Client, type Row } from "@libsql/client";
  * should ever run on.
  */
 
-export type Status = "pending" | "approved" | "rejected";
+export type Status = "pending" | "approved";
 
 export type Upload = {
   pathname: string;
@@ -130,10 +130,20 @@ export async function counts(): Promise<Record<Status, number>> {
     `SELECT status, COUNT(*) AS n FROM uploads GROUP BY status`
   );
 
-  const out: Record<Status, number> = { pending: 0, approved: 0, rejected: 0 };
+  const out: Record<Status, number> = { pending: 0, approved: 0 };
   for (const r of rows) {
     const s = String(r.status) as Status;
     if (s in out) out[s] = Number(r.n);
   }
   return out;
+}
+
+/* Rejecting is a deletion, not a state — the row goes, and the caller deletes
+   the file from Blob storage too. Nothing is left to undo from. */
+export async function removeUpload(pathname: string): Promise<void> {
+  const c = await db();
+  await c.execute({
+    sql: `DELETE FROM uploads WHERE pathname = ?`,
+    args: [pathname],
+  });
 }
