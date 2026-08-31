@@ -97,7 +97,7 @@ export const BANDS: Band[] = [
  {n:"PUGZ",                s:"unknown", base:"—",               kind:""},
  {n:"The Wooz",            s:"unknown", base:"—",               kind:""},
  {n:"Trevor Hill",         s:"unknown", base:"—",               kind:""},
- {n:"Davey Jay",           s:"unknown", base:"—",               kind:""},
+ {n:"Davey J.",           s:"unknown", base:"—",               kind:""},
  {n:"A FrumpyKnot",        s:"unknown", base:"—",               kind:""},
  {n:"MfoV",                s:"none",  base:"Maywood, IL",       kind:"Chicago-area punk trio — self-described, tongue firmly in cheek, as \"3 pambazo specials from MayHood IL.\"", u:"https://mfov123.bandcamp.com/album/early-shit", l1:"Music", u2:"https://www.instagram.com/mfov123.band", l2:"Instagram"},
  {n:"Keith Bondi",         s:"unknown", base:"—",               kind:""},
