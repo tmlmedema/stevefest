@@ -95,7 +95,7 @@ export const BANDS: Band[] = [
  {n:"Dead End On Sarah",   s:"unknown", base:"—",               kind:""},
  {n:"Gunnar Linden",       s:"unknown", base:"—",               kind:"", u:"https://www.instagram.com/gunnar_linden_music/", l1:"Instagram"},
  {n:"PUGZ",                s:"unknown", base:"—",               kind:""},
- {n:"The Wooz",            s:"unknown", base:"—",               kind:""},
+ {n:"Aaron Williams Performing The Wooz",            s:"unknown", base:"—",               kind:""},
  {n:"Trevor Hill",         s:"unknown", base:"—",               kind:""},
  {n:"Davey J",           s:"unknown", base:"—",               kind:""},
  {n:"A FrumpyKnot",        s:"unknown", base:"—",               kind:""},
