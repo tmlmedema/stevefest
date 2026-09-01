@@ -76,7 +76,7 @@ export const BANDS: Band[] = [
  {n:"The Foleys",          s:"store", base:"South Bend, IN",    kind:"Wrestlepunk from South Bend: punk rock, professional wrestling and bad decisions.", u:"https://wreckedhooligan.bandcamp.com/album/truth-or-consequences", l1:"Music", u2:"https://thefoleys574.com/listen", l2:"Site", u3:"https://wreckedhooliganshop.com", l3:"Shop"},
  {n:"Tongan Death Grip",   s:"store", base:"Waukegan, IL",      kind:"Waukegan metal formed in 2012 out of a shared love of pro wrestling.",            u:"https://tdg316.bandcamp.com/merch"},
  {n:"Counterfeit Goods",   s:"none",  base:"Oxford, OH",        kind:"Four-piece punk from Oxford, Ohio, pulling from rockabilly, soul, ska and jazz."},
- {n:"Low Range",           s:"none",  base:"—",                 kind:""},
+ {n:"Low Range",           s:"none",  base:"—",                 kind:"Chicago-style power trio"},
  {n:"Rabid Wreck",         s:"none",  base:"—",                 kind:"",            u:"https://www.instagram.com/rabid_wreck/", l1:"Instagram"},
  {n:"Misunderstood",       s:"store", base:"Richmond, IN",      kind:"Richmond, Indiana punk, started in 2006 by Lyn-Z when she was fifteen.", u:"https://misunderstood.bandcamp.com/merch"},
  {n:"Dracula Johnson",     s:"none",  base:"—",                 kind:""},
@@ -124,7 +124,7 @@ export const DAYS: Day[] = [
   ]},
   {label:"Sunday", date:"Sept 13", iso:"2026-09-13", start:"11:00", lanes:[
     [{t:"12:30",n:"Take the Reins"},{t:"13:30",n:"James the Boneless"},{t:"14:30",n:"Shukin & the Ramblers"},{t:"15:30",n:"Tone Zone Skam"},{t:"16:30",n:"Los Kausas"},{t:"17:30",n:"Tiger Uppercut"}],
-    [{t:"12:00",n:"Steve's in the Band"},{t:"13:00",n:"MG Bailey"},{t:"14:00",n:"The Nobodies"},{t:"15:00",n:"Counterfeit Goods"},{t:"16:00",n:"Deadfoot"},{t:"17:00",n:"MfoV"}],
+    [{t:"12:00",n:"Steve's in the Band"},{t:"13:00",n:"MG Bailey"},{t:"14:00",n:"The Jobodys"},{t:"15:00",n:"Counterfeit Goods"},{t:"16:00",n:"Deadfoot"},{t:"17:00",n:"MfoV"}],
     [{t:"13:00",n:"Trevor Hill"},{t:"14:00",n:"Davey J"},{t:"15:00",n:"Noodle Brain"},{t:"16:00",n:"A FrumpyKnot"}]
   ]}
 ];
