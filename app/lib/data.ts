@@ -120,7 +120,7 @@ export const DAYS: Day[] = [
   {label:"Saturday", date:"Sept 12", iso:"2026-09-12", start:"11:00", lanes:[
     [{t:"12:00",n:"Dead Freddie"},{t:"13:10",n:"13-Monsters",len:25},{t:"14:00",n:"Graygarden",len:25},{t:"14:50",n:"Dracula Johnson",len:30},{t:"15:45",n:"The Helsings",len:30},{t:"16:40",n:"The Foleys",len:30},{t:"17:35",n:"After the Fight",len:30},{t:"18:30",n:"The Larvettes",len:25},{t:"19:20",n:"The Steves",len:30},{t:"20:10",n:"Sex Dream",len:30},{t:"21:10",n:"Jukebox Rejects",len:30},{t:"22:10",n:"Bill Nelson",len:45}],
     [{t:"12:45",n:"Fishfood",len:25},{t:"13:40",n:"Narwhal Express",len:25},{t:"14:25",n:"The Rip Ups",len:25},{t:"15:20",n:"Misunderstood",len:25},{t:"16:15",n:"Goodbye Sunshine",len:25},{t:"17:10",n:"Tongan Death Grip",len:25},{t:"18:05",n:"Noodle Brain",len:25},{t:"18:55",n:"Tÿre Fÿre",len:25},{t:"19:50",n:"Zbyszko Cracker",len:20},{t:"20:40",n:"Rabid Wreck",len:30},{t:"21:40",n:"The Turdles",len:30}],
-    [{t:"13:00",n:"Dead End On Sarah"},{t:"14:00",n:"Gunnar Linden"},{t:"15:00",n:"PUGZ"},{t:"16:00",n:"Hesterménage à Trois"},{t:"17:00",n:"Aaron Williams Performing The Wooz"},{t:"18:00",n:"Dracula Johnson"},{t:"19:00",n:"The Nobodies"},{t:"20:00",n:"Cherry Phox"}]
+    [{t:"13:10",n:"Dead End On Sarah"},{t:"14:00",n:"Gunnar Linden"},{t:"15:00",n:"PUGZ"},{t:"16:00",n:"Hesterménage à Trois"},{t:"17:00",n:"Aaron Williams Performing The Wooz"},{t:"18:00",n:"Dracula Johnson"},{t:"19:00",n:"The Nobodies"},{t:"20:00",n:"Cherry Phox"}]
   ]},
   {label:"Sunday", date:"Sept 13", iso:"2026-09-13", start:"11:00", lanes:[
     [{t:"12:30",n:"Take the Reins"},{t:"13:30",n:"James the Boneless"},{t:"14:30",n:"Shukin & the Ramblers"},{t:"15:30",n:"Tone Zone Skam"},{t:"16:30",n:"Los Kausas"},{t:"17:30",n:"Tiger Uppercut"}],
