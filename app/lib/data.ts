@@ -113,8 +113,8 @@ export const STAGES = ["Main Stage", "Side Stage", "Rooftop Stage"];
 
 export const DAYS: Day[] = [
   {label:"Friday", date:"Sept 11", iso:"2026-09-11", start:"16:00", lanes:[
-    [{t:"17:00",n:"From the Start"},{t:"18:00",n:"S.M.F.C."},{t:"19:00",n:"The Come Alongs"},{t:"20:00",n:"Steve's in the Band"},{t:"21:00",n:"The Horrids"},{t:"22:00",n:"La Armada"}],
-    [{t:"17:30",n:"Cherry Phox"},{t:"18:30",n:"Low Range"},{t:"19:30",n:"Alex Kasznel & the Board of Directors"},{t:"20:30",n:"Acton's Dictum"},{t:"21:30",n:"Anger."}],
+    [{t:"17:00",n:"From the Start",len:30},{t:"18:00",n:"S.M.F.C.",len:30},{t:"19:00",n:"The Come Alongs",len:30},{t:"20:00",n:"Steve's in the Band",len:30},{t:"21:00",n:"The Horrids",len:30},{t:"22:00",n:"La Armada",len:30}],
+    [{t:"17:30",n:"Cherry Phox",len:30},{t:"18:30",n:"Low Range",len:30},{t:"19:30",n:"Alex Kasznel & the Board of Directors",len:30},{t:"20:30",n:"Acton's Dictum",len:30},{t:"21:30",n:"Anger.",len:30}],
     [{t:"17:00",n:"Keith Bondi"},{t:"18:00",n:"EL Fa"},{t:"19:00",n:"S.M.F.C."},{t:"20:00",n:"Bill Nelson"},{t:"21:00",n:"The Assistant Managers"}]
   ]},
   {label:"Saturday", date:"Sept 12", iso:"2026-09-12", start:"11:00", lanes:[
@@ -123,8 +123,8 @@ export const DAYS: Day[] = [
     [{t:"13:10",n:"Dead End On Sarah"},{t:"14:00",n:"Gunnar Linden"},{t:"15:00",n:"PUGZ"},{t:"16:00",n:"Hesterménage à Trois"},{t:"17:00",n:"Aaron Williams Performing The Wooz"},{t:"18:00",n:"Dracula Johnson"},{t:"19:00",n:"The Nobodies"},{t:"20:00",n:"Cherry Phox"}]
   ]},
   {label:"Sunday", date:"Sept 13", iso:"2026-09-13", start:"11:00", lanes:[
-    [{t:"12:30",n:"Take the Reins"},{t:"13:30",n:"James the Boneless"},{t:"14:30",n:"Shukin & the Ramblers"},{t:"15:30",n:"Tone Zone Skam"},{t:"16:30",n:"Los Kausas"},{t:"17:30",n:"Tiger Uppercut"}],
-    [{t:"12:00",n:"Steve's in the Band"},{t:"13:00",n:"MG Bailey"},{t:"14:00",n:"The Jobodys"},{t:"15:00",n:"Counterfeit Goods"},{t:"16:00",n:"Deadfoot"},{t:"17:00",n:"MfoV"}],
+    [{t:"12:30",n:"Take the Reins", len:30},{t:"13:30",n:"James the Boneless", len:30},{t:"14:30",n:"Shukin & the Ramblers", len:30},{t:"15:30",n:"Tone Zone Skam", len:30},{t:"16:30",n:"Los Kausas", len:30},{t:"17:30",n:"Tiger Uppercut", len:30}],
+    [{t:"12:00",n:"Steve's in the Band", len:30},{t:"13:00",n:"MG Bailey", len:30},{t:"14:00",n:"The Jobodys", len:30},{t:"15:00",n:"Counterfeit Goods", len:30},{t:"16:00",n:"Deadfoot", len:30},{t:"17:00",n:"MfoV", len:30}],
     [{t:"13:00",n:"Trevor Hill"},{t:"14:00",n:"Davey J"},{t:"15:00",n:"Noodle Brain"},{t:"16:00",n:"A FrumpyKnot"}]
   ]}
 ];
