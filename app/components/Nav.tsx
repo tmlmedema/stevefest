@@ -10,6 +10,11 @@ const LINKS = [
   { href: "/schedule", label: "Schedule" },
   { href: "/bands", label: "Bands" },
   { href: "/photos", label: "Photos" },
+  {
+    href: "https://givebutter.com/stevefestii",
+    label: "Donations",
+    external: true,
+  },
 ];
 
 export default function Nav() {
@@ -64,16 +69,28 @@ export default function Nav() {
           </span>
         </button>
         <nav id="site-nav" className={open ? "is-open" : undefined}>
-          {LINKS.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              aria-current={path === l.href ? "page" : undefined}
-              onClick={() => setOpen(false)}
-            >
-              {l.label}
-            </Link>
-          ))}
+          {LINKS.map((l) =>
+            l.external ? (
+              <a
+                key={l.href}
+                href={l.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+              >
+                {l.label}
+              </a>
+            ) : (
+              <Link
+                key={l.href}
+                href={l.href}
+                aria-current={path === l.href ? "page" : undefined}
+                onClick={() => setOpen(false)}
+              >
+                {l.label}
+              </Link>
+            ),
+          )}
         </nav>
       </div>
     </div>
