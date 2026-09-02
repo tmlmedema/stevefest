@@ -58,7 +58,6 @@ export default function Home() {
           <Link className="hollow" href="https://givebutter.com/stevefestii" target="_blank">
             Feed a steve
           </Link>
-          
         </div>
 
         <Countdown />
