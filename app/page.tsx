@@ -54,8 +54,8 @@ export default function Home() {
           <Link href="/schedule">See the schedule</Link>
           <Link className="hollow" href="/bands">
             Bands &amp; merch
-          </Link
-          <Link className="hollow" href="https://givebutter.com/stevefestii" terget="_blank">
+          </Link>
+          <Link className="hollow" href="https://givebutter.com/stevefestii" target="_blank">
             Feed a steve
           </Link>
           
