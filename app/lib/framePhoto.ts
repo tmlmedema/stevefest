@@ -24,6 +24,32 @@ const TILT = (-1.5 * Math.PI) / 180; /* matches the nav and the lightbox */
 
 const WORDMARK = "/assets/wordmark-nav.png";
 
+/* Stamped bottom-right, opposite the wordmark. Just the year for now — a
+   fuller date can replace it here without touching the drawing below. */
+const STAMP = "2026";
+
+/* Canvas needs a real family name, and --display is a stack fronted by the
+   hashed name next/font generates per build. Read it back off a probe rather
+   than hard-coding this build's hash. */
+async function displayFont(size: number): Promise<string> {
+  const probe = document.createElement("span");
+  probe.style.cssText =
+    "position:absolute; visibility:hidden; font-family:var(--display)";
+  document.body.appendChild(probe);
+  const family = getComputedStyle(probe).fontFamily;
+  probe.remove();
+
+  const font = `900 ${size}px ${family}`;
+  /* Canvas doesn't wait on webfonts — it silently draws in whatever's
+     already there — so the stamp would come out in Impact on a cold load. */
+  try {
+    await document.fonts.load(font);
+  } catch {
+    /* Not worth failing a download over; it falls down the stack instead. */
+  }
+  return font;
+}
+
 function load(src: string, cors: boolean): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new window.Image();
@@ -75,6 +101,27 @@ export async function framePhoto(src: string): Promise<Blob> {
   ctx.fillStyle = INK;
   ctx.fillRect(-blockW / 2, -blockH / 2, blockW, blockH);
   ctx.drawImage(mark, -markW / 2, -markH / 2, markW, markH);
+  ctx.restore();
+
+  /* Year stamp, bottom-right. Centred on the band's mid-line, which is the
+     wordmark's centre too, so the pair sit level however tall the band is. */
+  const bandMidY = border + h + band / 2;
+  const stampSize = Math.round(band * 0.3);
+  ctx.font = await displayFont(stampSize);
+  ctx.fillStyle = INK;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "alphabetic";
+
+  const metrics = ctx.measureText(STAMP);
+  /* Centre the glyphs by their painted bounds, not the em box: digits have
+     no descender, so a "middle" baseline would hang the stamp low. */
+  const ascent = metrics.actualBoundingBoxAscent || stampSize * 0.72;
+  const descent = metrics.actualBoundingBoxDescent || 0;
+
+  ctx.save();
+  ctx.translate(frame.width - border - metrics.width / 2, bandMidY);
+  ctx.rotate(TILT);
+  ctx.fillText(STAMP, 0, (ascent - descent) / 2);
   ctx.restore();
 
   /* Resample the whole polaroid down to the output width. */
