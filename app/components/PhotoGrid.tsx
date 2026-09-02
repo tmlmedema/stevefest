@@ -247,25 +247,31 @@ export default function PhotoGrid({
                 black block the nav gives it — on bare paper it disappears.
                 The sizes hint keeps Next from fetching the 1920px variant
                 for a slot that renders about 145px wide. */}
-            <span className="lightbox-mark">
-              <Image
-                src="/assets/wordmark-nav.png"
-                alt=""
-                width={760}
-                height={187}
-                sizes="150px"
-              />
-            </span>
-            {/* Lives inside the frame, but it's DOM only — the download is a
-                fresh canvas render, so the button never lands in the file. */}
-            <button
-              type="button"
-              className="lightbox-save"
-              onClick={onDownload}
-              disabled={saving}
-            >
-              {saving ? "Preparing…" : "Download"}
-            </button>
+            {/* One row rather than two separately-pinned corners: the mark
+                and the button are different heights, so matching their
+                bottom edges left their centres out of line. */}
+            <div className="lightbox-footer">
+              <span className="lightbox-mark">
+                <Image
+                  src="/assets/wordmark-nav.png"
+                  alt=""
+                  width={760}
+                  height={187}
+                  sizes="150px"
+                />
+              </span>
+              {/* Lives inside the frame, but it's DOM only — the download is
+                  a fresh canvas render, so the button never lands in the
+                  file. */}
+              <button
+                type="button"
+                className="lightbox-save"
+                onClick={onDownload}
+                disabled={saving}
+              >
+                {saving ? "Preparing…" : "Download"}
+              </button>
+            </div>
           </figure>
         </div>
       )}

@@ -369,8 +369,14 @@ a.sup:hover{transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(20,16,15,.22
   max-width:calc(100vw - 5.8rem);
   max-height:calc(100vh - 10.9rem);
 }
+/* The wordmark and the download button share one row so they sit on a
+   common centre line. Pinned separately they matched at the bottom edge,
+   which read as crooked — the two are different heights. */
+.lightbox-footer{
+  position:absolute; left:.9rem; right:.9rem; bottom:1.5rem; z-index:1;
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+}
 .lightbox-mark{
-  position:absolute; left:.9rem; bottom:1.5rem; z-index:1;
   display:block; background:var(--ink); padding:.4rem .6rem; line-height:0;
   transform:rotate(-1.5deg); pointer-events:none;
 }
@@ -383,7 +389,8 @@ a.sup:hover{transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(20,16,15,.22
     max-width:calc(100vw - 3.2rem);
     max-height:calc(100vh - 7.1rem);
   }
-  .lightbox-mark{left:.6rem; bottom:1.1rem; padding:.3rem .45rem}
+  .lightbox-footer{left:.6rem; right:.6rem; bottom:1.1rem}
+  .lightbox-mark{padding:.3rem .45rem}
   .lightbox-mark img{height:26px}
 }
 /* Close and download share a bar; close used to position itself. */
@@ -397,7 +404,7 @@ a.sup:hover{transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(20,16,15,.22
 }
 /* Sits in the frame's bottom band, mirroring the wordmark across the width. */
 .lightbox-save{
-  position:absolute; right:.9rem; bottom:1.5rem; z-index:1;
+  flex:none;
   font-family:var(--display); font-weight:900; text-transform:uppercase;
   letter-spacing:.05em; font-size:.85rem; line-height:1;
   background:var(--pink); color:var(--paper); border:none;
@@ -411,7 +418,7 @@ a.sup:hover{transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(20,16,15,.22
 }
 @media (max-width:640px){
   .lightbox-actions{top:.7rem; right:.8rem; gap:.5rem}
-  .lightbox-save{right:.6rem; bottom:1.1rem; font-size:.72rem; padding:.5rem .7rem}
+  .lightbox-save{font-size:.72rem; padding:.5rem .7rem}
   .lightbox-close{font-size:2rem}
 }
 .lede{
