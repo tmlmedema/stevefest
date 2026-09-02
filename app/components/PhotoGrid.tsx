@@ -38,11 +38,13 @@ export default function PhotoGrid({
   }, [active]);
 
   /* The confirmation clears itself so the wall isn't left with a stale
-     "thanks" pinned over it. Errors stay put — the visitor has to act on
+     "thanks" pinned over it, but not before it's been read — it's a couple
+     of sentences, and a phone that's just come back from the photo picker
+     needs a moment to settle. Errors stay put: the visitor has to act on
      those, and picking another file replaces the toast anyway. */
   useEffect(() => {
     if (status !== "done") return;
-    const t = setTimeout(() => setStatus("idle"), 6500);
+    const t = setTimeout(() => setStatus("idle"), 11000);
     return () => clearTimeout(t);
   }, [status]);
 
