@@ -13,8 +13,6 @@ export default function Privacy() {
           Steve doesn&apos;t sell your data.
           <br />
           Steve barely understands data.
-          <br />
-          Privacy policy coming soon.
         </div>
       </div>
     </section>
