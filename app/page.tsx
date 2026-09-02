@@ -51,10 +51,10 @@ export default function Home() {
         </p>
 
         <div className="cta">
-          <!--<Link href="/schedule">See the schedule</Link>
+          <Link href="/schedule">See the schedule</Link>
           <Link className="hollow" href="/bands">
             Bands &amp; merch
-          </Link>-->
+          </Link
             <Link className="hollow" href="https://givebutter.com/stevefestii" terget="_blank">
             Fee a steve
           </Link>
