@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { BANDS } from "./lib/data";
 import Countdown from "./components/Countdown";
 import Lineup from "./components/Lineup";
 
@@ -38,7 +39,7 @@ export default function Home() {
         <p className="subhead">Shannon&apos;s Deli hosts the regional festival</p>
         <p className="stats">
           <span>
-            <b>57</b> bands
+            <b>{BANDS.length}</b> bands
           </span>
           <span>
             <b>3</b> stages
@@ -72,7 +73,7 @@ export default function Home() {
           <span className="eyebrow">No cover, never has been</span>
           <h2 className="give-head">Keep Steve Fest free</h2>
           <p className="give-copy">
-            Three days, three stages, 57 bands, and not one dollar at the door.
+            Three days, three stages, {BANDS.length} bands, and not one dollar at the door.
             Donations are what keep it that way &mdash; chip in whatever you&apos;ve got.
           </p>
           <a

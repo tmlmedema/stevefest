@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef } from "react";
-import { BANDS } from "../lib/data";
+import { BANDS, nameStyle } from "../lib/data";
 
 export default function Lineup() {
   const box = useRef<HTMLDivElement>(null);
@@ -36,8 +36,7 @@ export default function Lineup() {
   return (
     <div className="names" id="names" ref={box}>
       {BANDS.map((b) => {
-        const style =
-          b.n === "A FrumpyKnot" ? { textTransform: "none" as const } : undefined;
+        const style = nameStyle(b.n);
         return b.u ? (
           <a
             key={b.n}

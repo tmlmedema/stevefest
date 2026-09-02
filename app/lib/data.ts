@@ -124,7 +124,7 @@ export const DAYS: Day[] = [
   ]},
   {label:"Sunday", date:"Sept 13", iso:"2026-09-13", start:"11:00", lanes:[
     [{t:"12:30",n:"Take the Reins", len:30},{t:"13:30",n:"James the Boneless", len:30},{t:"14:30",n:"Shukin & the Ramblers", len:30},{t:"15:30",n:"Tone Zone Skam", len:30},{t:"16:30",n:"Los Kausas", len:30},{t:"17:30",n:"Tiger Uppercut", len:30}],
-    [{t:"12:00",n:"Steve's in the Band", len:30},{t:"13:00",n:"MG Bailey", len:30},{t:"14:00",n:"The Jobodys", len:30},{t:"15:00",n:"Counterfeit Goods", len:30},{t:"16:00",n:"Deadfoot", len:30},{t:"17:00",n:"MfoV", len:30}],
+    [{t:"12:00",n:"Steve's in the Band", len:30},{t:"13:00",n:"MG Bailey", len:30},{t:"14:00",n:"The Nobodies", len:30},{t:"15:00",n:"Counterfeit Goods", len:30},{t:"16:00",n:"Deadfoot", len:30},{t:"17:00",n:"MfoV", len:30}],
     [{t:"13:00",n:"Trevor Hill"},{t:"14:00",n:"Davey J"},{t:"15:00",n:"Noodle Brain"},{t:"16:00",n:"A FrumpyKnot"}]
   ]}
 ];
@@ -150,6 +150,11 @@ export const WALL_CLOSES: string | null = "2026-09-13T23:59:59";
 /* Default set length when a slot doesn't specify one, and the grid's row size — both in minutes. */
 export const DEFAULT_LEN = 45;
 export const UNIT = 5;
+
+/* Every band name is upper-cased by the CSS. This one is styled as written,
+   so it reads as a name rather than a shout. */
+export const nameStyle = (name: string) =>
+  name === "A FrumpyKnot" ? { textTransform: "none" as const } : undefined;
 
 export const byName: Record<string, Band> = Object.fromEntries(
   BANDS.map((b) => [b.n, b])

@@ -1,4 +1,4 @@
-import { BANDS } from "../lib/data";
+import { BANDS, nameStyle } from "../lib/data";
 
 const SORTED_BANDS = [...BANDS].sort((a, b) => a.n.localeCompare(b.n));
 
@@ -28,7 +28,7 @@ export default function BandShelf() {
 
         return (
           <article className={b.u ? "band" : "band dim"} key={b.n}>
-            <h3 style={b.n === "A FrumpyKnot" ? { textTransform: "none" } : undefined}>
+            <h3 style={nameStyle(b.n)}>
               {b.n}
             </h3>
             <span className="where">{b.base}</span>

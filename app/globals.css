@@ -96,7 +96,7 @@ nav a[aria-current="page"]{background:var(--ink); color:var(--yellow)}
   nav a:last-child{border-bottom-color:transparent}
   nav a[aria-current="page"]{border-bottom-color:transparent}
 }
-a:focus-visible,button:focus-visible{outline:3px solid var(--pink); outline-offset:3px}
+a:focus-visible,button:focus-visible{outline:0;}
 
 /* ---------- shared page furniture ---------- */
 .view{display:block; padding:0 0 5rem}
@@ -138,8 +138,16 @@ h2.head{
   transition:transform .1s, box-shadow .1s;
 }
 .cta a.hollow{background:transparent; border-color:var(--paper); color:var(--paper); box-shadow:none}
-.cta a:hover{transform:translate(3px,3px); box-shadow:3px 3px 0 rgba(0,0,0,.45)}
-.cta a.hollow:hover{background:var(--paper); color:var(--ink); transform:none}
+/* Hollow buttons press the same way as the solid one — nudge and shadow, never
+   a colour swap. They used to invert to a white block on hover, which latched
+   after a click or tap and sat there looking stuck.
+
+   Gated so only devices with a real pointer get the nudge at all; on touch
+   :hover sticks after the finger leaves. Keyboard focus is the outline in the
+   base styles, which deliberately doesn't repaint the button. */
+@media (hover:hover) and (pointer:fine){
+  .cta a:hover{transform:translate(3px,3px); box-shadow:3px 3px 0 rgba(0,0,0,.45)}
+}
 
 /* countdown */
 .countdown{

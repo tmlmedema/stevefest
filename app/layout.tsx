@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Big_Shoulders, Anton, Archivo, Bitter } from "next/font/google";
+import { BANDS } from "./lib/data";
 import Nav from "./components/Nav";
 import "./globals.css";
 
@@ -34,8 +35,7 @@ const bitter = Bitter({
 
 export const metadata: Metadata = {
   title: "Steve Fest II — Downtown Lombard, Sept 11–13 2026",
-  description:
-    "Steve Fest II at Shannon's Deli, 11 S Park Ave, Lombard IL. Three days, three stages, 46 bands. Free, all ages. Sept 11–13, 2026.",
+  description: `Steve Fest II at Shannon's Deli, 11 S Park Ave, Lombard IL. Three days, three stages, ${BANDS.length} bands. Free, all ages. Sept 11–13, 2026.`,
 };
 
 export default function RootLayout({

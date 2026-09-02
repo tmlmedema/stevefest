@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DAYS, DEFAULT_LEN, STAGES, UNIT, byName } from "../lib/data";
+import { DAYS, DEFAULT_LEN, STAGES, UNIT, byName, nameStyle } from "../lib/data";
 import { defaultDayIndex } from "../lib/schedule";
 
 const toMin = (t: string) =>
@@ -141,10 +141,7 @@ export default function ScheduleGrid() {
               };
               const inner = (
                 <>
-                  <span
-                    className="n"
-                    style={slot.n === "A FrumpyKnot" ? { textTransform: "none" } : undefined}
-                  >
+                  <span className="n" style={nameStyle(slot.n)}>
                     {slot.n}
                   </span>
                   <span className="t">
