@@ -59,12 +59,6 @@ export default function Home() {
 
         <Countdown />
 
-        <div style={{ height: "3.2rem" }} />
-
-        <div className="sheet lineup">
-          <Lineup />
-        </div>
-
         <div className="sheet give">
           <span className="eyebrow">No cover, never has been</span>
           <h2 className="give-head">Keep Steve Fest free</h2>
@@ -81,6 +75,12 @@ export default function Home() {
             Donate to Steve Fest
           </a>
           <p className="give-note">Givebutter &middot; opens in a new tab</p>
+        </div>
+
+        <div style={{ height: "3.2rem" }} />
+
+        <div className="sheet lineup">
+          <Lineup />
         </div>
 
         <div className="sheet supporters">
