@@ -113,8 +113,8 @@ export const STAGES = ["Main Stage", "Side Stage", "Rooftop Stage"];
 
 export const DAYS: Day[] = [
   {label:"Friday", date:"Sept 11", iso:"2026-09-11", start:"16:00", lanes:[
-    [{t:"17:00",n:"From the Start",len:30},{t:"18:00",n:"S.M.F.C.",len:30},{t:"19:00",n:"The Come Alongs",len:30},{t:"20:00",n:"Steve's in the Band",len:30},{t:"21:00",n:"The Horrids",len:30},{t:"22:00",n:"La Armada",len:30}],
-    [{t:"17:30",n:"Cherry Phox",len:30},{t:"18:30",n:"Low Range",len:30},{t:"19:30",n:"Alex Kasznel & the Board of Directors",len:30},{t:"20:30",n:"Acton's Dictum",len:30},{t:"21:30",n:"Anger.",len:30}],
+    [{t:"17:00",n:"From the Start",len:30},{t:"18:00",n:"S.M.F.C.",len:30},{t:"19:00",n:"The Come Alongs",len:30},{t:"20:00",n:"Steve's in the Band",len:30},{t:"21:00",n:"The Horrids",len:45},{t:"22:15",n:"La Armada",len:45}],
+    [{t:"17:30",n:"Cherry Phox",len:30},{t:"18:30",n:"Low Range",len:30},{t:"19:30",n:"Alex Kasznel & the Board of Directors",len:30},{t:"20:30",n:"Acton's Dictum",len:30},{t:"21:45",n:"Anger.",len:30}],
     [{t:"17:00",n:"Keith Bondi"},{t:"18:00",n:"EL Fa"},{t:"19:00",n:"S.M.F.C."},{t:"20:00",n:"Bill Nelson"},{t:"21:00",n:"The Assistant Managers"}]
   ]},
   {label:"Saturday", date:"Sept 12", iso:"2026-09-12", start:"11:00", lanes:[
