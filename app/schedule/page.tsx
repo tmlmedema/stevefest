@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ScheduleGrid from "../components/ScheduleGrid";
+import GiveCta from "../components/GiveCta";
 
 export const metadata: Metadata = {
   title: "Schedule — Steve Fest II",
@@ -25,6 +26,8 @@ export default function Schedule() {
             Closing set
           </span>
         </p>
+
+        <GiveCta />
       </div>
     </section>
   );

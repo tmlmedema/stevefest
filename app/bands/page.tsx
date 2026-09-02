@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import BandShelf from "../components/BandShelf";
+import GiveCta from "../components/GiveCta";
 
 export const metadata: Metadata = {
   title: "Bands — Steve Fest II",
@@ -13,6 +14,7 @@ export default function Bands() {
       <div className="wrap page-top">
         <h2 className="head">The bands</h2>
         <BandShelf />
+        <GiveCta />
       </div>
     </section>
   );

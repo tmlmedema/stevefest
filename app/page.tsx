@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { BANDS } from "./lib/data";
 import Countdown from "./components/Countdown";
+import GiveCta from "./components/GiveCta";
 import Lineup from "./components/Lineup";
 
 const SPONSORS = [
@@ -69,22 +70,7 @@ export default function Home() {
           <Lineup />
         </div>
 
-        <div className="sheet give">
-          <span className="eyebrow">No cover, never has been</span>
-          <h2 className="give-head">Keep Steve Fest free</h2>
-          <p className="give-copy">
-            Three days, three stages, {BANDS.length} bands, and not one dollar at the door.
-            Donations are what keep it that way &mdash; chip in whatever you&apos;ve got.
-          </p>
-          <a
-            className="give-btn"
-            href="https://givebutter.com/stevefestii"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Donate to Steve Fest
-          </a>
-        </div>
+        <GiveCta />
 
         <div className="sheet supporters">
           <span className="supporters-title">Steve Couldn&apos;t Do It Without Our Sponsors</span>

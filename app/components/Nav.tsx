@@ -12,8 +12,11 @@ const LINKS = [
   { href: "/photos", label: "Photos" },
   {
     href: "https://givebutter.com/stevefestii",
-    label: "Donations",
+    label: "Feed a steve",
     external: true,
+    /* Burger menu only. On wide screens the footer link and the home page's
+       CTAs already cover donating, and the nav row reads better without it. */
+    mobileOnly: true,
   },
 ];
 
@@ -73,6 +76,7 @@ export default function Nav() {
             l.external ? (
               <a
                 key={l.href}
+                className={l.mobileOnly ? "nav-mobile-only" : undefined}
                 href={l.href}
                 target="_blank"
                 rel="noopener noreferrer"

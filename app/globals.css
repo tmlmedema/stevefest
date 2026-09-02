@@ -55,11 +55,15 @@ nav a:hover{border-color:var(--ink)}
 nav a[aria-current="page"]{background:var(--ink); color:var(--yellow)}
 
 /* ---------- mobile: hamburger that folds into an X ---------- */
-/* Breakpoint is 768px, not the 640px the rest of the page uses: the five nav
-   items plus the wordmark stop fitting on one line around 690px, and the tape
-   was folding to a second row before the burger ever appeared. */
+/* Breakpoint is 768px, not the 640px the rest of the page uses: the nav items
+   plus the wordmark stop fitting on one line well before then, and the tape was
+   folding to a second row before the burger ever appeared. */
 .burger{display:none}
+/* The donate link lives in the burger menu only — hidden by default, switched
+   back on inside the mobile block below, the same way the burger itself is. */
+.nav-mobile-only{display:none}
 @media (max-width:768px){
+  .nav-mobile-only{display:block}
   .tape .wrap{flex-wrap:nowrap; gap:1rem}
   .burger{
     display:block; margin-left:auto; flex:none;
