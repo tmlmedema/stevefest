@@ -37,6 +37,15 @@ export default function PhotoGrid({
     setSaveError("");
   }, [active]);
 
+  /* The confirmation clears itself so the wall isn't left with a stale
+     "thanks" pinned over it. Errors stay put — the visitor has to act on
+     those, and picking another file replaces the toast anyway. */
+  useEffect(() => {
+    if (status !== "done") return;
+    const t = setTimeout(() => setStatus("idle"), 6500);
+    return () => clearTimeout(t);
+  }, [status]);
+
   useEffect(() => {
     if (!active) return;
     const onKey = (e: KeyboardEvent) => {
@@ -188,14 +197,27 @@ export default function PhotoGrid({
         </p>
       )}
 
-      {status === "done" && (
-        <p className="upload-done">
-          Thanks — that's in. It goes up once one of the organisers has had a
-          look at it.
-        </p>
+      {(status === "done" || status === "error") && (
+        <div
+          className={status === "done" ? "toast toast-ok" : "toast toast-bad"}
+          role={status === "done" ? "status" : "alert"}
+          aria-live={status === "done" ? "polite" : "assertive"}
+        >
+          <p className="toast-text">
+            {status === "done"
+              ? "Steve has collected your photo! It gets a quick look from an organiser before it lands on the wall — thanks for your submission."
+              : error}
+          </p>
+          <button
+            type="button"
+            className="toast-close"
+            aria-label="Dismiss"
+            onClick={() => setStatus("idle")}
+          >
+            ×
+          </button>
+        </div>
       )}
-
-      {status === "error" && <p className="upload-error">{error}</p>}
 
       {active && (
         <div className="lightbox" onClick={() => setActive(null)}>

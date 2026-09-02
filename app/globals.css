@@ -306,7 +306,6 @@ a.sup:hover{transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(20,16,15,.22
 
 /* ---------- SCHEDULE ---------- */
 .page-top{padding:clamp(2rem,5vw,3.5rem) 0 1.6rem}
-.upload-error{color:var(--pink); font-family:var(--mono); font-size:.78rem; margin-top:.8rem}
 .wall-closed{
   font-family:var(--mono); font-size:.8rem; letter-spacing:.06em; color:var(--paper-dim);
   border-left:4px solid var(--orange); padding:.5rem 0 .5rem .9rem; margin:1.8rem 0 0;
@@ -637,9 +636,37 @@ a.sup:hover{transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(20,16,15,.22
 
 .admin-clear{color:var(--green)}
 
-.upload-done{
-  font-family:var(--mono); font-size:.78rem; color:var(--green);
-  margin-top:.8rem; letter-spacing:.04em;
+/* ---------- UPLOAD TOAST ---------- */
+/* The upload confirmation used to sit under the photo grid, which on a phone
+   is a long scroll below the fold — exactly where nobody is looking the
+   moment they need to be told the photo is queued for review. Pinned to the
+   viewport instead, clear of the iPhone home indicator. Below the lightbox
+   (z-index 100) on purpose, above the sticky tape (60). */
+.toast{
+  position:fixed; left:50%; transform:translateX(-50%);
+  bottom:calc(1rem + env(safe-area-inset-bottom));
+  z-index:80; width:min(430px,calc(100vw - 2rem));
+  display:flex; align-items:flex-start; gap:.7rem;
+  background:var(--paper); color:var(--ink);
+  border:4px solid var(--ink); border-left-width:10px;
+  box-shadow:8px 8px 0 rgba(0,0,0,.45);
+  padding:.85rem 1rem;
+  animation:toast-in .22s ease-out;
+}
+.toast-ok{border-left-color:var(--green)}
+.toast-bad{border-left-color:var(--pink)}
+.toast-text{
+  margin:0; font-family:var(--mono); font-size:.84rem;
+  line-height:1.45; letter-spacing:.02em;
+}
+.toast-close{
+  flex:none; margin-left:auto; background:none; border:none; cursor:pointer;
+  font-family:var(--display); font-weight:900; font-size:1.4rem; line-height:1;
+  color:var(--ink); padding:0 .1rem;
+}
+@keyframes toast-in{
+  from{opacity:0; transform:translate(-50%,14px)}
+  to{opacity:1; transform:translate(-50%,0)}
 }
 
 footer{
