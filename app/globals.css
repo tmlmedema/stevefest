@@ -628,7 +628,13 @@ footer .footer-logo{
   height:18px; width:auto; vertical-align:-4px; margin-right:.5rem;
   filter:grayscale(1); opacity:.85; transform:rotate(-1.5deg);
 }
-footer a{color:inherit; text-decoration:none}
+/* Underlined on purpose: these sit inside a run of plain text separated by
+   dots, so without the rule nothing marks them as the only clickable things
+   in the footer. Offset keeps the line clear of the mono descenders. */
+footer a{
+  color:inherit; text-decoration:underline;
+  text-decoration-thickness:1px; text-underline-offset:.28em;
+}
 footer a:hover, footer a:focus-visible{color:var(--paper)}
 
 @media (max-width:640px){
