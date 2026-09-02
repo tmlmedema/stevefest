@@ -56,7 +56,7 @@ export default function Home() {
             Bands &amp; merch
           </Link
             <Link className="hollow" href="https://givebutter.com/stevefestii" terget="_blank">
-            Fee a steve
+            Feed a steve
           </Link>
         </div>
 
