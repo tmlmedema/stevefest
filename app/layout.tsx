@@ -66,7 +66,14 @@ export default function RootLayout({
               </span>
               <span>
                 Sept 11–13, 2026 · Free · All ages ·{" "}
-                <Link href="/privacy">Privacy</Link>
+                <a
+                  href="https://givebutter.com/stevefestii"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Donations
+                </a>{" "}
+                · <Link href="/privacy">Privacy</Link>
               </span>
             </footer>
           </div>
