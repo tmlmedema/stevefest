@@ -271,7 +271,7 @@ h2.head{
   text-decoration:none; transition:transform .1s, box-shadow .1s;
 }
 a.sup:hover{transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(20,16,15,.22)}
-.sup img,.sup svg{height:88px; width:auto; max-width:100%; display:block}
+.sup img,.sup svg{height:88px; width:auto; max-width:100%; display:block; object-fit: contain;}
 
 /* ---------- COMING SOON (used by orphan/stub pages, e.g. /privacy) ---------- */
 .coming-soon{
