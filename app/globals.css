@@ -55,8 +55,11 @@ nav a:hover{border-color:var(--ink)}
 nav a[aria-current="page"]{background:var(--ink); color:var(--yellow)}
 
 /* ---------- mobile: hamburger that folds into an X ---------- */
+/* Breakpoint is 768px, not the 640px the rest of the page uses: the five nav
+   items plus the wordmark stop fitting on one line around 690px, and the tape
+   was folding to a second row before the burger ever appeared. */
 .burger{display:none}
-@media (max-width:640px){
+@media (max-width:768px){
   .tape .wrap{flex-wrap:nowrap; gap:1rem}
   .burger{
     display:block; margin-left:auto; flex:none;
