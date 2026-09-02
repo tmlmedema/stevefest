@@ -46,11 +46,11 @@ export default function Lineup() {
             data-store="1"
             style={style}
           >
-            {b.n}
+            <span className="nm">{b.n}</span>
           </a>
         ) : (
           <Link key={b.n} href="/bands" data-store="0" style={style}>
-            {b.n}
+            <span className="nm">{b.n}</span>
           </Link>
         );
       })}

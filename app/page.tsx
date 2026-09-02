@@ -64,8 +64,6 @@ export default function Home() {
 
         <Countdown />
 
-        <div style={{ height: "3.2rem" }} />
-
         <div className="sheet lineup">
           <Lineup />
         </div>

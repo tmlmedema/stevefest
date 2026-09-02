@@ -208,28 +208,31 @@ h2.head{
 .stats b{color:var(--yellow); font-weight:700}
 
 /* the lineup block — the poster's justified name grid, made live */
-.lineup{padding:1.6rem clamp(1rem,3vw,2.4rem) 1.8rem}
+.lineup{padding:1.6rem clamp(1rem,3vw,2.4rem) 1.8rem; margin-top: 3.2rem;}
 .names{
   font-family:var(--display); font-weight:800; text-transform:uppercase;
   font-size:clamp(1.15rem,3.5vw,2.3rem); line-height:1.06; letter-spacing:-.005em;
   display:flex; flex-wrap:wrap; align-items:baseline; justify-content:center;
   gap:0 .55em; text-align:center;
 }
-.names a{
-  text-decoration:none; color:var(--ink); position:relative; padding:0 .05em;
+.names a{text-decoration:none; color:var(--ink); position:relative}
+/* The name gets its own span so the hover block hugs the text. The separator
+   is an ::after on the link, which would otherwise sit inside that block and
+   have to be repainted pink to hide it against its own background. */
+.names a .nm{
+  padding:0 .05em;
   transition:color .12s, background-color .12s;
 }
 .names a::after{
   content:"■"; color:var(--pink); font-size:.42em; margin-left:.5em;
-  vertical-align:.28em; transition:color .12s;
+  vertical-align:.28em; pointer-events:none;
 }
 .names a:last-of-type::after,
 .names a.eol::after{content:""}
-.names a:hover,.names a:focus-visible{background:var(--pink); color:var(--paper)}
-.names a:hover::after{color:var(--pink)}
+.names a:hover .nm,.names a:focus-visible .nm{background:var(--pink); color:var(--paper)}
 .names a[data-store="0"]{color:#8A8493}
-.names a[data-store="0"]:hover,
-.names a[data-store="0"]:focus-visible{color:var(--paper)}
+.names a[data-store="0"]:hover .nm,
+.names a[data-store="0"]:focus-visible .nm{color:var(--paper)}
 .tail{
   font-family:var(--display); font-weight:700; text-transform:uppercase;
   font-size:clamp(.85rem,2vw,1.15rem); letter-spacing:.03em;
