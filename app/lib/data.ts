@@ -37,6 +37,10 @@ export type Slot = {
 export type Day = {
   label: string;
   date: string;
+  /** Who's credited under the day tabs while this day is showing. Leave it
+      off and the day gets no credit line. Names should match a SPONSORS entry
+      — that's where the link comes from, and the logo if this ever wants one. */
+  sponsors?: string[];
   /** "YYYY-MM-DD" — the calendar date, for "is the fest on today?" */
   iso: string;
   /** 24-hour "HH:MM" — where the grid's time axis starts */
@@ -112,22 +116,48 @@ export const BANDS: Band[] = [
 export const STAGES = ["Main Stage", "Side Stage", "Rooftop Stage"];
 
 export const DAYS: Day[] = [
-  {label:"Friday", date:"Sept 11", iso:"2026-09-11", start:"16:00", lanes:[
+  {label:"Friday", date:"Sept 11", iso:"2026-09-11", start:"16:00", sponsors:["Carpool"], lanes:[
     [{t:"17:00",n:"From the Start",len:30},{t:"18:00",n:"S.M.F.C.",len:30},{t:"19:00",n:"The Come Alongs",len:30},{t:"20:00",n:"Steve's in the Band",len:30},{t:"21:00",n:"The Horrids",len:45},{t:"22:15",n:"La Armada",len:45}],
     [{t:"17:30",n:"Cherry Phox",len:30},{t:"18:30",n:"Low Range",len:30},{t:"19:30",n:"Alex Kasznel & the Board of Directors",len:30},{t:"20:30",n:"Acton's Dictum",len:30},{t:"21:45",n:"Anger.",len:30}],
     [{t:"17:00",n:"Keith Bondi"},{t:"18:00",n:"EL Fa"},{t:"19:00",n:"S.M.F.C."},{t:"20:00",n:"Bill Nelson"},{t:"21:00",n:"The Assistant Managers"}]
   ]},
-  {label:"Saturday", date:"Sept 12", iso:"2026-09-12", start:"11:00", lanes:[
+  {label:"Saturday", date:"Sept 12", iso:"2026-09-12", start:"11:00", sponsors:["Dobies Printing LLC"], lanes:[
     [{t:"12:00",n:"Dead Freddie"},{t:"13:10",n:"13-Monsters",len:25},{t:"14:00",n:"Graygarden",len:25},{t:"14:50",n:"Dracula Johnson",len:30},{t:"15:45",n:"The Helsings",len:30},{t:"16:40",n:"The Foleys",len:30},{t:"17:35",n:"After the Fight",len:30},{t:"18:30",n:"The Larvettes",len:25},{t:"19:20",n:"The Steves",len:30},{t:"20:10",n:"Sex Dream",len:30},{t:"21:10",n:"Jukebox Rejects",len:30},{t:"22:10",n:"Bill Nelson",len:45}],
     [{t:"12:45",n:"Fishfood",len:25},{t:"13:40",n:"Narwhal Express",len:25},{t:"14:25",n:"The Rip Ups",len:25},{t:"15:20",n:"Misunderstood",len:25},{t:"16:15",n:"Goodbye Sunshine",len:25},{t:"17:10",n:"Tongan Death Grip",len:25},{t:"18:05",n:"Noodle Brain",len:25},{t:"18:55",n:"Tÿre Fÿre",len:25},{t:"19:50",n:"Zbyszko Cracker",len:20},{t:"20:40",n:"Rabid Wreck",len:30},{t:"21:40",n:"The Turdles",len:30}],
     [{t:"13:10",n:"Dead End On Sarah"},{t:"14:00",n:"Gunnar Linden"},{t:"15:00",n:"PUGZ"},{t:"16:00",n:"Hesterménage à Trois"},{t:"17:00",n:"Aaron Williams Performing The Wooz"},{t:"18:00",n:"Dracula Johnson"},{t:"19:00",n:"The Nobodies"},{t:"20:00",n:"Cherry Phox"}]
   ]},
-  {label:"Sunday", date:"Sept 13", iso:"2026-09-13", start:"11:00", lanes:[
+  {label:"Sunday", date:"Sept 13", iso:"2026-09-13", start:"11:00", sponsors:["JL Vintage","Eating Soup Daily"], lanes:[
     [{t:"12:30",n:"Take the Reins", len:30},{t:"13:30",n:"James the Boneless", len:30},{t:"14:30",n:"Shukin & the Ramblers", len:30},{t:"15:30",n:"Tone Zone Skam", len:30},{t:"16:30",n:"Los Kausas", len:30},{t:"17:30",n:"Tiger Uppercut", len:30}],
     [{t:"12:00",n:"Steve's in the Band", len:30},{t:"13:00",n:"MG Bailey", len:30},{t:"14:00",n:"The Nobodies", len:30},{t:"15:00",n:"Counterfeit Goods", len:30},{t:"16:00",n:"Deadfoot", len:30},{t:"17:00",n:"MfoV", len:30}],
     [{t:"13:00",n:"Trevor Hill"},{t:"14:00",n:"Davey J"},{t:"15:00",n:"Noodle Brain"},{t:"16:00",n:"A FrumpyKnot"}]
   ]}
 ];
+
+export type Sponsor = {
+  /** name as it should read — also the logo's alt text */
+  name: string;
+  /** path under /public */
+  src: string;
+  /** intrinsic pixel size, so the browser reserves the right box up front */
+  w: number;
+  h: number;
+  /** their site, or null if they haven't got one */
+  href: string | null;
+};
+
+/* The logos are artwork on a white ground rather than transparent marks, so
+   wherever they land they need a paper tile behind them. */
+export const SPONSORS: Sponsor[] = [
+  { name: "Shannon's Deli", src: "/assets/sponsors/shannons-deli.png", w: 2560, h: 806, href: "https://shannonsdeli.net/" },
+  { name: "Blind Corner Brewery", src: "/assets/sponsors/blind-corner-brewery.png", w: 1460, h: 1268, href: "https://www.blindcornerbrewery.com/" },
+  { name: "Punk Rock Saves Lives", src: "/assets/logo-punk-rock-saves-lives.png", w: 360, h: 360, href: "https://www.punkrocksaveslives.org/" },
+  { name: "Carpool", src: "/assets/sponsors/carpool.png", w: 336, h: 336, href: null },
+  { name: "Dobies Printing LLC", src: "/assets/sponsors/dobies-printing.png", w: 500, h: 500, href: "https://dobiesprinting.com/" },
+  { name: "Eating Soup Daily", src: "/assets/sponsors/eating-soup-daily.jpg", w: 1080, h: 1080, href: "https://www.tiktok.com/@nagernadnerb" },
+  { name: "JL Vintage", src: "/assets/sponsors/jl-vintage.jpg", w: 1304, h: 1600, href: "https://www.jlvintage.com/" },
+  { name: "I Heart DTL", src: "/assets/dtl-heart.svg", w: 1254, h: 1254, href: "https://iheartdtl.com/" },
+];
+
 
 /* Doors: Friday Sept 11, 5:00 PM. */
 export const DOORS = "2026-09-11T17:00:00";
@@ -158,4 +188,8 @@ export const nameStyle = (name: string) =>
 
 export const byName: Record<string, Band> = Object.fromEntries(
   BANDS.map((b) => [b.n, b])
+);
+
+export const sponsorByName: Record<string, Sponsor> = Object.fromEntries(
+  SPONSORS.map((s) => [s.name, s])
 );

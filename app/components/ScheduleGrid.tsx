@@ -1,7 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { DAYS, DEFAULT_LEN, STAGES, UNIT, byName, nameStyle } from "../lib/data";
+import { Fragment, useEffect, useState } from "react";
+import {
+  DAYS,
+  DEFAULT_LEN,
+  STAGES,
+  UNIT,
+  byName,
+  nameStyle,
+  sponsorByName,
+} from "../lib/data";
 import { defaultDayIndex } from "../lib/schedule";
 
 const toMin = (t: string) =>
@@ -24,6 +32,21 @@ const ROOFTOP_NOTE = (
   </p>
 );
 
+/* The day names its sponsors and SPONSORS is where the link lives, so a name
+   that matches nothing there still gets its credit — just without a link.
+   Neither does one whose entry has no site of its own. */
+function SponsorName({ name }: { name: string }) {
+  const href = sponsorByName[name]?.href ?? null;
+
+  return href ? (
+    <a href={href} target="_blank" rel="noopener noreferrer">
+      {name}
+    </a>
+  ) : (
+    <b>{name}</b>
+  );
+}
+
 export default function ScheduleGrid() {
   /* Opens on the first day so the server and the browser agree on the first
      paint, then moves to today if today is one of the three. */
@@ -40,6 +63,8 @@ export default function ScheduleGrid() {
       ...d.lanes.flat().map((slot) => toMin(slot.t) + (slot.len ?? DEFAULT_LEN))
     ) + 30;
   const rows = Math.ceil((end - s0) / UNIT);
+
+  const sponsors = d.sponsors ?? [];
 
   return (
     <>
@@ -66,11 +91,19 @@ export default function ScheduleGrid() {
         </a>
       </div>
 
-      {/* Text only to start — the logos from the home page's sponsor row are
-          the next thing to try here. */}
-      <p className="sched-sponsor">
-        Sponsored by: <b>JL Vintage</b>
-      </p>
+      {/* Reads off the day being shown, so switching tabs switches the
+          credit. Days without a sponsor simply don't get the line. */}
+      {sponsors.length > 0 && (
+        <p className="sched-sponsor">
+          Sponsored by:{" "}
+          {sponsors.map((name, i) => (
+            <Fragment key={name}>
+              {i > 0 && (i === sponsors.length - 1 ? " & " : ", ")}
+              <SponsorName name={name} />
+            </Fragment>
+          ))}
+        </p>
+      )}
 
       <div className="grid-scroll">
         <div
