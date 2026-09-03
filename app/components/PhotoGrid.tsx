@@ -188,6 +188,14 @@ export default function PhotoGrid({
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={p.url} alt="" loading="lazy" />
+            {/* Decoration, not a control — it advertises the download
+                waiting in the lightbox. The tile itself is the button. */}
+            <span className="polaroid-save" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M12 3v10m0 0 4-4m-4 4-4-4" />
+                <path d="M4 17v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2" />
+              </svg>
+            </span>
           </button>
         ))}
       </div>

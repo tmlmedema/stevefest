@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 /* Seeded example so the wall isn't empty on day one. */
-const EXAMPLE_PHOTO = { url: "/photo-example.png", pathname: "example" };
+const EXAMPLE_PHOTO = { url: "/photo-example.jpg", pathname: "example" };
 
 async function getPhotos() {
   try {

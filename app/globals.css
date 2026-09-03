@@ -348,6 +348,7 @@ a.sup:hover{transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(20,16,15,.22
   .upload-tile .plus-circle{width:32px; height:32px; font-size:1.3rem}
 }
 .polaroid{
+  position:relative;
   display:block; width:100%; background:var(--paper); padding:.6rem .6rem 2.4rem;
   border:none; box-shadow:0 10px 20px rgba(0,0,0,.4); cursor:pointer;
   transform:rotate(var(--r,0deg));
@@ -355,6 +356,19 @@ a.sup:hover{transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(20,16,15,.22
 }
 .polaroid:hover{transform:rotate(0deg) scale(1.04); z-index:2}
 .polaroid img{width:100%; aspect-ratio:1/1; object-fit:cover; display:block; background:var(--grape)}
+/* A badge in the white band, not a control: it tells the visitor a
+   download is waiting behind the tile. Clicks belong to the tile. */
+.polaroid-save{
+  position:absolute; left:.6rem; bottom:.5rem; pointer-events:none;
+  width:26px; height:26px;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--pink); color:var(--paper);
+}
+.polaroid-save svg{
+  width:15px; height:15px; display:block;
+  fill:none; stroke:currentColor; stroke-width:2;
+  stroke-linecap:round; stroke-linejoin:round;
+}
 
 .lightbox{
   position:fixed; inset:0; z-index:100; background:rgba(0,0,0,.88);
