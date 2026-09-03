@@ -10,6 +10,7 @@ const LINKS = [
   { href: "/schedule", label: "Schedule" },
   { href: "/bands", label: "Bands" },
   { href: "/photos", label: "Photos" },
+  { href: "/#sponsors", label: "Sponsors" },
   {
     href: "https://givebutter.com/stevefestii",
     label: "Feed a steve",
@@ -20,7 +21,7 @@ const LINKS = [
   },
 ];
 
-export default function Nav() {
+export default function Nav({ admin = false }: { admin?: boolean }) {
   const path = usePathname();
   const [open, setOpen] = useState(false);
   const tape = useRef<HTMLDivElement>(null);
@@ -94,6 +95,18 @@ export default function Nav() {
                 {l.label}
               </Link>
             ),
+          )}
+          {/* Only signed-in allowlisted accounts ever see this, so it's a
+              shortcut rather than a door — everyone else's nav is unchanged. */}
+          {admin && (
+            <Link
+              className="nav-admin"
+              href="/admin"
+              aria-current={path.startsWith("/admin") ? "page" : undefined}
+              onClick={() => setOpen(false)}
+            >
+              Admin
+            </Link>
           )}
         </nav>
       </div>

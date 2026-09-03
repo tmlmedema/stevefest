@@ -1,20 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BANDS } from "./lib/data";
+import { BANDS, SPONSORS } from "./lib/data";
 import Countdown from "./components/Countdown";
 import GiveCta from "./components/GiveCta";
 import Lineup from "./components/Lineup";
-
-const SPONSORS = [
-  { name: "Shannon's Deli", src: "/assets/sponsors/shannons-deli.png", w: 2560, h: 806, href: "https://shannonsdeli.net/" },
-  { name: "Blind Corner Brewery", src: "/assets/sponsors/blind-corner-brewery.png", w: 1460, h: 1268, href: "https://www.blindcornerbrewery.com/" },
-  { name: "Punk Rock Saves Lives", src: "/assets/logo-punk-rock-saves-lives.png", w: 360, h: 360, href: "https://www.punkrocksaveslives.org/" },
-  { name: "Carpool", src: "/assets/sponsors/carpool.png", w: 336, h: 336, href: null },
-  { name: "Dobies Printing LLC", src: "/assets/sponsors/dobies-printing.png", w: 500, h: 500, href: "https://dobiesprinting.com/" },
-  { name: "Eating Soup Daily", src: "/assets/sponsors/eating-soup-daily.jpg", w: 1080, h: 1080, href: "https://www.tiktok.com/@nagernadnerb" },
-  { name: "JL Vintage", src: "/assets/sponsors/jl-vintage.jpg", w: 1304, h: 1600, href: "https://www.jlvintage.com/" },
-  { name: "I Heart DTL", src: "/assets/dtl-heart.svg", w: 1254, h: 1254, href: "https://iheartdtl.com/" },
-];
 
 export default function Home() {
   return (
@@ -70,7 +59,7 @@ export default function Home() {
 
         <GiveCta />
 
-        <div className="sheet supporters">
+        <div className="sheet supporters" id="sponsors">
           <span className="supporters-title">Steve Couldn&apos;t Do It Without Our Sponsors</span>
           <div className="sup-row">
             {SPONSORS.map((sp) => {

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Big_Shoulders, Anton, Archivo, Bitter } from "next/font/google";
+import { auth, isAdmin } from "@/auth";
 import { BANDS } from "./lib/data";
 import Nav from "./components/Nav";
 import "./globals.css";
@@ -38,11 +39,16 @@ export const metadata: Metadata = {
   description: `Steve Fest II at Shannon's Deli, 11 S Park Ave, Lombard IL. Three days, three stages, ${BANDS.length} bands. Free, all ages. Sept 11–13, 2026.`,
 };
 
-export default function RootLayout({
+/* The nav's Admin link is the only reason the shell needs a session, and it's
+   the same allowlist check the panel itself makes — so a link that shows up is
+   a link that works. */
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await auth();
+
   return (
     <html
       lang="en"
@@ -50,7 +56,7 @@ export default function RootLayout({
     >
       <body>
         <div className="page-shell">
-          <Nav />
+          <Nav admin={isAdmin(session?.user?.email)} />
           <main>{children}</main>
           <div className="wrap">
             <footer>
@@ -71,7 +77,7 @@ export default function RootLayout({
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Donations
+                  Feed A Steve
                 </a>{" "}
                 · <Link href="/privacy">Privacy</Link>
               </span>
