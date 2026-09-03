@@ -66,6 +66,12 @@ export default function ScheduleGrid() {
         </a>
       </div>
 
+      {/* Text only to start — the logos from the home page's sponsor row are
+          the next thing to try here. */}
+      <p className="sched-sponsor">
+        Sponsored by: <b>JL Vintage</b>
+      </p>
+
       <div className="grid-scroll">
         <div
           className="grid"

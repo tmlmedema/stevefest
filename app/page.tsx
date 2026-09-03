@@ -70,7 +70,7 @@ export default function Home() {
 
         <GiveCta />
 
-        <div className="sheet supporters">
+        <div className="sheet supporters" id="sponsors">
           <span className="supporters-title">Steve Couldn&apos;t Do It Without Our Sponsors</span>
           <div className="sup-row">
             {SPONSORS.map((sp) => {
