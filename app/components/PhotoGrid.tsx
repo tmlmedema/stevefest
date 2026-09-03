@@ -32,9 +32,39 @@ export default function PhotoGrid({
   const busy = status === "compressing" || status === "uploading";
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState("");
+  const [file, setFile] = useState<File | null>(null);
 
+  /* Rendered when the lightbox opens, not when Download is pressed. iOS only
+     allows navigator.share while the tap's user activation is still live, and
+     framePhoto's image loads and toBlob are long enough to lose it — by the
+     time a blob came back the share sheet would be refused. */
   useEffect(() => {
     setSaveError("");
+    setFile(null);
+    if (!active) return;
+
+    let stale = false;
+    setSaving(true);
+
+    framePhoto(active)
+      .then((blob) => {
+        if (stale) return;
+        setFile(
+          new File([blob], `steve-fest-${Date.now()}.jpg`, {
+            type: "image/jpeg",
+          })
+        );
+      })
+      .catch(() => {
+        if (!stale) setSaveError("Couldn't save that one.");
+      })
+      .finally(() => {
+        if (!stale) setSaving(false);
+      });
+
+    return () => {
+      stale = true;
+    };
   }, [active]);
 
   /* The confirmation clears itself so the wall isn't left with a stale
@@ -68,25 +98,32 @@ export default function PhotoGrid({
   };
 
   const onDownload = async () => {
-    if (!active) return;
-    setSaving(true);
+    if (!file) return;
     setSaveError("");
 
-    try {
-      const blob = await framePhoto(active);
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `steve-fest-${Date.now()}.jpg`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    } catch {
-      setSaveError("Couldn't save that one.");
-    } finally {
-      setSaving(false);
+    /* The share sheet is the only route to a phone's camera roll — a plain
+       download lands in Files or the Downloads folder instead. Desktop
+       browsers don't offer it for files, and fall through. */
+    if (navigator.canShare?.({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file] });
+        return;
+      } catch (err) {
+        /* Dismissing the sheet is a choice, not a failure. Anything else
+           falls through to the download rather than leaving them empty
+           handed. */
+        if (err instanceof DOMException && err.name === "AbortError") return;
+      }
     }
+
+    const url = URL.createObjectURL(file);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = file.name;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
   };
 
   const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -275,7 +312,7 @@ export default function PhotoGrid({
                 type="button"
                 className="lightbox-save"
                 onClick={onDownload}
-                disabled={saving}
+                disabled={saving || !file}
               >
                 {saving ? "Preparing…" : "Download"}
               </button>
