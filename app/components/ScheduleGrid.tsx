@@ -80,15 +80,6 @@ export default function ScheduleGrid() {
             <small>{day.date}</small>
           </button>
         ))}
-
-        <a
-          className="feed-btn"
-          href="https://givebutter.com/stevefestii"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Feed a steve
-        </a>
       </div>
 
       {/* Reads off the day being shown, so switching tabs switches the

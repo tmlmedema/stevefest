@@ -3,6 +3,7 @@ import Link from "next/link";
 import { BANDS, SPONSORS } from "./lib/data";
 import Countdown from "./components/Countdown";
 import GiveCta from "./components/GiveCta";
+import PlaylistCta from "./components/PlaylistCta";
 import Lineup from "./components/Lineup";
 
 export default function Home() {
@@ -57,7 +58,10 @@ export default function Home() {
           <Lineup />
         </div>
 
-        <GiveCta />
+        <div className="ask-row">
+          <GiveCta />
+          <PlaylistCta />
+        </div>
 
         <div className="sheet supporters" id="sponsors">
           <span className="supporters-title">Steve Couldn&apos;t Do It Without Our Sponsors</span>
