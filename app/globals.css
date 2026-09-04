@@ -573,6 +573,167 @@ a.sup:hover{transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(20,16,15,.22
 .band .links a.ghost:hover{background:var(--ink); color:var(--paper)}
 .band.dim{background:#EFEDF1}
 
+/* ---------- MERCH ---------- */
+.merch-head{
+  display:flex; align-items:flex-end; justify-content:space-between; gap:1rem 1.4rem;
+  flex-wrap:wrap;
+}
+.merch-head .days{margin:0}
+.merch-head + .eyebrow{margin-top:1.6rem; display:block}
+.merch-head + .lineup-head{margin-top:1.6rem}
+.merch-stage-grid + .lineup-head{margin-top:1.6rem}
+.day-btn.merch-tab[aria-pressed="true"]{background:var(--pink); border-color:var(--pink); color:var(--paper)}
+.merch-store{margin-top:1.6rem}
+.product-grid{
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:1rem; margin-top:.9rem;
+}
+.product-card{
+  background:var(--paper); color:var(--ink); border:4px solid var(--ink);
+  box-shadow:8px 8px 0 rgba(0,0,0,.4); overflow:hidden;
+  display:flex; flex-direction:column;
+}
+.product-card img{width:100%; aspect-ratio:1; object-fit:cover; display:block; border-bottom:4px solid var(--ink)}
+.product-body{padding:1rem 1.1rem 1.2rem; display:flex; flex-direction:column; gap:.4rem; flex:1}
+.product-name{
+  font-family:var(--display); font-weight:900; text-transform:uppercase; line-height:.95;
+  font-size:1.2rem; margin:0; letter-spacing:-.005em;
+}
+.product-price{font-family:var(--mono); font-size:.82rem; color:#6E6873}
+.product-buy{
+  margin-top:auto; align-self:flex-start;
+  font-family:var(--display); font-weight:900; text-transform:uppercase; letter-spacing:.04em;
+  font-size:1rem; line-height:1; text-decoration:none;
+  padding:.6rem 1.1rem; border:3px solid var(--ink);
+  background:var(--pink); color:var(--paper); box-shadow:4px 4px 0 rgba(0,0,0,.35);
+  transition:transform .1s, box-shadow .1s;
+}
+@media (hover:hover) and (pointer:fine){
+  .product-buy:hover{transform:translate(2px,2px); box-shadow:2px 2px 0 rgba(0,0,0,.35)}
+}
+.merch-stage-grid{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:1rem;
+  margin-top:.8rem;
+}
+@media (max-width:860px){ .merch-stage-grid{grid-template-columns:1fr} }
+.merch-card{
+  padding:1.5rem clamp(1.1rem,3vw,1.9rem) 1.7rem;
+  display:flex; flex-direction:column; height:100%;
+}
+.merch-band{
+  font-family:var(--display); font-weight:900; text-transform:uppercase; line-height:.95;
+  font-size:clamp(1.7rem,5vw,2.6rem); letter-spacing:-.01em; margin:.5rem 0 .2rem;
+}
+.merch-actions{display:flex; gap:.7rem; flex-wrap:wrap; margin:1.2rem 0 1.1rem}
+.merch-btn{
+  font-family:var(--display); font-weight:900; text-transform:uppercase; letter-spacing:.04em;
+  font-size:1.05rem; line-height:1; cursor:pointer;
+  padding:.65rem 1.2rem; border:3px solid var(--ink);
+  text-decoration:none; display:inline-block; text-align:center;
+  background:transparent; color:var(--ink);
+  transition:transform .1s, box-shadow .1s;
+}
+@media (hover:hover) and (pointer:fine){
+  .merch-btn:hover{background:var(--ink); color:var(--paper)}
+}
+.merch-status{
+  display:flex; flex-direction:column; gap:.3rem; align-items:flex-start;
+  font-size:.95rem; line-height:1.4; color:#33303A; margin:1rem 0 0; padding-left:1.1rem; position:relative;
+}
+.merch-status i{
+  position:absolute; left:0; top:.45em; width:9px; height:9px; border-radius:50%;
+  background:var(--green);
+}
+.merch-status.tier-3 i{background:#9b86a4}
+.merch-meta,.merch-venmo{
+  display:block; font-family:var(--mono); font-size:.7rem; letter-spacing:.05em; color:#6E6873;
+}
+.merch-tell{
+  font-family:var(--display); font-weight:800; text-transform:uppercase; font-size:.85rem;
+  letter-spacing:.03em; color:var(--ink); text-decoration:none; margin-top:.15rem;
+}
+.merch-tell:hover{color:var(--pink)}
+
+.merch-played{margin-top:1.6rem}
+.lineup-head{
+  font-family:var(--display); font-weight:900; text-transform:uppercase;
+  font-size:clamp(1.6rem,4.8vw,2.6rem); line-height:.94; letter-spacing:-.01em;
+  color:var(--yellow); margin:0 0 .3rem; text-wrap:balance;
+}
+/* One static stage header per column — reusing the schedule page's own
+   .g-head look, so it resizes at the same breakpoint and to the same
+   sizes the schedule already uses on a phone — with the day's cards for
+   that stage stacked underneath, most recent on top. */
+.played-columns{display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:.9rem}
+.played-col{
+  display:flex; flex-direction:column; color:var(--ink);
+  background:var(--paper); border:3px solid var(--ink);
+  box-shadow:5px 5px 0 rgba(0,0,0,.35); overflow:hidden;
+}
+.played-col .g-head{border-left:none}
+.played-card{border-top:3px solid #EFEDF1}
+.played-col .g-head + .played-card{border-top:none}
+.played-body{padding:.8rem .9rem .9rem}
+.played-card h4{
+  display:flex; align-items:baseline; gap:.3rem;
+  font-family:var(--display); font-weight:900; text-transform:uppercase; line-height:.95;
+  font-size:1.3rem; margin:0; letter-spacing:-.005em; overflow-wrap:break-word;
+}
+.tag-icon{flex:none; color:var(--pink); transform:translateY(.15em)}
+.played-time{display:block; font-family:var(--mono); font-size:.72rem; color:#6E6873; margin-top:.2rem}
+.played-label{
+  font-family:var(--mono); font-size:.7rem; letter-spacing:.07em; text-transform:uppercase;
+  color:var(--pink); display:block; margin:.7rem 0 .25rem;
+}
+.played-label.featured{
+  font-family:var(--display); font-weight:900; font-size:1.35rem; line-height:1;
+  letter-spacing:-.005em; margin:.9rem 0 .35rem;
+}
+/* The mini "Shop today's lineup" cards keep the same bold treatment as the
+   featured cards, just sized down to fit their smaller footprint. */
+.played-card .played-label.featured{font-size:1rem; margin:.7rem 0 .3rem}
+.played-sub{display:block; font-size:1.05rem; line-height:1.4; color:#33303A; margin-bottom:.6rem}
+.played-chips{display:flex; gap:.35rem; flex-wrap:wrap; margin-top:.6rem}
+.played-label + .played-chips{margin-top:0}
+.played-chip{
+  font-family:var(--display); font-weight:800; text-transform:uppercase; font-size:.9rem;
+  letter-spacing:.03em; text-decoration:none; background:var(--ink); color:var(--paper);
+  border:3px solid var(--ink); padding:.45rem .8rem;
+}
+.played-chip:hover{background:var(--pink); border-color:var(--pink)}
+.played-chip.ghost{background:transparent; color:var(--ink)}
+.played-chip.ghost:hover{background:var(--ink); color:var(--paper); border-color:var(--ink)}
+
+/* A light tint marking off "reach out to buy" from the rest of the card —
+   only bands with a real contact on file get this treatment. */
+.reach-out{background:rgba(255,46,139,.08); margin-top:.65rem; padding:.85rem .9rem .95rem}
+.merch-card .reach-out .played-label.featured,
+.played-body .reach-out .played-label.featured{margin-top:0}
+@media (max-width:640px){
+  /* Three stacked sections instead of three squeezed columns: each stage's
+     header runs full width, with its own cards in one connected column
+     underneath — same layout as desktop, just full width. */
+  .played-columns{grid-template-columns:1fr; gap:1rem}
+  .played-body{padding:.6rem .55rem .7rem}
+  .played-card h4{font-size:.95rem}
+  .played-time{font-size:.64rem}
+  .played-label{font-size:.6rem; margin:.55rem 0 .15rem}
+  .played-card .played-label.featured{font-size:.85rem; margin:.55rem 0 .2rem}
+  .played-sub{font-size:.85rem}
+  .played-chip{font-size:.78rem; padding:.38rem .65rem}
+}
+.merch-find{
+  display:inline-block; margin-top:2rem; text-decoration:none; cursor:pointer;
+  font-family:var(--display); font-weight:900; text-transform:uppercase; letter-spacing:.05em;
+  font-size:clamp(1.05rem,2.4vw,1.35rem); line-height:1; text-align:center;
+  padding:.85rem 1.6rem; border:4px solid var(--ink);
+  background:var(--pink); color:var(--paper); box-shadow:7px 7px 0 rgba(0,0,0,.45);
+  transition:transform .1s, box-shadow .1s;
+}
+@media (hover:hover) and (pointer:fine){
+  .merch-find:hover{transform:translate(3px,3px); box-shadow:3px 3px 0 rgba(0,0,0,.45)}
+}
+
 /* ---------- ADMIN ---------- */
 .signin{max-width:520px}
 .signin .lede{margin-bottom:1.6rem}
@@ -740,3 +901,53 @@ footer a:hover, footer a:focus-visible{color:var(--paper)}
   .wordmark{filter:drop-shadow(5px 6px 0 rgba(0,0,0,.45))}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none !important; animation:none !important}}
+
+/* ---------- MERCH ALT — same layout ideas, real site's own look ---------- */
+/* Reuses .sheet/.merch-card/.g-head/.day-btn/.merch-btn/.lineup-head etc.
+   directly rather than a parallel style system, so this matches /schedule
+   and the real /merch page exactly. Only new here: the small stage glyph
+   in each g-head and the compact cart-icon row style for "Shop today's
+   lineup" — no photo/thumbnail slots, since there are no photos to show. */
+.stage-glyph{display:inline-flex; vertical-align:-3px; margin-right:.4rem}
+.alt-section-head{margin-top:2.6rem}
+
+.alt-upnext{
+  display:flex; align-items:center; gap:1.4rem; flex-wrap:wrap;
+  padding:1.3rem clamp(1.1rem,3vw,1.9rem);
+}
+.alt-upnext-row{display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; flex:1}
+@media (max-width:640px){ .alt-upnext-row{grid-template-columns:1fr} .alt-upnext{flex-direction:column; align-items:stretch} }
+.alt-upnext-item{display:flex; flex-direction:column; gap:.15rem}
+.alt-upnext-item .t{font-family:var(--mono); font-size:.72rem; color:#6E6873}
+.alt-upnext-item .n{
+  font-family:var(--display); font-weight:900; text-transform:uppercase; font-size:1.1rem; line-height:1;
+}
+.alt-upnext-item .s{
+  font-family:var(--mono); font-size:.6rem; letter-spacing:.08em; text-transform:uppercase; color:#6E6873;
+}
+
+/* The real /merch page's "Up next" has no schedule button competing for
+   space, so it gets to run its type much bigger once there's room. */
+@media (min-width:641px){
+  .merch-upnext-board .alt-upnext-item .t{font-size:.9rem}
+  .merch-upnext-board .alt-upnext-item .n{font-size:clamp(1.8rem,3.2vw,2.4rem)}
+  .merch-upnext-board .alt-upnext-item .s{font-size:.78rem}
+}
+
+.alt-lineup{display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:.9rem}
+@media (max-width:860px){ .alt-lineup{grid-template-columns:1fr} }
+.alt-lineup-col{background:var(--paper); border:3px solid var(--ink); box-shadow:6px 6px 0 rgba(0,0,0,.4)}
+.alt-lineup-list{display:flex; flex-direction:column}
+.alt-lineup-row{
+  display:flex; align-items:flex-start; gap:.7rem; padding:.8rem .9rem;
+  border-top:3px solid #EFEDF1; color:var(--ink);
+}
+.alt-lineup-list .alt-lineup-row:first-child{border-top:none}
+.alt-lineup-info{display:flex; flex-direction:column; gap:.15rem; flex:1; min-width:0}
+.alt-lineup-info strong{
+  font-family:var(--display); font-weight:900; text-transform:uppercase; font-size:.92rem; line-height:1.1;
+}
+.alt-lineup-info span{font-family:var(--mono); font-size:.66rem; color:#6E6873}
+.alt-cart{flex:none; color:var(--ink); margin-top:.3rem; text-decoration:none}
+.alt-cart:hover{color:var(--pink)}
+

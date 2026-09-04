@@ -27,3 +27,18 @@ export function defaultDayIndex(now: Date = new Date()): number {
      should look like. Either way, open on Friday. */
   return i === -1 ? 0 : i;
 }
+
+/* Minutes since midnight, read off a clock in Chicago at that instant —
+   the same "what time does it actually feel like at the deli" question
+   chicagoDate answers, but for the clock rather than the calendar. */
+export function chicagoMinutes(now: Date = new Date()): number {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: ZONE,
+    hour12: false,
+    hour: "2-digit",
+    minute: "2-digit",
+  }).formatToParts(now);
+  const at = (type: string) =>
+    Number(parts.find((p) => p.type === type)?.value ?? "0");
+  return (at("hour") % 24) * 60 + at("minute");
+}
