@@ -9,6 +9,27 @@ import { framePhoto } from "../lib/framePhoto";
 
 const ROTATIONS = [-3, 2, -2, 3, -1, 1];
 
+/* The share sheet is worth offering on a phone or tablet and nowhere else,
+   so this has to be sure before it says yes. Chrome and Edge answer outright
+   with userAgentData.mobile; everywhere else (Safari, Firefox) it takes all
+   three of a coarse pointer, no hover, and a real touchscreen. Anything the
+   browser won't tell us about counts as desktop and gets a plain download. */
+const touchDevice = () => {
+  if (typeof navigator === "undefined" || typeof matchMedia !== "function") {
+    return false;
+  }
+
+  const ua = (navigator as Navigator & { userAgentData?: { mobile?: boolean } })
+    .userAgentData;
+  if (typeof ua?.mobile === "boolean") return ua.mobile;
+
+  return (
+    matchMedia("(pointer: coarse)").matches &&
+    matchMedia("(hover: none)").matches &&
+    navigator.maxTouchPoints > 0
+  );
+};
+
 type Status = "idle" | "compressing" | "uploading" | "done" | "error";
 
 export default function PhotoGrid({
@@ -30,9 +51,11 @@ export default function PhotoGrid({
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const busy = status === "compressing" || status === "uploading";
-  const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  /* Set when Download is pressed before the render has finished; the effect
+     below hands over as soon as it has something to hand over. */
+  const [waiting, setWaiting] = useState(false);
 
   /* Rendered when the lightbox opens, not when Download is pressed. iOS only
      allows navigator.share while the tap's user activation is still live, and
@@ -41,10 +64,10 @@ export default function PhotoGrid({
   useEffect(() => {
     setSaveError("");
     setFile(null);
+    setWaiting(false);
     if (!active) return;
 
     let stale = false;
-    setSaving(true);
 
     framePhoto(active)
       .then((blob) => {
@@ -56,10 +79,11 @@ export default function PhotoGrid({
         );
       })
       .catch(() => {
-        if (!stale) setSaveError("Couldn't save that one.");
-      })
-      .finally(() => {
-        if (!stale) setSaving(false);
+        if (stale) return;
+        setSaveError("Couldn't save that one.");
+        /* Release a press that was queued against a render that's never
+           coming, so the button doesn't sit on "Preparing…" for good. */
+        setWaiting(false);
       });
 
     return () => {
@@ -97,16 +121,15 @@ export default function PhotoGrid({
     reset();
   };
 
-  const onDownload = async () => {
-    if (!file) return;
-    setSaveError("");
-
+  const deliver = async (ready: File) => {
     /* The share sheet is the only route to a phone's camera roll — a plain
-       download lands in Files or the Downloads folder instead. Desktop
-       browsers don't offer it for files, and fall through. */
-    if (navigator.canShare?.({ files: [file] })) {
+       download lands in Files or the Downloads folder instead. On a desktop
+       it's the wrong answer: canShare says yes there too on recent Chrome
+       and Safari, and a mouse gets a sheet to click through when it asked
+       for a file. touchDevice decides which one this is. */
+    if (touchDevice() && navigator.canShare?.({ files: [ready] })) {
       try {
-        await navigator.share({ files: [file] });
+        await navigator.share({ files: [ready] });
         return;
       } catch (err) {
         /* Dismissing the sheet is a choice, not a failure. Anything else
@@ -116,15 +139,34 @@ export default function PhotoGrid({
       }
     }
 
-    const url = URL.createObjectURL(file);
+    const url = URL.createObjectURL(ready);
     const a = document.createElement("a");
     a.href = url;
-    a.download = file.name;
+    a.download = ready.name;
     document.body.appendChild(a);
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
   };
+
+  const onDownload = () => {
+    setSaveError("");
+    /* Nothing to give yet: remember the press and let the effect below run
+       it the moment the render lands. */
+    if (!file) {
+      setWaiting(true);
+      return;
+    }
+    void deliver(file);
+  };
+
+  /* Picks up a press that arrived early. Split out of the click handler so
+     the button can stay live while the canvas is still working. */
+  useEffect(() => {
+    if (!waiting || !file) return;
+    setWaiting(false);
+    void deliver(file);
+  }, [waiting, file]);
 
   const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -308,13 +350,16 @@ export default function PhotoGrid({
               {/* Lives inside the frame, but it's DOM only — the download is
                   a fresh canvas render, so the button never lands in the
                   file. */}
+              {/* Reads "Download" from the moment the lightbox opens: the
+                  canvas render runs in the background, and "Preparing…"
+                  only shows if someone gets there before it does. */}
               <button
                 type="button"
                 className="lightbox-save"
                 onClick={onDownload}
-                disabled={saving || !file}
+                disabled={waiting || !!saveError}
               >
-                {saving ? "Preparing…" : "Download"}
+                {waiting ? "Preparing…" : "Download"}
               </button>
             </div>
           </figure>

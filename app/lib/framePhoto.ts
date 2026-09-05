@@ -3,9 +3,12 @@
  *
  * The lightbox frame is CSS, which the browser won't hand us as a file, so the
  * frame is painted again here on a canvas. The polaroid is built at the photo's
- * full resolution, then scaled to 1080px wide — Instagram's native width — with
- * the height left to follow the polaroid's own proportions. The saved image is
- * the polaroid and nothing else: no backdrop, edge to edge.
+ * full resolution, then dropped whole onto a 1080x1080 board — Instagram's
+ * square — so a saved photo posts without the crop tool touching it.
+ *
+ * The polaroid is fitted rather than cropped: whatever shape the photo is, all
+ * of it survives, and the grape board takes up the slack down the sides of a
+ * portrait or above and below a landscape.
  *
  * One deliberate difference from the CSS: on screen the border and bottom band
  * are fixed pixel sizes, so their proportions shift with the photo's shape.
@@ -15,8 +18,14 @@
 
 const INK = "#14100F";
 const PAPER = "#FFFFFF";
-/* Instagram's native upload width; height follows the polaroid's shape. */
-const OUTPUT_W = 1080;
+/* The board behind the polaroid — the site's own deep grape, so a saved
+   photo still reads as coming from here. */
+const BOARD = "#280E2F";
+/* Instagram's square, at its native upload width. */
+const OUTPUT = 1080;
+/* Air left around the polaroid, as a fraction of the board's side. Enough
+   that the paper never runs into the edge of a feed post. */
+const MARGIN_RATIO = 0.05;
 
 const BORDER_RATIO = 0.03; /* frame edge, as a fraction of photo width */
 const BAND_RATIO = 0.17; /* deep bottom band, likewise */
@@ -124,17 +133,35 @@ export async function framePhoto(src: string): Promise<Blob> {
   ctx.fillText(STAMP, 0, (ascent - descent) / 2);
   ctx.restore();
 
-  /* Resample the whole polaroid down to the output width. */
+  /* Sit the finished polaroid on the square board, scaled to whichever of
+     its sides runs out of room first and centred on both axes. */
   const post = document.createElement("canvas");
-  post.width = OUTPUT_W;
-  post.height = Math.round((frame.height / frame.width) * OUTPUT_W);
+  post.width = OUTPUT;
+  post.height = OUTPUT;
 
   const pctx = post.getContext("2d");
   if (!pctx) throw new Error("Couldn't prepare that image.");
 
+  pctx.fillStyle = BOARD;
+  pctx.fillRect(0, 0, OUTPUT, OUTPUT);
+
+  const room = OUTPUT * (1 - MARGIN_RATIO * 2);
+  const scale = Math.min(room / frame.width, room / frame.height);
+  const drawW = Math.round(frame.width * scale);
+  const drawH = Math.round(frame.height * scale);
+  const drawX = Math.round((OUTPUT - drawW) / 2);
+  const drawY = Math.round((OUTPUT - drawH) / 2);
+
   pctx.imageSmoothingEnabled = true;
   pctx.imageSmoothingQuality = "high";
-  pctx.drawImage(frame, 0, 0, post.width, post.height);
+  /* The same lift the lightbox gives the frame, so the paper reads as an
+     object on the board rather than a white rectangle painted on it. */
+  pctx.save();
+  pctx.shadowColor = "rgba(0,0,0,.55)";
+  pctx.shadowBlur = Math.round(OUTPUT * 0.03);
+  pctx.shadowOffsetY = Math.round(OUTPUT * 0.012);
+  pctx.drawImage(frame, drawX, drawY, drawW, drawH);
+  pctx.restore();
 
   return new Promise((resolve, reject) =>
     post.toBlob(
