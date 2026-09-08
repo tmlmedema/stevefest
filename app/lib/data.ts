@@ -84,7 +84,7 @@ export const BANDS: Band[] = [
  {n:"Rabid Wreck",         s:"none",  base:"—",                 kind:"",            u:"https://www.instagram.com/rabid_wreck/", l1:"Instagram"},
  {n:"Misunderstood",       s:"store", base:"Richmond, IN",      kind:"Richmond, Indiana punk, started in 2006 by Lyn-Z when she was fifteen.", u:"https://misunderstood.bandcamp.com/merch"},
  {n:"Dracula Johnson",     s:"none",  base:"—",                 kind:""},
- {n:"13-Monsters",         s:"store", base:"West Chicago, IL",  kind:"Chicago based band that has played over 150 shows, released two albums, and hosted several festivals they own, including The Rock & Roll Circus Side Shows, Baconstöck and GOATSTÖCK since 2017.",                  u:"https://13-monsters.bandcamp.com/merch", u2:"https://13-monsters.tumblr.com/", l2:"Tumblr"},
+ {n:"13-Monsters",         s:"store", base:"Chicago, IL",  kind:"Chicago based band that has played over 150 shows, released two albums, and hosted several festivals they own, including The Rock & Roll Circus Side Shows, Baconstöck and GOATSTÖCK since 2017.",                  u:"https://13-monsters.bandcamp.com/merch", u2:"https://13-monsters.tumblr.com/", l2:"Tumblr"},
  {n:"Noodle Brain",        s:"store", base:"Chicago, IL",       kind:"Illinois pop-punk duo releasing through Outloud! Records and Laptop Punk Records.", u:"https://noodlebrain.bandcamp.com/music", l1:"Music"},
 //  {n:"Cinema Violence",     s:"none",  base:"—",                 kind:""},
  {n:"Los Kausas",          s:"none",  base:"—",                 kind:""},
