@@ -5,6 +5,14 @@
 export type Band = {
   /** name shown on the site */
   n: string;
+  /** optional telephone contact method */
+  t?: string;
+  /** optional email contact method */
+  e?: string;
+  /** alternate contact method */
+  ac?: string;
+  /** label for the alternate contact method (defaults to "Alt Contact") */
+  lac?: string;
   /** "store" if they sell online, "none" if they don't */
   s: "store" | "site" | "unknown" | "none";
   /** where they're from */
@@ -52,10 +60,15 @@ export type Day = {
 export const BANDS: Band[] = [
   {
     n: "La Armada",
+    t: "954-793-8431",
+    e: "armadahardcore@gmail.com",
     s: "store",
     base: "Chicago, IL",
     kind: "Latino hardcore fury, formed in Santo Domingo and based in Chicago since 2008. Has toured with Sick of It All and Propagandhi.",
-    u: "https://www.merchbar.com/rock-alternative/la-armada",
+    u: "https://www.laarmadamusic.com/category/all-products",
+    l1: "Merch",
+    u2: "https://www.laarmadamusic.com",
+    l2: "Site",
   },
   {
     n: "Take the Reins",
@@ -76,13 +89,16 @@ export const BANDS: Band[] = [
   },
   {
     n: "Steve's in the Band",
+    t: "847-791-9587",
     s: "store",
     base: "West Chicago, IL",
     kind: "Local Skate Punk",
     u: "https://stevesintheband.bandcamp.com/",
     l1: "Music",
-    u2: "https://linktr.ee/stevesintheband",
-    l2: "Site",
+    u2: "https://d6c769-3a.myshopify.com/?utm_source=ig&utm_medium=social&utm_content=link_in_bio",
+    l2: "Merch",
+    u3: "https://linktr.ee/stevesintheband",
+    l3: "Links",
   },
   {
     n: "The Steves",
@@ -107,16 +123,26 @@ export const BANDS: Band[] = [
   },
   {
     n: "Dead Freddie",
+    e: "donatasramanauskas@rocketmail.com",
     s: "store",
     base: "Chicago, IL",
-    kind: "Punk-pop with roots in Chicago's South Side scene of 1979, reformed in 2013. Yes, there is an accordion.",
-    u: "https://deadfreddie.bandcamp.com/merch",
+    kind: "Dead Freddie IS Chicago Garage Rock and Power Pop blended with UK Punk with a touch of Ska , originally emerging from Chicago’s South Side in 1979, reincarnating in 2013. The band has three releases on vinyl, most recently in 2023 with a fourth album in the works. They are known for their high-energy live shows, with the accordion adding something unexpected to the mix. “This Chicago pop punk band is rooted in that town’s original late-’70s punk scene, even before Strike Under, The Effigies, Naked Raygun…Their sound is full of the Windy City’s over-the-top-hard-punk-with- melodic-undertow tradition” (Big Takeover, No. 87).   Current members of the band are Gintas Buinevicius (drums & backing vocals), Gary Vacha (guitar), Karl Sperling (bass), and Donatas Ramanauskas (lead vocals and accordion).",
+    u: "https://deadfreddie.bandcamp.com/",
+    l1: "Merch"
   },
   {
     n: "From the Start",
+    t: "630-936-1471",
+    e: "Fromthestartbooking@gmail.com",
+    ac: "https://www.instagram.com/fromthestartil",
+    lac: "Instagram",
     s: "unknown",
     base: "Chicago, IL",
     kind: "Fun music for fun people!",
+    u: "https://linktr.ee/fromthestart",
+    l1: "Links",
+    u2: "https://fromthestart.bandcamp.com/",
+    l2: "Music",
   },
   {
     n: "The Turdles",
@@ -145,10 +171,14 @@ export const BANDS: Band[] = [
   },
   {
     n: "James the Boneless",
+    t: "630-638-9358",
     s: "store",
     base: "Chicago, IL",
     kind: "Chicago-based weirdo psych art punk with missing bones theatrics, funky bass, thunder drums, and soaring outer space guitar leads.",
-    u: "https://jamestheboneless.bandcamp.com/merch",
+    u: "https://ebay.io/m/z5Fida",
+    l1: "Merch",
+    u2: "https://www.instagram.com/jamestheboneless",
+    l2: "Instagram",
   },
   {
     n: "The Larvettes",
@@ -158,7 +188,7 @@ export const BANDS: Band[] = [
     u: "https://thelarvettes.bandcamp.com/",
     l1: "Music",
     u2: "https://merch.the-larvettes.com/",
-    l2: "Buy",
+    l2: "Merch",
   },
   {
     n: "The Nobodies",
@@ -239,11 +269,12 @@ export const BANDS: Band[] = [
   },
   {
     n: "Alex Kasznel & the Board of Directors",
+    e: "booking@akandthebod.com",
     s: "store",
     base: "Cincinnati, OH",
     kind: "The Board of Directors are a punk rock-fueled power-pop trio from Cincinnati. Since forming in 2023, they've released several albums and EPs, and performed over 200 times across the US and Canada. They're known for an energetic and light-hearted stage presence, and lyrically-driven, complex-but-catchy songs.",
-    u: "https://alexkasznel.bandcamp.com/",
-    l1: "Music",
+    u: "https://alexkasznel.bandcamp.com/merch",
+    l1: "Merch",
     u2: "https://akandthebod.com/",
     l2: "Site",
   },
@@ -255,6 +286,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "MG Bailey",
+    e: "mgbaileyonemanband@gmail.com",
     s: "store",
     base: "Homewood, IL",
     kind: "MG Bailey Rocks🤘🏼",
@@ -275,15 +307,16 @@ export const BANDS: Band[] = [
   },
   {
     n: "The Foleys",
+    e: "thefoleys@wreckedhooligan.com",
     s: "store",
     base: "South Bend, IN",
     kind: "The Foleys are South Bend’s Wrestle Punk main event — loud, chant-along chaos fueled by real Midwest heart. Blending pro-wrestling intensity with high-energy punk hooks, they turn every show into a sweat-soaked underdog victory.",
     u: "https://wreckedhooligan.bandcamp.com/album/truth-or-consequences",
     l1: "Music",
-    u2: "https://thefoleys574.com/listen",
-    l2: "Site",
-    u3: "https://wreckedhooliganshop.com",
-    l3: "Shop",
+    u2: "https://www.facebook.com/TheFoleysPunk/",
+    l2: "Facebook",
+    u3: "https://thefoleys574.com/merch",
+    l3: "Merch",
   },
   {
     n: "Tongan Death Grip",
@@ -329,7 +362,7 @@ export const BANDS: Band[] = [
     n: "13-Monsters",
     s: "store",
     base: "Chicago, IL",
-    kind: "Chicago based band that has played over 150 shows, released two albums, and hosted several festivals they own, including The Rock & Roll Circus Side Shows, Baconstöck and GOATSTÖCK since 2017.",
+    kind: "A Chicago grungy psyche band led by Deb Sonzo. They are a band you'd expect to hear in a Tarantino movie. A dark-basement-with-candles-fog-and-loud-amplifiers kind of band that consistently leaves people with that “why haven’t I been here til now?” feeling. They host several festivals of their own own, including The Rock & Roll Circus Side Shows, Baconstöck and GOATSTÖCK. All of their releases are on Circus Side Show Records.",
     u: "https://13-monsters.bandcamp.com/merch",
     u2: "https://13-monsters.tumblr.com/",
     l2: "Tumblr",
@@ -403,11 +436,12 @@ export const BANDS: Band[] = [
   },
   {
     n: "Goodbye Sunshine",
+    e: "goodbye.sunshine.music@gmail.com",
     s: "store",
     base: "Chicago, IL",
     kind: "The Motely Crue of Pop Punk",
-    u: "https://goodbyesunshine.bandcamp.com/",
-    l1: "Music",
+    u: "https://open.spotify.com/artist/5CzE85COaS1eYmQwbvljTP?si=lWpfCQ-1Sw2GVVeCc30xvg",
+    l1: "Spotify",
     u2: "https://rivermonsterrecords.bandcamp.com",
     l2: "Label",
   },
@@ -430,15 +464,15 @@ export const BANDS: Band[] = [
   {
     n: "Dead End On Sarah",
     s: "unknown",
-    base: "—",
+    base: "Mishawaka, IN",
     kind: "",
   },
   {
     n: "Gunnar Linden",
     s: "unknown",
-    base: "",
+    base: "Chicago, IL",
     kind: "This musical passion is the real deal, born from a decade of carving his own path—working overnight shifts to get time on university pianos and taking his music full-time. He brings skill, energy, and a truly unique show to every performance",
-    u: "https://www.instagram.com/gunnar_linden_music/",
+    u: "https://www.instagram.com/gunnar_linden_",
     l1: "Instagram",
   },
   {
@@ -450,7 +484,7 @@ export const BANDS: Band[] = [
   {
     n: "Aaron Williams Performing The Wooz",
     s: "unknown",
-    base: "—",
+    base: "Chicago, IL",
     kind: "",
   },
   {
@@ -468,7 +502,7 @@ export const BANDS: Band[] = [
   {
     n: "A FrumpyKnot",
     s: "unknown",
-    base: "—",
+    base: "Lombard, IL",
     kind: "",
   },
   {
@@ -496,8 +530,13 @@ export const BANDS: Band[] = [
   {
     n: "Hesterménage à Trois",
     s: "unknown",
+    ac: "https://www.instagram.com/hesterman_band_",
+    lac: "Instagram",
     base: "Glen Ellyn, IL",
     kind: "Hesterménage à Trois also known as Hesterman is a4 piece original band from Glen Ellyn, IL. We originally started over 20 years ago, took a brief hiatus and have been playing the past few years!",
+    u: "https://www.youtube.com/playlist?list=OLAK5uy_mp7W4AWftS_fVYaNBDcDzb2r-bv8DeTLI",
+    l1: "YouTube",
+
   },
   {
     n: "The Jobodys",
