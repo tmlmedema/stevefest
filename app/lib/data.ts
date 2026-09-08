@@ -64,7 +64,7 @@ export const BANDS: Band[] = [
     e: "armadahardcore@gmail.com",
     s: "store",
     base: "Chicago, IL",
-    kind: "Latino hardcore fury, formed in Santo Domingo and based in Chicago since 2008. Has toured with Sick of It All and Propagandhi.",
+    kind: "La Armada’s focus is to leave their mark on heavy music. A punk band at heart, they utilize elements of Afro-Caribbean rhythms and metal to create a style as unique as their story. Formed in the Dominican Republic in 2001 from where they dominated the Caribbean scene for years, the band opted to take a leap and relocate to Chicago in 2008, where they still reside. Influenced by bands ranging from the Bad Brains to Death, they take elements from their native Island’s music to conjure a unique recipe; explosive live energy, and a clear cut narrative that highlights the effects of neo-colonialism on vulnerable communities.",
     u: "https://www.laarmadamusic.com/category/all-products",
     l1: "Merch",
     u2: "https://www.laarmadamusic.com",
