@@ -297,7 +297,11 @@ h2.head{
 .playlist .eyebrow{display:block; color:var(--ink); margin:0 0 .55rem}
 .playlist .give-copy{margin-bottom:1.4rem}
 .playlist .give-head{color:var(--paper)}
-.playlist-btn{align-self:center; margin-top:auto; background:var(--paper)}
+.playlist-btns{
+  display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
+  gap:1rem; margin-top:auto;
+}
+.playlist-btn{background:var(--paper); font-size:clamp(.95rem,2vw,1.2rem)}
 
 .supporters{margin-top:3.4rem; padding:1.5rem 1.4rem 1.7rem; text-align:center}
 .supporters-title{
