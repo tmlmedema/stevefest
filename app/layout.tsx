@@ -53,6 +53,7 @@ export default async function RootLayout({
     <html
       lang="en"
       className={`${shoulders.variable} ${anton.variable} ${archivo.variable} ${bitter.variable}`}
+      data-scroll-behavior="smooth"
     >
       <body>
         <div className="page-shell">

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useCallback, useEffect, useRef } from "react";
 import { BANDS, nameStyle } from "../lib/data";
 
@@ -9,11 +8,11 @@ export default function Lineup() {
 
   /* squares separate names, so drop the one at each line's end */
   const trimSquares = useCallback(() => {
-    const links = Array.from(box.current?.querySelectorAll("a") ?? []);
-    links.forEach((a) => a.classList.remove("eol"));
-    links.forEach((a, i) => {
-      const next = links[i + 1];
-      if (!next || next.offsetTop > a.offsetTop) a.classList.add("eol");
+    const names = Array.from(box.current?.querySelectorAll<HTMLElement>(".name") ?? []);
+    names.forEach((el) => el.classList.remove("eol"));
+    names.forEach((el, i) => {
+      const next = names[i + 1];
+      if (!next || next.offsetTop > el.offsetTop) el.classList.add("eol");
     });
   }, []);
 
@@ -37,9 +36,12 @@ export default function Lineup() {
     <div className="names" id="names" ref={box}>
       {BANDS.map((b) => {
         const style = nameStyle(b.n);
+        /* no link of their own, so no hover and nothing to click — the name
+           just sits there as text */
         return b.u ? (
           <a
             key={b.n}
+            className="name"
             href={b.u}
             target="_blank"
             rel="noopener"
@@ -49,9 +51,9 @@ export default function Lineup() {
             <span className="nm">{b.n}</span>
           </a>
         ) : (
-          <Link key={b.n} href="/bands" data-store="0" style={style}>
+          <span key={b.n} className="name" data-store="0" style={style}>
             <span className="nm">{b.n}</span>
-          </Link>
+          </span>
         );
       })}
     </div>
