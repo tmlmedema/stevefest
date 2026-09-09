@@ -707,3 +707,42 @@ export const byName: Record<string, Band> = Object.fromEntries(
 export const sponsorByName: Record<string, Sponsor> = Object.fromEntries(
   SPONSORS.map((s) => [s.name, s])
 );
+
+/* =======================================================================
+   PHOTOGRAPHERS — the codes handed out so a shot can be credited.
+
+   PLACEHOLDER DATA. These three are invented to build against; swap the
+   whole array for the real list before the wall opens, and the codes go
+   with them — anyone holding one of these could credit themselves.
+   ======================================================================= */
+
+export type Photographer = {
+  /** the name to credit */
+  name: string;
+  /** six characters: their initials, then four digits. Compared upper-cased,
+      so what they type is never the thing that decides it. */
+  code: string;
+};
+
+export const PHOTOGRAPHERS: Photographer[] = [
+  { name: "Rosa Delgado", code: "RD4192" },
+  { name: "Marcus Yee", code: "MY7305" },
+  { name: "Priya Raman", code: "PR2648" },
+];
+
+/* The one place a code is turned into a photographer. Both the browser and
+   the upload route call this, so neither can be stricter than the other and
+   a code that passes the form can't then be refused by the server. */
+export function photographerFor(code: string): Photographer | null {
+  const want = code.trim().toUpperCase();
+  if (!want) return null;
+  return PHOTOGRAPHERS.find((p) => p.code.toUpperCase() === want) ?? null;
+}
+
+/* What the field will take at all — six letters or digits. Anything longer
+   or shorter isn't a code, so the form can say so without a lookup. */
+export const PHOTOGRAPHER_CODE_LENGTH = 6;
+
+/* One message for every way a code can be wrong, so a wrong guess never
+   reveals which part of it was wrong. */
+export const BAD_CODE_MESSAGE = "The code you used is invalid.";

@@ -22,6 +22,9 @@ export type Upload = {
   uploadedAt: string;
   reviewedAt: string | null;
   reviewedBy: string | null;
+  /** The photographer code the uploader gave, if they gave one. Null is the
+      normal case — most people at the fest aren't shooting on a code. */
+  photographerCode: string | null;
 };
 
 let client: Client | null = null;
@@ -43,18 +46,32 @@ function connect(): Client {
 function schema(): Promise<void> {
   if (ready) return ready;
 
-  ready = connect()
-    .execute(
+  ready = (async () => {
+    const c = connect();
+
+    await c.execute(
       `CREATE TABLE IF NOT EXISTS uploads (
-         pathname    TEXT PRIMARY KEY,
-         url         TEXT NOT NULL,
-         status      TEXT NOT NULL DEFAULT 'pending',
-         uploaded_at TEXT NOT NULL,
-         reviewed_at TEXT,
-         reviewed_by TEXT
+         pathname          TEXT PRIMARY KEY,
+         url               TEXT NOT NULL,
+         status            TEXT NOT NULL DEFAULT 'pending',
+         uploaded_at       TEXT NOT NULL,
+         reviewed_at       TEXT,
+         reviewed_by       TEXT,
+         photographer_code TEXT
        )`
-    )
-    .then(() => undefined);
+    );
+
+    /* CREATE TABLE IF NOT EXISTS does nothing to a table that already exists,
+       so a database made before the column existed needs it added. SQLite has
+       no ADD COLUMN IF NOT EXISTS — the way to ask is to try it and let the
+       duplicate-column complaint go by. Anything else is a real failure and
+       is rethrown. */
+    try {
+      await c.execute(`ALTER TABLE uploads ADD COLUMN photographer_code TEXT`);
+    } catch (error) {
+      if (!/duplicate column/i.test((error as Error).message)) throw error;
+    }
+  })();
 
   return ready;
 }
@@ -72,23 +89,34 @@ function toUpload(row: Row): Upload {
     uploadedAt: String(row.uploaded_at),
     reviewedAt: row.reviewed_at === null ? null : String(row.reviewed_at),
     reviewedBy: row.reviewed_by === null ? null : String(row.reviewed_by),
+    photographerCode:
+      row.photographer_code == null ? null : String(row.photographer_code),
   };
 }
 
 /* Called when a photo lands. Both the upload route and Vercel's completion
    callback can reach here for the same file, so it has to be safe to repeat —
-   and it must never quietly reset a verdict an admin already gave. */
+   and it must never quietly reset a verdict an admin already gave.
+
+   Hence the narrow upsert: a repeat touches nothing but photographer_code,
+   and COALESCE means the first writer to supply a code keeps it. Whichever
+   of the two paths gets there second can fill in a code that was missing but
+   can't blank one that's already recorded. */
 export async function recordUpload(
   pathname: string,
   url: string,
-  status: Status = "pending"
+  status: Status = "pending",
+  photographerCode: string | null = null
 ): Promise<void> {
   const c = await db();
   await c.execute({
-    sql: `INSERT INTO uploads (pathname, url, status, uploaded_at)
-          VALUES (?, ?, ?, ?)
-          ON CONFLICT(pathname) DO NOTHING`,
-    args: [pathname, url, status, new Date().toISOString()],
+    sql: `INSERT INTO uploads
+            (pathname, url, status, uploaded_at, photographer_code)
+          VALUES (?, ?, ?, ?, ?)
+          ON CONFLICT(pathname) DO UPDATE
+            SET photographer_code =
+                  COALESCE(uploads.photographer_code, excluded.photographer_code)`,
+    args: [pathname, url, status, new Date().toISOString(), photographerCode],
   });
 }
 

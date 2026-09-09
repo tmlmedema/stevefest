@@ -361,6 +361,78 @@ a.sup:hover{transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(20,16,15,.22
 }
 .upload-tile:hover{transform:scale(1.04)}
 .upload-tile:disabled{opacity:.6; cursor:not-allowed; transform:none}
+
+/* ---------- the upload form, in a modal over the wall ---------- */
+/* Same furniture as the lightbox — a dark field you can click out of, with a
+   paper sheet on it — because it appears in the same place for the same
+   reason and shouldn't read as a different kind of thing. */
+.upload-modal{
+  position:fixed; inset:0; z-index:80; background:rgba(10,6,12,.82);
+  display:flex; align-items:center; justify-content:center; padding:1.2rem;
+  overflow-y:auto;
+}
+.upload-sheet{
+  width:min(430px,100%); background:var(--paper); color:var(--ink);
+  border:4px solid var(--ink); box-shadow:10px 10px 0 rgba(0,0,0,.45);
+  padding:1.3rem; display:flex; flex-direction:column; gap:1.1rem;
+  max-height:100%; overflow-y:auto;
+}
+.upload-head{display:flex; align-items:flex-start; justify-content:space-between; gap:1rem}
+.upload-head h3{
+  margin:0; font-family:var(--display); font-weight:900; text-transform:uppercase;
+  font-size:1.7rem; line-height:.95; letter-spacing:-.005em;
+}
+.upload-close{
+  flex:none; background:none; border:none; cursor:pointer; color:var(--ink);
+  font-size:1.7rem; line-height:1; padding:0 .2rem; margin:-.2rem -.2rem 0 0;
+}
+.upload-close:disabled{opacity:.4; cursor:not-allowed}
+
+.upload-field{display:flex; flex-direction:column; gap:.45rem}
+.upload-label{
+  font-family:var(--mono); font-size:.7rem; letter-spacing:.14em;
+  text-transform:uppercase; color:#4A4551;
+}
+.upload-optional{text-transform:none; letter-spacing:.02em; color:#8A8493; font-style:italic}
+
+/* Stands in for the file input, which is hidden — a bare input can't be
+   styled to match anything else here. */
+.upload-choose{
+  font-family:var(--display); font-weight:900; text-transform:uppercase; letter-spacing:.04em;
+  font-size:1rem; line-height:1; cursor:pointer; text-align:center;
+  padding:.7rem .9rem; border:3px dashed var(--ink); background:transparent; color:var(--ink);
+}
+.upload-choose:hover{background:var(--yellow)}
+.upload-choose:disabled{opacity:.5; cursor:not-allowed; background:transparent}
+.upload-picked{
+  font-family:var(--mono); font-size:.7rem; color:#4A4551;
+  overflow-wrap:anywhere;
+}
+
+.upload-input{
+  font-family:var(--mono); font-size:1rem; letter-spacing:.22em; text-transform:uppercase;
+  padding:.65rem .7rem; border:3px solid var(--ink); background:var(--paper); color:var(--ink);
+  width:100%;
+}
+.upload-input::placeholder{color:#B5AEBC; letter-spacing:.22em}
+.upload-input:disabled{opacity:.5; cursor:not-allowed}
+.upload-input.is-bad{border-color:#C4142E; background:#FFF3F5}
+
+.upload-hint{font-family:var(--body); font-size:.78rem; line-height:1.35; color:#4A4551}
+.upload-error{font-family:var(--body); font-weight:700; font-size:.8rem; color:#C4142E}
+.upload-error-form{margin:0}
+
+.upload-submit{
+  font-family:var(--display); font-weight:900; text-transform:uppercase; letter-spacing:.05em;
+  font-size:1.25rem; line-height:1; cursor:pointer; margin-top:.2rem;
+  padding:.85rem 1.4rem; border:4px solid var(--ink);
+  background:var(--pink); color:var(--paper); box-shadow:6px 6px 0 rgba(0,0,0,.45);
+  transition:transform .1s, box-shadow .1s;
+}
+@media (hover:hover) and (pointer:fine){
+  .upload-submit:hover{transform:translate(3px,3px); box-shadow:3px 3px 0 rgba(0,0,0,.45)}
+}
+.upload-submit:disabled{opacity:.6; cursor:not-allowed; transform:none; box-shadow:6px 6px 0 rgba(0,0,0,.45)}
 .upload-tile .plus-circle{
   width:36px; height:36px; border-radius:50%; background:var(--paper); flex:none;
   display:flex; align-items:center; justify-content:center;
@@ -858,7 +930,10 @@ a.sup:hover{transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(20,16,15,.22
 .toast{
   position:fixed; left:50%; transform:translateX(-50%);
   bottom:calc(1rem + env(safe-area-inset-bottom));
-  z-index:80; width:min(430px,calc(100vw - 2rem));
+  /* Above .upload-modal, not level with it: a failed upload leaves the form
+     open so the photo needn't be found again, and the toast saying why has
+     to be readable over the top of it. */
+  z-index:90; width:min(430px,calc(100vw - 2rem));
   display:flex; align-items:flex-start; gap:.7rem;
   background:var(--paper); color:var(--ink);
   border:4px solid var(--ink); border-left-width:10px;
