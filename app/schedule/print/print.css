@@ -1,0 +1,306 @@
+/* ======================================================================
+   The schedule on paper: one 11x17 sheet per day, portrait.
+
+   The sheet is a real 11in x 17in box on screen as well as on paper, so
+   what shows in the browser is what comes out of the printer. Each day's
+   grid rows are fr units and the grid stretches to fill the sheet, so a
+   day sets its own scale off its own running time — Saturday packs in,
+   Friday and Sunday breathe.
+   ====================================================================== */
+
+/* This route exists to make paper, so the site shell — the tape, the footer
+   and its Feed A Steve link — is off on screen as well as in the run. */
+body:has(.p-page) .tape,
+body:has(.p-page) .page-shell > .wrap {
+  display: none;
+}
+
+.p-page {
+  --p-rail: 0.62in;
+  --p-ink: #14100f;
+  --p-yellow: #ffde17;
+  --p-orange: #ff6a15;
+  --p-field: #f3eef5;
+  background: #4a4551;
+  min-height: 100vh;
+  padding: 1.2rem;
+}
+
+/* ---------- screen-only chrome ---------- */
+.p-bar {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  width: 11in;
+  max-width: 100%;
+  margin: 0 auto 1.2rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: #ddd4e2;
+}
+.p-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.p-print {
+  font-family: var(--display);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 1.05rem;
+  line-height: 1;
+  padding: 0.7rem 1.3rem;
+  border: 4px solid var(--p-ink);
+  background: var(--p-yellow);
+  color: var(--p-ink);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+}
+.p-print-one {
+  background: #fff;
+  font-size: 0.9rem;
+  padding: 0.6rem 0.9rem;
+}
+
+/* ---------- the sheet ---------- */
+.p-sheet {
+  width: 11in;
+  height: 17in;
+  margin: 0 auto 1.2rem;
+  padding: 0.36in;
+  background: #fff;
+  color: var(--p-ink);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25), 0 18px 40px rgba(0, 0, 0, 0.5);
+}
+
+.p-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.2in;
+  border-bottom: 5pt solid var(--p-ink);
+  padding-bottom: 0.07in;
+}
+.p-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.02in;
+}
+.p-title b {
+  font-family: var(--display);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 46pt;
+  line-height: 0.8;
+  letter-spacing: -0.015em;
+}
+.p-title span {
+  font-family: var(--news);
+  font-weight: 800;
+  font-size: 9pt;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.p-dayline {
+  text-align: right;
+  flex: none;
+}
+.p-dayline b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 30pt;
+  line-height: 0.85;
+  letter-spacing: 0.01em;
+}
+.p-dayline span {
+  font-family: var(--mono);
+  font-size: 9pt;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.p-sub {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.2in;
+  padding: 0.05in 0 0.09in;
+  font-family: var(--news);
+  font-weight: 700;
+  font-size: 8.5pt;
+}
+.p-legend {
+  display: flex;
+  gap: 0.14in;
+  flex: none;
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: 7pt;
+  letter-spacing: 0.05em;
+}
+.p-legend i {
+  display: inline-block;
+  width: 9pt;
+  height: 9pt;
+  border: 1.5pt solid var(--p-ink);
+  vertical-align: -1pt;
+  margin-right: 0.04in;
+}
+.p-legend .k-set {
+  background: #fff;
+}
+.p-legend .k-close {
+  background: var(--p-orange);
+}
+
+/* ---------- the grid ---------- */
+.p-grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  gap: 0;
+  background: var(--p-ink);
+  border: 3pt solid var(--p-ink);
+}
+.p-gh {
+  font-family: var(--display);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 14pt;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  background: var(--p-yellow);
+  color: var(--p-ink);
+  text-align: center;
+  padding: 0.06in 0.03in;
+  border-left: 2.5pt solid var(--p-ink);
+}
+.p-gh.p-rail {
+  background: var(--p-ink);
+  border-left: none;
+}
+.p-time {
+  grid-column: 1;
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 7pt;
+  color: #fff;
+  background: var(--p-ink);
+  text-align: right;
+  padding: 0 0.05in;
+  white-space: nowrap;
+  transform: translateY(-0.45em);
+}
+.p-lane {
+  background: var(--p-field);
+  border-left: 2.5pt solid var(--p-ink);
+}
+
+.p-slot {
+  background: #fff;
+  border: 2pt solid var(--p-ink);
+  margin: 0 2.5pt;
+  padding: 0.02in 0.05in;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+.p-slot.is-close {
+  background: var(--p-orange);
+}
+.p-n {
+  font-family: var(--display);
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 0.9;
+  font-size: 13pt;
+  letter-spacing: -0.005em;
+  overflow-wrap: break-word;
+}
+.p-t {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 7.5pt;
+  line-height: 1.05;
+  color: #4a4551;
+  margin-top: 0.014in;
+}
+.p-slot.is-close .p-t {
+  color: #54250b;
+}
+
+.p-note,
+.p-dark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.12in;
+  font-family: var(--mono);
+  font-size: 7.5pt;
+  line-height: 1.5;
+  color: #6f6678;
+}
+.p-dark {
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.p-foot {
+  flex: none;
+  border-top: 3pt solid var(--p-ink);
+  margin-top: 0.1in;
+  padding-top: 0.06in;
+  font-family: var(--mono);
+  font-size: 7pt;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+/* ---------- paper ---------- */
+@page {
+  size: 11in 17in;
+  margin: 0;
+}
+
+@media print {
+  .p-bar {
+    display: none !important;
+  }
+  .p-page {
+    background: #fff;
+    padding: 0;
+    min-height: 0;
+  }
+  .p-sheet {
+    box-shadow: none;
+    margin: 0;
+    break-after: page;
+  }
+  .p-sheet:last-child {
+    break-after: auto;
+  }
+  /* printing one day drops the other two out of the run */
+  body[data-print-only] .p-sheet {
+    display: none;
+  }
+  body[data-print-only="2026-09-11"] .p-sheet[data-day="2026-09-11"],
+  body[data-print-only="2026-09-12"] .p-sheet[data-day="2026-09-12"],
+  body[data-print-only="2026-09-13"] .p-sheet[data-day="2026-09-13"] {
+    display: flex;
+    break-after: auto;
+  }
+  /* colour blocks are the whole point of the thing */
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
