@@ -899,6 +899,19 @@ footer a{
   text-decoration-thickness:1px; text-underline-offset:.28em;
 }
 footer a:hover, footer a:focus-visible{color:var(--paper)}
+/* Once the two lines stop sharing a row they centre instead of sitting hard
+   left. Three things have to happen together or the centring doesn't read:
+   the wrap goes full bleed so the lines have the whole screen rather than the
+   92vw the rest of the page is held to, flex-basis pins the stack to the
+   breakpoint rather than to however long the address happens to run, and the
+   mark drops onto its own line — inline it pushed the first line out to full
+   width, which looks identical to left-aligned. */
+@media (max-width:820px){
+  .page-shell > .wrap{width:100%; padding:0 .75rem}
+  footer{justify-content:center; text-align:center}
+  footer > span{flex-basis:100%}
+  footer .footer-logo{display:block; margin:0 auto .55rem}
+}
 
 @media (max-width:640px){
   .wordmark{filter:drop-shadow(5px 6px 0 rgba(0,0,0,.45))}
