@@ -220,24 +220,23 @@ h2.head{
   display:flex; flex-wrap:wrap; align-items:baseline; justify-content:center;
   gap:0 .55em; text-align:center;
 }
-.names a{text-decoration:none; color:var(--ink); position:relative}
+.names .name{text-decoration:none; color:var(--ink); position:relative}
 /* The name gets its own span so the hover block hugs the text. The separator
-   is an ::after on the link, which would otherwise sit inside that block and
+   is an ::after on the name, which would otherwise sit inside that block and
    have to be repainted pink to hide it against its own background. */
-.names a .nm{
+.names .name .nm{
   padding:0 .05em;
   transition:color .12s, background-color .12s;
 }
-.names a::after{
+.names .name::after{
   content:"■"; color:var(--pink); font-size:.42em; margin-left:.5em;
   vertical-align:.28em; pointer-events:none;
 }
-.names a:last-of-type::after,
-.names a.eol::after{content:""}
-.names a:hover .nm,.names a:focus-visible .nm{background:var(--pink); color:var(--paper)}
-.names a[data-store="0"]{color:#8A8493}
-.names a[data-store="0"]:hover .nm,
-.names a[data-store="0"]:focus-visible .nm{color:var(--paper)}
+.names .name:last-child::after,
+.names .name.eol::after{content:""}
+/* only the ones with somewhere to go light up */
+.names a.name:hover .nm,.names a.name:focus-visible .nm{background:var(--pink); color:var(--paper)}
+.names .name[data-store="0"]{color:#8A8493}
 .tail{
   font-family:var(--display); font-weight:700; text-transform:uppercase;
   font-size:clamp(.85rem,2vw,1.15rem); letter-spacing:.03em;
