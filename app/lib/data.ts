@@ -5,6 +5,11 @@
 export type Band = {
   /** name shown on the site */
   n: string;
+  /** False for a band that's dropped out. Their entry stays in the roster —
+      the research behind it is worth keeping, and bands come back — but the
+      site doesn't show them and they hold no slot on the schedule. Required
+      rather than optional so adding a band is a decision, not a default. */
+  active: boolean;
   /** optional telephone contact method */
   t?: string;
   /** optional email contact method */
@@ -57,9 +62,12 @@ export type Day = {
   lanes: Slot[][];
 };
 
-export const BANDS: Band[] = [
+/* Everyone who has ever been on the bill. Use BANDS below for anything the
+   site displays — this one is here for the count, the archive and the admin. */
+export const ROSTER: Band[] = [
   {
     n: "La Armada",
+    active: true,
     t: "954-793-8431",
     e: "armadahardcore@gmail.com",
     s: "store",
@@ -72,6 +80,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "Take the Reins",
+    active: false,
     s: "store",
     base: "Chicago, IL",
     kind: "Chicago rock fronted by Courtney Boyers, on Flat Aht Records. Compared to Joan Jett by way of the Pretenders.",
@@ -81,6 +90,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "The Horrids",
+    active: true,
     s: "unknown",
     base: "Lombard, IL",
     kind: "Horror-fueled street punk from the gutters of Lombard, Illinois, raising hell since 2003. Has bled on stages alongside with Misfits, Michale Graves, The Casualties, GWAR, The Unseen, Lower Class Brats, Flatfoot 56, Nekromantix, and Blitzkid.",
@@ -89,6 +99,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "Steve's in the Band",
+    active: true,
     t: "847-791-9587",
     s: "store",
     base: "West Chicago, IL",
@@ -102,6 +113,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "The Steves",
+    active: true,
     s: "unknown",
     base: "—",
     kind: "",
@@ -110,6 +122,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "S.M.F.C.",
+    active: true,
     s: "store",
     base: "Joliet, IL",
     kind: "The solo project of Chicago guitarist Steev Custer, also of Death and Memphis and Space Age Zeros.",
@@ -120,12 +133,14 @@ export const BANDS: Band[] = [
   },
   {
     n: "Bill Nelson",
+    active: true,
     s: "unknown",
     base: "Chicago, IL",
     kind: "",
   },
   {
     n: "Dead Freddie",
+    active: true,
     e: "donatasramanauskas@rocketmail.com",
     s: "store",
     base: "Chicago, IL",
@@ -135,6 +150,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "From the Start",
+    active: true,
     t: "630-936-1471",
     e: "Fromthestartbooking@gmail.com",
     ac: "https://www.instagram.com/fromthestartil",
@@ -149,6 +165,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "The Turdles",
+    active: true,
     s: "none",
     base: "St. Charles, IL",
     kind: "Midwestern punk from St. Charles, cheerfully self-described as old, bald and unbothered.",
@@ -157,6 +174,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "Sex Dream",
+    active: true,
     s: "store",
     base: "Chicago suburbs",
     kind: "Ramonescore with a twee streak from the Chicago suburbs, fronted by Maria Surfinbird since 2018.",
@@ -166,6 +184,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "Anger.",
+    active: true,
     s: "store",
     base: "Chicago, IL",
     kind: "Chicago hardcore on Punk Rock Tacos Records. Their self-titled LP is dedicated to drummer Matt Meuzelaar.",
@@ -174,6 +193,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "James the Boneless",
+    active: true,
     t: "630-638-9358",
     s: "store",
     base: "Chicago, IL",
@@ -185,6 +205,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "The Larvettes",
+    active: true,
     s: "store",
     base: "Lombard, IL",
     kind: "A garage pop punk band from the early 20s.",
@@ -195,6 +216,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "The Nobodies",
+    active: true,
     s: "none",
     base: "Chicago, IL",
     kind: "Performing as a duo for this fest. They combine a punk-derived recklessness and garage-rock sensibility with lyrical wit and a bittersweet vulnerability. Their songs will help you forget your troubles and remember your triumphs.",
@@ -205,6 +227,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "Tone Zone Skam",
+    active: true,
     s: "store",
     base: "Chicago area",
     kind: "Chicago-area ska, playing Berwyn halls and Burlington Bar bills since 2013.",
@@ -213,6 +236,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "The Come Alongs",
+    active: true,
     s: "site",
     base: "Central Indiana",
     kind: "Central Indiana trio moving between classic rock, rockabilly, indie and punk.",
@@ -221,6 +245,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "Tiger Uppercut",
+    active: true,
     s: "unknown",
     base: "Kingston, Ontario",
     kind: "",
@@ -231,6 +256,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "Deadfoot",
+    active: true,
     s: "store",
     base: "Indianapolis, IN",
     kind: "Indianapolis punk trio writing about political corruption, greed, and the occasional love ballad.",
@@ -241,6 +267,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "Acton's Dictum",
+    active: true,
     s: "site",
     base: "Berwyn, IL | Valparaiso, IN",
     kind: "Wobbly stoner anarcho-prog-punk from Berwyn, IL / Valparaiso, IN.",
@@ -249,6 +276,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "The Rip Ups",
+    active: true,
     s: "store",
     base: "Chicago, IL",
     kind: "Garage-a-billy punk out of Chicago's alleys — you can mosh to it or dance to it.",
@@ -257,12 +285,14 @@ export const BANDS: Band[] = [
   },
   {
     n: "Jukebox Rejects",
+    active: true,
     s: "none",
     base: "Appleton, WI",
     kind: "",
   },
   {
     n: "Tÿre Fÿre",
+    active: true,
     s: "store",
     base: "Chicago, IL",
     kind: "Chicago punk born at the Alley, played entirely by fifty-year-old men from Elk Grove Village.",
@@ -272,6 +302,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "Alex Kasznel & the Board of Directors",
+    active: true,
     e: "booking@akandthebod.com",
     s: "store",
     base: "Cincinnati, OH",
@@ -283,12 +314,14 @@ export const BANDS: Band[] = [
   },
   {
     n: "Cherry Phox",
+    active: true,
     s: "none",
     base: "Lombard, IL",
     kind: "",
   },
   {
     n: "MG Bailey",
+    active: true,
     e: "mgbaileyonemanband@gmail.com",
     s: "store",
     base: "Homewood, IL",
@@ -300,6 +333,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "After the Fight",
+    active: true,
     s: "store",
     base: "Elgin, IL",
     kind: "Chicago-area punk rock - melodic and loud, intense and un-serious, not hardcore since 2004.",
@@ -310,6 +344,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "The Foleys",
+    active: true,
     e: "thefoleys@wreckedhooligan.com",
     s: "store",
     base: "South Bend, IN",
@@ -323,6 +358,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "Tongan Death Grip",
+    active: true,
     s: "store",
     base: "Waukegan, IL",
     kind: "Waukegan metal formed in 2012 out of a shared love of pro wrestling.",
@@ -330,18 +366,21 @@ export const BANDS: Band[] = [
   },
   {
     n: "Counterfeit Goods",
+    active: true,
     s: "none",
     base: "Oxford, OH",
     kind: "Four-piece punk from Oxford, Ohio, pulling from rockabilly, soul, ska and jazz.",
   },
   {
     n: "Low Range",
+    active: true,
     s: "none",
     base: "—",
     kind: "Chicago-style power trio",
   },
   {
     n: "Rabid Wreck",
+    active: true,
     s: "none",
     base: "—",
     kind: "",
@@ -350,6 +389,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "Misunderstood",
+    active: true,
     s: "store",
     base: "Richmond, IN",
     kind: "Richmond, Indiana punk, started in 2006 by Lyn-Z when she was fifteen.",
@@ -357,12 +397,14 @@ export const BANDS: Band[] = [
   },
   {
     n: "Dracula Johnson",
+    active: true,
     s: "none",
     base: "—",
     kind: "",
   },
   {
     n: "13-Monsters",
+    active: true,
     s: "store",
     base: "Chicago, IL",
     kind: "A Chicago grungy psyche band led by Deb Sonzo. They are a band you'd expect to hear in a Tarantino movie. A dark-basement-with-candles-fog-and-loud-amplifiers kind of band that consistently leaves people with that “why haven’t I been here til now?” feeling. They host several festivals of their own own, including The Rock & Roll Circus Side Shows, Baconstöck and GOATSTÖCK. All of their releases are on Circus Side Show Records.",
@@ -372,6 +414,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "Noodle Brain",
+    active: true,
     s: "store",
     base: "Chicago, IL",
     kind: "Illinois pop-punk duo releasing through Outloud! Records and Laptop Punk Records.",
@@ -380,18 +423,21 @@ export const BANDS: Band[] = [
   },
   // {
   //   n: "Cinema Violence",
+  //   active: true,
   //   s: "none",
   //   base: "—",
   //   kind: "",
   // },
   {
     n: "Los Kausas",
+    active: true,
     s: "none",
     base: "—",
     kind: "",
   },
   {
     n: "Shukin & the Ramblers",
+    active: true,
     s: "store",
     base: "Chicago, IL",
     kind: "Chicago blues, R&B, roots country and gypsy jazz played with a punk edge.",
@@ -402,6 +448,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "The Helsings",
+    active: true,
     s: "site",
     base: "Indianapolis, IN",
     kind: "Indianapolis rock and roll, mixing Ramones energy with Motörhead fury.",
@@ -410,6 +457,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "Graygarden",
+    active: true,
     s: "site",
     base: "Central Indiana",
     kind: "Alt/pop punk with a tinge of post-hardcore edge from Central Indiana. Formed in 2019 with the goal of writing fun, intricate, strong music with melodic and catchy vocals.",
@@ -420,6 +468,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "Fishfood",
+    active: true,
     s: "store",
     base: "North Freedom, WI",
     kind: "Silly pop punk rock, as they call it, from North Freedom, Wisconsin.",
@@ -432,6 +481,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "Zbyszko Cracker",
+    active: true,
     s: "store",
     base: "Wauconda, IL",
     kind: "As if Jack Benny led a band that combined Rage Against The Machine with Atom & His Package but built the whole thing using glow-in-the-dark Better Blocks and a kalimba.",
@@ -439,6 +489,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "Goodbye Sunshine",
+    active: true,
     e: "goodbye.sunshine.music@gmail.com",
     s: "store",
     base: "Chicago, IL",
@@ -450,6 +501,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "Narwhal Express",
+    active: true,
     s: "none",
     base: "Indianapolis, IN",
     kind: "Anti-fa punk/alt-rock band out of Indy.",
@@ -460,18 +512,21 @@ export const BANDS: Band[] = [
   },
   {
     n: "The Assistant Managers",
+    active: true,
     s: "unknown",
     base: "—",
     kind: "",
   },
   {
     n: "Dead End On Sarah",
+    active: false,
     s: "unknown",
     base: "Mishawaka, IN",
     kind: "",
   },
   {
     n: "Gunnar Linden",
+    active: true,
     s: "unknown",
     base: "Chicago, IL",
     kind: "This musical passion is the real deal, born from a decade of carving his own path—working overnight shifts to get time on university pianos and taking his music full-time. He brings skill, energy, and a truly unique show to every performance",
@@ -480,36 +535,42 @@ export const BANDS: Band[] = [
   },
   {
     n: "PUGZ",
+    active: true,
     s: "unknown",
     base: "—",
     kind: "",
   },
   {
     n: "Aaron Williams Performing The Wooz",
+    active: true,
     s: "unknown",
     base: "Chicago, IL",
     kind: "",
   },
   {
     n: "Trevor Hill",
+    active: true,
     s: "unknown",
     base: "—",
     kind: "",
   },
   {
     n: "Davey J",
+    active: true,
     s: "unknown",
     base: "—",
     kind: "",
   },
   {
     n: "A FrumpyKnot",
+    active: true,
     s: "unknown",
     base: "Lombard, IL",
     kind: "",
   },
   {
     n: "MfoV",
+    active: true,
     s: "none",
     base: "Maywood, IL",
     kind: "Chicago-area punk trio — self-described, tongue firmly in cheek, as \"3 pambazo specials from MayHood IL.\"",
@@ -520,18 +581,21 @@ export const BANDS: Band[] = [
   },
   {
     n: "Keith Bondi",
+    active: true,
     s: "unknown",
     base: "—",
     kind: "",
   },
   {
     n: "EL Fa",
+    active: true,
     s: "unknown",
     base: "—",
     kind: "",
   },
   {
     n: "Hesterménage à Trois",
+    active: true,
     s: "unknown",
     ac: "https://www.instagram.com/hesterman_band_",
     lac: "Instagram",
@@ -543,6 +607,7 @@ export const BANDS: Band[] = [
   },
   {
     n: "The Jobodys",
+    active: true,
     s: "unknown",
     base: "Villa Park, IL",
     kind: "",
@@ -566,10 +631,10 @@ export const DAYS: Day[] = [
   {label:"Saturday", date:"Sept 12", iso:"2026-09-12", start:"11:00", sponsors:["Dobies Printing LLC"], lanes:[
     [{t:"12:00",n:"Dead Freddie"},{t:"13:10",n:"13-Monsters",len:25},{t:"14:00",n:"Graygarden",len:25},{t:"14:50",n:"Dracula Johnson",len:30},{t:"15:45",n:"The Helsings",len:30},{t:"16:40",n:"The Foleys",len:30},{t:"17:35",n:"After the Fight",len:30},{t:"18:30",n:"The Larvettes",len:25},{t:"19:20",n:"The Steves",len:30},{t:"20:10",n:"Sex Dream",len:30},{t:"21:10",n:"Jukebox Rejects",len:30},{t:"22:10",n:"Bill Nelson",len:45}],
     [{t:"12:45",n:"Fishfood",len:25},{t:"13:40",n:"Narwhal Express",len:25},{t:"14:25",n:"The Rip Ups",len:25},{t:"15:20",n:"Misunderstood",len:25},{t:"16:15",n:"Goodbye Sunshine",len:25},{t:"17:10",n:"Tongan Death Grip",len:25},{t:"18:05",n:"Noodle Brain",len:25},{t:"18:55",n:"Tÿre Fÿre",len:25},{t:"19:50",n:"Zbyszko Cracker",len:20},{t:"20:40",n:"Rabid Wreck",len:30},{t:"21:40",n:"The Turdles",len:30}],
-    [{t:"13:10",n:"Dead End On Sarah"},{t:"14:00",n:"Gunnar Linden"},{t:"15:00",n:"PUGZ"},{t:"16:00",n:"Hesterménage à Trois"},{t:"17:00",n:"Aaron Williams Performing The Wooz"},{t:"18:00",n:"Dracula Johnson"},{t:"19:00",n:"The Nobodies"},{t:"20:00",n:"Cherry Phox"}]
+    [{t:"14:00",n:"Gunnar Linden"},{t:"15:00",n:"PUGZ"},{t:"16:00",n:"Hesterménage à Trois"},{t:"17:00",n:"Aaron Williams Performing The Wooz"},{t:"18:00",n:"Dracula Johnson"},{t:"19:00",n:"The Nobodies"},{t:"20:00",n:"Cherry Phox"}]
   ]},
   {label:"Sunday", date:"Sept 13", iso:"2026-09-13", start:"11:00", sponsors:["JL Vintage","Eating Soup Daily"], lanes:[
-    [{t:"12:30",n:"Take the Reins", len:30},{t:"13:30",n:"James the Boneless", len:30},{t:"14:30",n:"Shukin & the Ramblers", len:30},{t:"15:30",n:"Tone Zone Skam", len:30},{t:"16:30",n:"Los Kausas", len:30},{t:"17:30",n:"Tiger Uppercut", len:30}],
+    [{t:"13:30",n:"James the Boneless", len:30},{t:"14:30",n:"Shukin & the Ramblers", len:30},{t:"15:30",n:"Tone Zone Skam", len:30},{t:"16:30",n:"Los Kausas", len:30},{t:"17:30",n:"Tiger Uppercut", len:30}],
     [{t:"12:00",n:"Steve's in the Band", len:30},{t:"13:00",n:"MG Bailey", len:30},{t:"14:00",n:"The Jobodys", len:30},{t:"15:00",n:"Counterfeit Goods", len:30},{t:"16:00",n:"Deadfoot", len:30},{t:"17:00",n:"MfoV", len:30}],
     [{t:"13:00",n:"Trevor Hill"},{t:"14:00",n:"Davey J"},{t:"15:00",n:"Noodle Brain"},{t:"16:00",n:"A FrumpyKnot"}]
   ]}
@@ -628,8 +693,15 @@ export const UNIT = 5;
 export const nameStyle = (name: string) =>
   name === "A FrumpyKnot" ? { textTransform: "none" as const } : undefined;
 
+/* What the site shows: the roster minus anyone who's dropped out. Everything
+   that renders or counts bands reads this, so a band going inactive takes
+   them off the page, out of the lineup and out of the tally in one edit. */
+export const BANDS: Band[] = ROSTER.filter((b) => b.active);
+
+/* Built off the whole roster, not just BANDS — a lookup for a band who has
+   since dropped should still find their details rather than come back empty. */
 export const byName: Record<string, Band> = Object.fromEntries(
-  BANDS.map((b) => [b.n, b])
+  ROSTER.map((b) => [b.n, b])
 );
 
 export const sponsorByName: Record<string, Sponsor> = Object.fromEntries(

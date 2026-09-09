@@ -157,5 +157,5 @@ export function dayTicker(day: Day, now: Date = new Date()) {
 }
 
 export function bandFor(name: string): Band {
-  return byName[name] ?? { n: name, s: "unknown", base: "—", kind: "" };
+  return byName[name] ?? { n: name, active: true, s: "unknown", base: "—", kind: "" };
 }
