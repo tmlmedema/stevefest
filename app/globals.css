@@ -502,7 +502,7 @@ a.sup:hover{transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(20,16,15,.22
 .grid-scroll{overflow-x:auto; padding-bottom:.5rem}
 .grid{
   display:grid; min-width:720px; background:var(--ink); border:4px solid var(--ink); gap:0;
-  --rail-w:62px;
+  --rail-w:62px; --row-h:14px;
 }
 .g-head{
   font-family:var(--display); font-weight:900; text-transform:uppercase; font-size:1.15rem;

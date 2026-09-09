@@ -23,7 +23,8 @@ const fmt = (m: number) => {
   return `${h}:${mm} ${ap}`;
 };
 
-const ROW_PX = 14;
+/* Row height lives in CSS as --row-h so the sheet can swap it: 14px of screen
+   becomes 1fr on paper, where the grid stretches to fill the page. */
 
 const ROOFTOP_NOTE = (
   <p>
@@ -102,7 +103,7 @@ export default function ScheduleGrid() {
           id="grid"
           style={{
             gridTemplateColumns: `var(--rail-w) repeat(${STAGES.length},1fr)`,
-            gridTemplateRows: `auto repeat(${rows},${ROW_PX}px)`,
+            gridTemplateRows: `auto repeat(${rows},var(--row-h))`,
           }}
         >
           <div className="g-head rail" />

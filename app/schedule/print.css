@@ -1,0 +1,41 @@
+/* ======================================================================
+   The schedule on paper — 11x17 portrait, the day that's showing.
+
+   Whichever day tab is up is the day that prints, so three days is three
+   trips to the printer. Everything that isn't the grid comes off: the
+   tape, the day tabs, the ask, the footer. The rows are var(--row-h),
+   14px on screen, so paper only has to swap that for 1fr and give the
+   grid a height for the fr units to divide up.
+   ====================================================================== */
+@page{size:11in 17in; margin:.4in}
+
+@media print{
+  .tape, .days, .give, .ask-row, .page-shell > .wrap{display:none !important}
+  body{background:#fff; color:var(--ink); font-size:12pt}
+  .view{padding:0}
+  .page-top{padding:0}
+
+  h2.head{font-size:34pt; line-height:.85; margin:0 0 .04in}
+  .sched-sponsor{margin:0 0 .1in; font-size:8pt; color:#4a4551}
+  .sched-sponsor b, .sched-sponsor a{color:var(--ink)}
+
+  /* the grid takes the sheet, less the head, the credit and the legend */
+  .grid-scroll{overflow:visible; padding:0}
+  .grid{
+    min-width:0; --rail-w:.6in; --row-h:1fr;
+    height:14.6in; border-width:3pt;
+  }
+  .g-head{font-size:14pt; padding:.06in .03in; border-left-width:2.5pt}
+  .g-head.rail, .g-time{position:static; color:#fff}
+  .g-time{font-size:7pt; padding:0 .05in}
+  .g-lane{background:#f3eef5; border-left-width:2.5pt}
+  .slot{margin:0 2.5pt; padding:.02in .05in; border-width:2pt}
+  .slot .n{font-size:13pt}
+  .slot .t{font-size:7.5pt; margin-top:.014in; color:#4a4551}
+  .rooftop-note{padding:.12in; font-size:7.5pt; color:#6f6678}
+
+  .legend{margin-top:.1in; font-size:7.5pt; color:var(--ink)}
+
+  /* the yellow heads and the orange closers are the whole point */
+  *{-webkit-print-color-adjust:exact; print-color-adjust:exact}
+}

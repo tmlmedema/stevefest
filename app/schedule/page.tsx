@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import ScheduleGrid from "../components/ScheduleGrid";
 import GiveCta from "../components/GiveCta";
+import "./print.css";
 
 export const metadata: Metadata = {
   title: "Schedule — Steve Fest II",
