@@ -33,7 +33,7 @@ export default function BandShelf() {
             </h3>
             <span className="where">{b.base}</span>
             {b.kind && <p className="blurb">{b.kind}</p>}
-            {/* {links.length > 0 && <div className="links">{links}</div>} */}
+            {links.length > 0 && <div className="links">{links}</div>}
           </article>
         );
       })}
