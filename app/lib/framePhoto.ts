@@ -2,30 +2,28 @@
  * Redraws a photo inside the polaroid frame so it can be saved as one image.
  *
  * The lightbox frame is CSS, which the browser won't hand us as a file, so the
- * frame is painted again here on a canvas. The polaroid is built at the photo's
- * full resolution, then dropped whole onto a 1080x1080 board — Instagram's
- * square — so a saved photo posts without the crop tool touching it.
+ * frame is painted again here on a canvas. The output is a 1080x1080 square —
+ * Instagram's — and the polaroid fills the whole of it, edge to edge, with no
+ * board behind it. What you save is the paper and nothing else.
  *
- * The polaroid is fitted rather than cropped: whatever shape the photo is, all
- * of it survives, and the grape board takes up the slack down the sides of a
- * portrait or above and below a landscape.
+ * A polaroid is taller than it is wide, so a square one can't have a square
+ * window: once the border and the deep bottom band are taken off, what's left
+ * for the photo is landscape, about 1.16:1. The photo is therefore covered
+ * into that window — scaled to fill and centre-cropped — rather than fitted.
+ * A portrait loses its top and bottom to do it; that's the price of the square
+ * having no board to absorb the difference.
  *
  * One deliberate difference from the CSS: on screen the border and bottom band
  * are fixed pixel sizes, so their proportions shift with the photo's shape.
- * Here they scale with the photo's width, which keeps a downloaded portrait and
- * a downloaded landscape looking like the same object.
+ * Here they're struck off the square, so every download is the same object
+ * whatever went into it.
  */
 
 const INK = "#14100F";
 const PAPER = "#FFFFFF";
-/* The board behind the polaroid — the site's own deep grape, so a saved
-   photo still reads as coming from here. */
-const BOARD = "#280E2F";
-/* Instagram's square, at its native upload width. */
+/* Instagram's square, at its native upload width. The polaroid is this size —
+   there's nothing behind it. */
 const OUTPUT = 1080;
-/* Air left around the polaroid, as a fraction of the board's side. Enough
-   that the paper never runs into the edge of a feed post. */
-const MARGIN_RATIO = 0.05;
 
 const BORDER_RATIO = 0.03; /* frame edge, as a fraction of photo width */
 const BAND_RATIO = 0.17; /* deep bottom band, likewise */
@@ -77,22 +75,41 @@ export async function framePhoto(src: string): Promise<Blob> {
     load(WORDMARK, false),
   ]);
 
-  const w = photo.naturalWidth;
-  const h = photo.naturalHeight;
-  const border = Math.round(w * BORDER_RATIO);
+  /* Work back from the square: the border is a fraction of the window's
+     width, and the window is what's left of the square once both borders are
+     off it — so the ratio has to be solved for rather than multiplied out. */
+  const border = Math.round((OUTPUT * BORDER_RATIO) / (1 + BORDER_RATIO * 2));
+  const w = OUTPUT - border * 2;
   const band = Math.round(w * BAND_RATIO);
+  /* What's left for the photo after the border above and the band below. */
+  const h = OUTPUT - border - band;
 
-  /* The polaroid itself, at the photo's own resolution. */
   const frame = document.createElement("canvas");
-  frame.width = w + border * 2;
-  frame.height = h + border + band;
+  frame.width = OUTPUT;
+  frame.height = OUTPUT;
 
   const ctx = frame.getContext("2d");
   if (!ctx) throw new Error("Couldn't prepare that image.");
 
   ctx.fillStyle = PAPER;
-  ctx.fillRect(0, 0, frame.width, frame.height);
-  ctx.drawImage(photo, border, border, w, h);
+  ctx.fillRect(0, 0, OUTPUT, OUTPUT);
+
+  /* Cover: scale to fill the window on whichever axis is short, then take the
+     middle of the other one. Nothing is left blank inside the frame. */
+  const crop = Math.min(photo.naturalWidth / w, photo.naturalHeight / h);
+  const cropW = w * crop;
+  const cropH = h * crop;
+  ctx.drawImage(
+    photo,
+    (photo.naturalWidth - cropW) / 2,
+    (photo.naturalHeight - cropH) / 2,
+    cropW,
+    cropH,
+    border,
+    border,
+    w,
+    h
+  );
 
   /* Wordmark on its black block, bottom-left, centred in the band. */
   const markH = Math.round(band * 0.34);
@@ -133,38 +150,10 @@ export async function framePhoto(src: string): Promise<Blob> {
   ctx.fillText(STAMP, 0, (ascent - descent) / 2);
   ctx.restore();
 
-  /* Sit the finished polaroid on the square board, scaled to whichever of
-     its sides runs out of room first and centred on both axes. */
-  const post = document.createElement("canvas");
-  post.width = OUTPUT;
-  post.height = OUTPUT;
-
-  const pctx = post.getContext("2d");
-  if (!pctx) throw new Error("Couldn't prepare that image.");
-
-  pctx.fillStyle = BOARD;
-  pctx.fillRect(0, 0, OUTPUT, OUTPUT);
-
-  const room = OUTPUT * (1 - MARGIN_RATIO * 2);
-  const scale = Math.min(room / frame.width, room / frame.height);
-  const drawW = Math.round(frame.width * scale);
-  const drawH = Math.round(frame.height * scale);
-  const drawX = Math.round((OUTPUT - drawW) / 2);
-  const drawY = Math.round((OUTPUT - drawH) / 2);
-
-  pctx.imageSmoothingEnabled = true;
-  pctx.imageSmoothingQuality = "high";
-  /* The same lift the lightbox gives the frame, so the paper reads as an
-     object on the board rather than a white rectangle painted on it. */
-  pctx.save();
-  pctx.shadowColor = "rgba(0,0,0,.55)";
-  pctx.shadowBlur = Math.round(OUTPUT * 0.03);
-  pctx.shadowOffsetY = Math.round(OUTPUT * 0.012);
-  pctx.drawImage(frame, drawX, drawY, drawW, drawH);
-  pctx.restore();
-
+  /* No board, so no drop shadow either — there'd be nothing for it to fall
+     on. The polaroid is the whole image. */
   return new Promise((resolve, reject) =>
-    post.toBlob(
+    frame.toBlob(
       (blob) =>
         blob ? resolve(blob) : reject(new Error("Couldn't prepare that image.")),
       "image/jpeg",
