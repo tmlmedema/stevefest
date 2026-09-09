@@ -174,7 +174,18 @@ export default function ScheduleGrid() {
               const len = isRooftop ? 60 : slot.len ?? DEFAULT_LEN;
               const b = byName[slot.n] ?? {};
               const closer = k === lane.length - 1 && lane.length > 1;
-              const cls = closer ? "slot head-set" : "slot";
+              /* Saturday packs twelve sets onto the main stage, so its short
+                 ones get a box less than half the height a Friday set gets.
+                 The print sheet sizes their type down to suit; on screen the
+                 class does nothing, because every row is 14px there. */
+              const tight = len <= 25;
+              const cls = [
+                "slot",
+                closer && "head-set",
+                tight && "slot-tight",
+              ]
+                .filter(Boolean)
+                .join(" ");
               const style = {
                 gridColumn: si + 2,
                 gridRow: `${(st - s0) / UNIT + 2} / span ${Math.round(len / UNIT)}`,
