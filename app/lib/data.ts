@@ -785,9 +785,9 @@ export const sponsorByName: Record<string, Sponsor> = Object.fromEntries(
 /* =======================================================================
    PHOTOGRAPHERS — the codes handed out so a shot can be credited.
 
-   PLACEHOLDER DATA. These three are invented to build against; swap the
-   whole array for the real list before the wall opens, and the codes go
-   with them — anyone holding one of these could credit themselves.
+   The real list. A code is the only thing standing between someone and a
+   credit, so it stays out of anywhere public and a photographer who loses
+   theirs gets a new one here rather than a reminder of the old.
    ======================================================================= */
 
 export type Photographer = {
@@ -799,9 +799,8 @@ export type Photographer = {
 };
 
 export const PHOTOGRAPHERS: Photographer[] = [
-  { name: "Rosa Delgado", code: "RD4192" },
-  { name: "Marcus Yee", code: "MY7305" },
-  { name: "Priya Raman", code: "PR2648" },
+  { name: "Ed Kost", code: "EK6631" },
+  { name: "Chris Peters", code: "CP8662" },
 ];
 
 /* The one place a code is turned into a photographer. Both the browser and
