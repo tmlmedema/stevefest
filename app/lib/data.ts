@@ -196,6 +196,7 @@ export const ROSTER: Band[] = [
     base: "Chicago suburbs",
     kind: "Ramonescore with a twee streak from the Chicago suburbs, fronted by Maria Surfinbird since 2018.",
     u: "https://sexxdream.bandcamp.com/merch/mad-kitties-in-space",
+    l1: "Merch",
     u2: "https://linktr.ee/sex.dream",
     l2: "Links",
   },
@@ -203,11 +204,16 @@ export const ROSTER: Band[] = [
     n: "Anger.",
     active: true,
     isMerching: false,
+    t: "630-666-9399",
+    e: "kevinlustrup@gmail.com",
     s: "store",
     base: "Chicago, IL",
-    kind: "Chicago hardcore on Punk Rock Tacos Records. Their self-titled LP is dedicated to drummer Matt Meuzelaar.",
+    kind: "Anger has been around since probly 2008, Dave Simon is the lone original member. The main influences are Motörhead, NoMeansNo and Bad Brains. Drummer, friend, brother Matt Meuzelaar entered Valhalla in 2024 and we dedicate every ass kicked to him and his memory.",
     u: "https://angerchicago.bandcamp.com/album/anger",
     l1: "Music",
+    u2: "https://www.etsy.com/shop/KevinLustrup",
+    l2: "Merch",
+
   },
   {
     n: "James the Boneless",
@@ -796,11 +802,13 @@ export type Photographer = {
   /** six characters: their initials, then four digits. Compared upper-cased,
       so what they type is never the thing that decides it. */
   code: string;
+  /** optional email for contact */
+  email?: string;
 };
 
 export const PHOTOGRAPHERS: Photographer[] = [
-  { name: "Ed Kost", code: "EK6631" },
-  { name: "Chris Peters", code: "CP8662" },
+  { name: "Ed Kost", code: "EK6631", email: "kost.ed@gmail.com" },
+  { name: "Chris Peters", code: "CP8662", email: "ChrisP.pics@gmail.com" },
 ];
 
 /* The one place a code is turned into a photographer. Both the browser and
