@@ -1,124 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DAYS, DEFAULT_LEN, STAGES, nameStyle } from "../lib/data";
-import { defaultDayIndex } from "../lib/schedule";
-import { ResolvedMerch, TickerEntry, bandFor, dayTicker, fmtClock, merchFor } from "../lib/merch";
+import { DAYS, STAGES, nameStyle } from "../lib/data";
+import {
+  MerchContact,
+  TickerEntry,
+  bandFor,
+  comingUp,
+  contactsFor,
+  dayState,
+  daySets,
+  festHasConcluded,
+  fmtClock,
+  merchTableStatus,
+  openingDayIndex,
+  recentlyPlayed,
+  shopUrlFor,
+} from "../lib/merch";
 import GiveCta from "./GiveCta";
-
-/* The band's real merch link, if data.ts actually has one on file — never
-   a fabricated shop URL. Falls back to the roster page for these example
-   cards, since none of the three has a real store to point to yet. */
-function realShopUrl(band: string): string {
-  return merchFor(bandFor(band)).shopUrl ?? "/bands";
-}
-
-/* The real, computed status for a band — used for every "full day" example
-   below except the two hand-authored "reach out to buy" demos. Whatever
-   data.ts already knows about a band (a confirmed store, a Bandcamp page,
-   or nothing at all) is what shows up here, unfabricated. */
-function realStatus(band: string): ResolvedMerch {
-  return merchFor(bandFor(band));
-}
-
-const EMPTY_TICKER = {
-  upNext: STAGES.map(() => null) as (TickerEntry | null)[],
-};
-
-/* Nobody's played yet — the fest doesn't start until Sept 11 — so the real
-   per-stage ticker (see dayTicker in lib/merch) has nothing to show. These
-   three stand in for it until then, one per tier, so this page demonstrates
-   what it looks like instead of just saying "nothing's wrapped yet" three
-   times. Swap this block back for `dayTicker(day, now).justPlayed` once
-   there's something real to show. */
-/* A real build only shows whichever contact method a band actually handed
-   over — `textHref`/`instagramHref` are real `sms:`/`https:` links, so
-   tapping either opens the phone's own messaging or Instagram app rather
-   than this site. */
-type HereToday = {
-  textHref: string;
-  instagramHref: string;
-  instagramHandle: string;
-};
-
-/* Three real coverage scenarios, worst-to-best case for a fan standing
-   there wanting to buy something:
-     Horrids    — at the table right now, AND reachable directly, AND a store
-     Low Range  — not at the table, but reachable directly and has a store
-     Cherry Phox — not at the table, no contact, no store: a dead end */
-type ExampleCard = {
-  entry: TickerEntry;
-  status: ResolvedMerch;
-  hereToday?: HereToday;
-};
-
-/* Fabricated on purpose, and reused everywhere Horrids/Low Range show up
-   below — a real build never invents a phone number or handle a band
-   didn't hand over. */
-const HORRIDS_HERE_TODAY: HereToday = {
-  textHref: "sms:+15550178342",
-  instagramHref: "https://www.instagram.com/thehorridsband/",
-  instagramHandle: "@thehorridsband",
-};
-const LOW_RANGE_HERE_TODAY: HereToday = {
-  textHref: "sms:+15550134921",
-  instagramHref: "https://www.instagram.com/lowrangeband/",
-  instagramHandle: "@lowrangeband",
-};
-
-const EXAMPLE_JUST_PLAYED: ExampleCard[] = [
-  {
-    entry: { stage: "Main Stage", band: "The Horrids", start: 21 * 60, end: 21 * 60 + 45 },
-    status: {
-      tier: 1,
-      note: "Selling now at the merch table",
-      shopUrl: realShopUrl("The Horrids"),
-    },
-    hereToday: HORRIDS_HERE_TODAY,
-  },
-  {
-    entry: { stage: "Side Stage", band: "Low Range", start: 21 * 60, end: 21 * 60 + 30 },
-    status: {
-      tier: 3,
-      note: "Not selling at the merch table",
-      shopUrl: realShopUrl("Low Range"),
-    },
-    hereToday: LOW_RANGE_HERE_TODAY,
-  },
-  {
-    entry: { stage: "Rooftop Stage", band: "Cherry Phox", start: 21 * 60, end: 22 * 60 },
-    status: {
-      tier: 3,
-      note: "Not selling at the merch table.",
-    },
-  },
-];
-
-const toMin = (t: string) => +t.split(":")[0] * 60 + +t.split(":")[1];
-const slotLenFor = (stage: string, len?: number) =>
-  stage === "Rooftop Stage" ? 60 : len ?? DEFAULT_LEN;
-
-/* The Horrids and Low Range keep their hand-authored "reach out to buy"
-   scenario wherever they show up in the real schedule below — every other
-   band gets its status computed for real (realStatus), unfabricated. */
-const STATUS_OVERRIDES: Record<string, { status: ResolvedMerch; hereToday: HereToday }> = {
-  "The Horrids": {
-    status: {
-      tier: 1,
-      note: "Selling now at the merch table",
-      shopUrl: realShopUrl("The Horrids"),
-    },
-    hereToday: HORRIDS_HERE_TODAY,
-  },
-  "Low Range": {
-    status: {
-      tier: 3,
-      note: "Not selling at the merch table",
-      shopUrl: realShopUrl("Low Range"),
-    },
-    hereToday: LOW_RANGE_HERE_TODAY,
-  },
-};
 
 /* How often the board re-checks the clock — no need for anything tighter,
    the shortest set on the schedule is still many minutes long. */
@@ -143,41 +42,67 @@ const PRODUCTS: Product[] = [
   },
 ];
 
+/* Everything a card needs about one band, all of it read off the roster —
+   no card ever invents a number, a handle or a store. */
+type BandMerch = {
+  contacts: MerchContact[];
+  shopUrl?: string;
+  table: { tier: 1 | 3; note: string };
+};
+
+function bandMerch(name: string): BandMerch {
+  const b = bandFor(name);
+  return {
+    contacts: contactsFor(b),
+    shopUrl: shopUrlFor(b),
+    table: merchTableStatus(b),
+  };
+}
+
 export default function MerchBoard() {
   /* Same SSR-safe pattern as ScheduleGrid: open on day 0 for the first
-     paint, then correct to today once we're in the browser. */
+     paint, then correct to the day that actually matters once we're in the
+     browser and can read the visitor's clock. */
   const [dayIx, setDayIx] = useState(0);
   const [now, setNow] = useState<Date | null>(null);
   const [view, setView] = useState<"board" | "store">("board");
 
   useEffect(() => {
-    setDayIx(defaultDayIndex());
+    setDayIx(openingDayIndex());
     setNow(new Date());
     const id = setInterval(() => setNow(new Date()), TICK_MS);
     return () => clearInterval(id);
   }, []);
 
   const day = DAYS[dayIx];
-  /* Nothing to compute yet on the server — the ticker depends on the
-     visitor's clock, so it's blank until useEffect sets `now`. */
-  const { upNext } = now ? dayTicker(day, now) : EMPTY_TICKER;
 
-  /* Every band playing this day, one column per stage — recomputed
-     whenever the day tab changes, straight from the real schedule. */
-  const lineupByStage = STAGES.map((stage, si) => {
-    const lane = day.lanes[si] ?? [];
-    const cards: ExampleCard[] = lane.map((slot) => {
-      const start = toMin(slot.t);
-      const end = start + slotLenFor(stage, slot.len);
-      const override = STATUS_OVERRIDES[slot.n];
-      return {
-        entry: { stage, band: slot.n, start, end },
-        status: override?.status ?? realStatus(slot.n),
-        hereToday: override?.hereToday,
-      };
-    });
-    return { stage, cards };
-  });
+  /* Nothing to work out on the server — all of this depends on the
+     visitor's clock, so until useEffect sets `now` the board renders as
+     if the whole fest were still ahead. */
+  const state = now ? dayState(day, now) : "future";
+  const concluded = now ? festHasConcluded(now) : false;
+
+  /* "Just played" is only ever about the day you're actually standing in.
+     On any other tab — a day already gone, or one still to come — those
+     three cards would be answering a question nobody asked. */
+  const justPlayed =
+    now && !concluded && state === "today" ? recentlyPlayed(day, now) : [];
+
+  /* "Up next" survives onto future tabs (Sunday's first three bands, read
+     on Saturday) but not onto days that have already happened. */
+  const upNext = now && !concluded && state !== "past" ? comingUp(day, now) : [];
+
+  /* The day's whole bill, newest set first within each stage — the one
+     section that's on every tab, whatever the clock says. */
+  const lineupByStage = STAGES.map((stage) => ({
+    stage,
+    sets: daySets(day)
+      .filter((s) => s.stage === stage)
+      .sort((a, b) => b.end - a.end),
+  }));
+
+  const lineupHead =
+    state === "today" ? "Shop today's lineup" : `Shop ${day.label} lineup`;
 
   return (
     <>
@@ -209,7 +134,7 @@ export default function MerchBoard() {
       </div>
 
       {view === "store" ? (
-        <div className="merch-store">
+        <section className="merch-section merch-store">
           <div className="product-grid">
             {PRODUCTS.map((p) => (
               <article className="product-card" key={p.name}>
@@ -227,108 +152,86 @@ export default function MerchBoard() {
               </article>
             ))}
           </div>
-
-          <GiveCta />
-        </div>
+        </section>
       ) : (
         <>
-          <h3 className="lineup-head">Just played</h3>
-          <div className="merch-stage-grid">
-            {EXAMPLE_JUST_PLAYED.map(({ entry, status, hereToday }) => (
-              <JustPlayedCard
-                key={entry.stage}
-                entry={entry}
-                status={status}
-                hereToday={hereToday}
-              />
-            ))}
-          </div>
+          {concluded && <ConcludedPanel />}
 
-          <h3 className="lineup-head">Up next</h3>
-          <div className="sheet alt-upnext merch-upnext-board">
-            <div className="alt-upnext-row">
-              {upNext.map((entry, i) => (
-                <div className="alt-upnext-item" key={STAGES[i]}>
-                  <span className="n" style={entry ? nameStyle(entry.band) : undefined}>
-                    {entry ? entry.band : `${STAGES[i]} wrapped`}
-                  </span>
-                  <span className="s">{entry ? entry.stage : ""}</span>
+          {justPlayed.length > 0 && (
+            <section className="merch-section">
+              <h3 className="lineup-head">Just played</h3>
+              <div className="merch-stage-grid">
+                {justPlayed.map((entry) => (
+                  <JustPlayedCard key={`${entry.stage}-${entry.band}`} entry={entry} />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {upNext.length > 0 && (
+            <section className="merch-section">
+              <h3 className="lineup-head">Up next</h3>
+              <div className="sheet alt-upnext merch-upnext-board">
+                <div className="alt-upnext-row">
+                  {upNext.map((entry) => (
+                    <div className="alt-upnext-item" key={`${entry.stage}-${entry.band}`}>
+                      <span className="n" style={nameStyle(entry.band)}>
+                        {entry.band}
+                      </span>
+                      <span className="s">{entry.stage}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
+            </section>
+          )}
 
-          <div className="merch-played">
-            <h3 className="lineup-head">Shop today&apos;s lineup</h3>
+          <section className="merch-section">
+            <h3 className="lineup-head">{lineupHead}</h3>
             <div className="played-columns">
-              {lineupByStage.map(({ stage, cards }) => (
+              {lineupByStage.map(({ stage, sets }) => (
                 <div className="played-col" key={stage}>
                   <span className="g-head">{stage}</span>
-                  {[...cards]
-                    .sort((a, b) => b.entry.end - a.entry.end)
-                    .map(({ entry, status, hereToday }) => (
-                      <article className="played-card" key={entry.band}>
-                        <div className="played-body">
-                          <h4 style={nameStyle(entry.band)}>
-                            <TagIcon />
-                            {entry.band}
-                          </h4>
-                          <span className="played-time">
-                            {fmtClock(entry.start)}&ndash;{fmtClock(entry.end)}
-                          </span>
-
-                          {hereToday && (
-                            <div className="reach-out">
-                              <span className="played-label featured">Reach out to buy</span>
-                              <span className="played-sub">
-                                They&apos;re around here somewhere with merch in tow.
-                                Flag them down:
-                              </span>
-                              <div className="played-chips">
-                                <a className="played-chip" href={hereToday.textHref}>
-                                  Text
-                                </a>
-                                <a
-                                  className="played-chip"
-                                  href={hereToday.instagramHref}
-                                  target="_blank"
-                                  rel="noopener"
-                                >
-                                  {hereToday.instagramHandle}
-                                </a>
-                              </div>
-                            </div>
-                          )}
-
-                          {status.shopUrl && (
-                            <div className="played-chips">
-                              <a className="played-chip ghost" href={status.shopUrl}>
-                                Shop online
-                              </a>
-                            </div>
-                          )}
-                        </div>
-                      </article>
-                    ))}
+                  {sets.map((entry) => (
+                    <LineupCard key={`${entry.band}-${entry.start}`} entry={entry} />
+                  ))}
                 </div>
               ))}
             </div>
-          </div>
+          </section>
         </>
       )}
+
+      <GiveCta />
     </>
   );
 }
 
-function JustPlayedCard({
-  entry,
-  status,
-  hereToday,
-}: {
-  entry: TickerEntry;
-  status: ResolvedMerch;
-  hereToday?: HereToday;
-}) {
+/* The sign-off, once the closing set of the last day is over. Everything
+   above it — who just played, who's up next — is about a fest that's still
+   running, so it comes down and this goes up in its place. The day tabs
+   stay, because a band's shop links are still worth something on Monday. */
+function ConcludedPanel() {
+  return (
+    <section className="merch-section">
+      <div className="sheet merch-concluded">
+        <p className="merch-concluded-copy">
+          Steve Fest has concluded. Thank you for participating in this
+          extraordinary event. We look forward to seeing you all next year
+          for&hellip;
+        </p>
+        <p className="merch-concluded-next">
+          Steve Fest 3: Next time it&apos;s personal!
+        </p>
+      </div>
+    </section>
+  );
+}
+
+/* One of the three big "just played" cards. */
+function JustPlayedCard({ entry }: { entry: TickerEntry }) {
+  const { contacts, shopUrl, table } = bandMerch(entry.band);
+
   return (
     <div className="sheet merch-card">
       <span className="eyebrow">{entry.stage}</span>
@@ -336,9 +239,12 @@ function JustPlayedCard({
         {entry.band}
       </h3>
 
-      <MerchStatusLine status={status} />
+      <p className={`merch-status tier-${table.tier}`}>
+        <i />
+        {table.note}
+      </p>
 
-      {hereToday && (
+      {contacts.length > 0 && (
         <div className="reach-out">
           <span className="played-label featured">Reach out to buy</span>
           <span className="played-sub">
@@ -346,24 +252,16 @@ function JustPlayedCard({
             down:
           </span>
           <div className="merch-actions">
-            <a className="merch-btn" href={hereToday.textHref}>
-              Text
-            </a>
-            <a
-              className="merch-btn"
-              href={hereToday.instagramHref}
-              target="_blank"
-              rel="noopener"
-            >
-              {hereToday.instagramHandle}
-            </a>
+            {contacts.map((c) => (
+              <ContactLink key={c.href} className="merch-btn" contact={c} />
+            ))}
           </div>
         </div>
       )}
 
-      {status.shopUrl && (
+      {shopUrl && (
         <div className="merch-actions">
-          <a className="merch-btn" href={status.shopUrl}>
+          <a className="merch-btn" href={shopUrl} target="_blank" rel="noopener">
             Shop online &rarr;
           </a>
         </div>
@@ -372,27 +270,76 @@ function JustPlayedCard({
   );
 }
 
-function MerchStatusLine({ status }: { status: ResolvedMerch }) {
+/* The compact version of the same card, one per set in "Shop … lineup".
+   No merch-table line here: this section is the whole day's bill at once,
+   most of it hours away from the table either way, so "not selling at the
+   merch table" on twenty cards is noise. That status belongs on the three
+   "just played" cards, where it answers a question someone is standing
+   there asking. */
+function LineupCard({ entry }: { entry: TickerEntry }) {
+  const { contacts, shopUrl } = bandMerch(entry.band);
+
   return (
-    <p className={`merch-status tier-${status.tier}`}>
-      <i />
-      {status.note}
-      {(status.location || status.updated) && (
-        <span className="merch-meta">
-          {[status.location, status.updated && `updated ${status.updated}`]
-            .filter(Boolean)
-            .join(" · ")}
+    <article className="played-card">
+      <div className="played-body">
+        <h4 style={nameStyle(entry.band)}>
+          <TagIcon />
+          {entry.band}
+        </h4>
+        <span className="played-time">
+          {fmtClock(entry.start)}&ndash;{fmtClock(entry.end)}
         </span>
-      )}
-      {status.venmo && status.venmo.length > 0 && (
-        <span className="merch-venmo">Venmo {status.venmo.join(" · ")}</span>
-      )}
-      {status.tier === 3 && status.contactUrl && (
-        <a className="merch-tell" href={status.contactUrl}>
-          Tell them you&apos;d buy one &rarr;
-        </a>
-      )}
-    </p>
+
+        {contacts.length > 0 && (
+          <div className="reach-out">
+            <span className="played-label featured">Reach out to buy</span>
+            <span className="played-sub">
+              They&apos;re around here somewhere with merch in tow. Flag them
+              down:
+            </span>
+            <div className="played-chips">
+              {contacts.map((c) => (
+                <ContactLink key={c.href} className="played-chip" contact={c} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {shopUrl && (
+          <div className="played-chips">
+            <a
+              className="played-chip ghost"
+              href={shopUrl}
+              target="_blank"
+              rel="noopener"
+            >
+              Shop online
+            </a>
+          </div>
+        )}
+      </div>
+    </article>
+  );
+}
+
+/* An sms:/mailto: link stays in place and hands off to the phone's own app;
+   only a real http link wants a new tab. */
+function ContactLink({
+  contact,
+  className,
+}: {
+  contact: MerchContact;
+  className: string;
+}) {
+  return (
+    <a
+      className={className}
+      href={contact.href}
+      target={contact.external ? "_blank" : undefined}
+      rel={contact.external ? "noopener" : undefined}
+    >
+      {contact.label}
+    </a>
   );
 }
 

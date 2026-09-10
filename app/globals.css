@@ -675,10 +675,29 @@ a.sup:hover{transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(20,16,15,.22
 }
 .merch-head .days{margin:0}
 .merch-head + .eyebrow{margin-top:1.6rem; display:block}
-.merch-head + .lineup-head{margin-top:1.6rem}
-.merch-stage-grid + .lineup-head{margin-top:1.6rem}
 .day-btn.merch-tab[aria-pressed="true"]{background:var(--pink); border-color:var(--pink); color:var(--paper)}
-.merch-store{margin-top:1.6rem}
+
+/* Every block on the board is one of these: a heading and the thing it
+   heads, spaced the same way whichever section it is, and free to be left
+   out entirely when the clock says that section has nothing to say. The
+   gap under the h3 is set here rather than on each child, so the grids
+   below can't drift apart from one another. */
+.merch-section{margin-top:1.9rem}
+.merch-section > .lineup-head{margin:0 0 .9rem}
+.merch-section > .lineup-head + *{margin-top:0}
+
+/* The sign-off after the last set of the last day. */
+.merch-concluded{padding:1.7rem clamp(1.1rem,3vw,2.4rem) 1.9rem; text-align:center}
+.merch-concluded-copy{
+  font-family:var(--news); font-weight:700; line-height:1.4;
+  font-size:clamp(.95rem,2.1vw,1.2rem);
+  max-width:52ch; margin:0 auto; text-wrap:balance; color:#33303A;
+}
+.merch-concluded-next{
+  font-family:var(--display); font-weight:900; text-transform:uppercase;
+  font-size:clamp(1.6rem,4.8vw,2.9rem); line-height:.94; letter-spacing:-.01em;
+  margin:1rem 0 0; text-wrap:balance; color:var(--pink);
+}
 .product-grid{
   display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
   gap:1rem; margin-top:.9rem;
@@ -749,7 +768,6 @@ a.sup:hover{transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(20,16,15,.22
 }
 .merch-tell:hover{color:var(--pink)}
 
-.merch-played{margin-top:1.6rem}
 .lineup-head{
   font-family:var(--display); font-weight:900; text-transform:uppercase;
   font-size:clamp(1.6rem,4.8vw,2.6rem); line-height:.94; letter-spacing:-.01em;
