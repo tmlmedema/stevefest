@@ -499,6 +499,24 @@ a.sup:hover{transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(20,16,15,.22
   transform:rotate(-1.5deg); pointer-events:none;
 }
 .lightbox-mark img{height:36px; width:auto; display:block}
+/* Centred in the band between the wordmark and the button, mirroring where
+   the download paints it. flex:1 is what does the centring — the two ends
+   are different widths, so the middle has to claim the space itself rather
+   than let space-between share it out. */
+.lightbox-credit{
+  flex:1; min-width:0; text-align:center; line-height:1.05;
+  font-family:var(--display); font-weight:900; color:var(--ink);
+  transform:rotate(-1.5deg); pointer-events:none;
+}
+.lightbox-credit-label{
+  display:block; font-size:.8rem; letter-spacing:.08em; text-transform:uppercase;
+}
+.lightbox-credit-name{
+  display:block; font-size:1.25rem; letter-spacing:.02em;
+  /* A long name shrinks in the download; here it just wraps to the width
+     the flex row gives it. */
+  overflow-wrap:anywhere;
+}
 @media (max-width:640px){
   /* Give the photo back the width the overlay's padding was eating. */
   .lightbox{padding:1rem}
@@ -510,6 +528,8 @@ a.sup:hover{transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(20,16,15,.22
   .lightbox-footer{left:.6rem; right:.6rem; bottom:1.1rem}
   .lightbox-mark{padding:.3rem .45rem}
   .lightbox-mark img{height:26px}
+  .lightbox-credit-label{font-size:.65rem}
+  .lightbox-credit-name{font-size:.95rem}
 }
 /* Close and download share a bar; close used to position itself. */
 .lightbox-actions{

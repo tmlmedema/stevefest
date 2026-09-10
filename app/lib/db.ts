@@ -134,13 +134,23 @@ export async function setStatus(
   });
 }
 
-/* What the public wall shows. */
-export async function approvedPathnames(): Promise<Set<string>> {
+/* What the public wall shows, and who to credit for each one.
+ *
+ * A Map rather than a Set because the wall needs both answers at once: `has`
+ * still decides whether a photo is public at all, and the value carries the
+ * photographer code that goes under it — null for the ordinary case of a
+ * photo uploaded without one. */
+export async function approvedCredits(): Promise<Map<string, string | null>> {
   const c = await db();
   const { rows } = await c.execute(
-    `SELECT pathname FROM uploads WHERE status = 'approved'`
+    `SELECT pathname, photographer_code FROM uploads WHERE status = 'approved'`
   );
-  return new Set(rows.map((r) => String(r.pathname)));
+  return new Map(
+    rows.map((r) => [
+      String(r.pathname),
+      r.photographer_code == null ? null : String(r.photographer_code),
+    ])
+  );
 }
 
 /* What the admin reviews, newest first. */

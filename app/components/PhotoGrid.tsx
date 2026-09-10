@@ -43,14 +43,19 @@ export default function PhotoGrid({
   notice,
   adminOverride,
 }: {
-  photos: { url: string; pathname: string }[];
+  photos: { url: string; pathname: string; credit?: string | null }[];
   /* Decided on the server. The upload route enforces the same rule, so this
      only decides what's drawn — losing the argument here costs nothing. */
   canUpload: boolean;
   notice: string | null;
   adminOverride: boolean;
 }) {
-  const [active, setActive] = useState<string | null>(null);
+  /* The whole photo rather than its url: the band needs the credit too, and
+     looking it back up by url would only be the same object again. */
+  const [active, setActive] = useState<{
+    url: string;
+    credit?: string | null;
+  } | null>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -82,7 +87,7 @@ export default function PhotoGrid({
 
     let stale = false;
 
-    framePhoto(active)
+    framePhoto(active.url, active.credit)
       .then((blob) => {
         if (stale) return;
         setFile(
@@ -342,7 +347,7 @@ export default function PhotoGrid({
             className="polaroid"
             key={p.pathname}
             style={{ "--r": `${ROTATIONS[i % ROTATIONS.length]}deg` } as React.CSSProperties}
-            onClick={() => setActive(p.url)}
+            onClick={() => setActive(p)}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={p.url} alt="" loading="lazy" />
@@ -511,7 +516,7 @@ export default function PhotoGrid({
             onClick={(e) => e.stopPropagation()}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={active} alt="" />
+            <img src={active.url} alt="" />
             {/* The wordmark is yellow on transparent, so it gets the same
                 black block the nav gives it — on bare paper it disappears.
                 The sizes hint keeps Next from fetching the 1920px variant
@@ -529,6 +534,15 @@ export default function PhotoGrid({
                   sizes="150px"
                 />
               </span>
+              {/* Between the two, as it is in the download. A shot with no
+                  photographer on it gets no line at all rather than an
+                  empty label. */}
+              {active.credit && (
+                <span className="lightbox-credit">
+                  <span className="lightbox-credit-label">Photo Cred:</span>
+                  <span className="lightbox-credit-name">{active.credit}</span>
+                </span>
+              )}
               {/* Lives inside the frame, but it's DOM only — the download is
                   a fresh canvas render, so the button never lands in the
                   file. */}
