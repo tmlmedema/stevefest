@@ -3,7 +3,8 @@ import { list } from "@vercel/blob";
 import PhotoGrid from "../components/PhotoGrid";
 import { auth, isAdmin } from "@/auth";
 import { canUpload, closedNotice, publicWallState } from "../lib/wall";
-import { approvedPathnames } from "../lib/db";
+import { approvedCredits } from "../lib/db";
+import { photographerFor } from "../lib/data";
 
 export const metadata: Metadata = {
   title: "Steve Was There. Were You? — Steve Fest II",
@@ -11,7 +12,11 @@ export const metadata: Metadata = {
 };
 
 /* Seeded example so the wall isn't empty on day one. */
-const EXAMPLE_PHOTO = { url: "/photo-example.jpg", pathname: "example" };
+const EXAMPLE_PHOTO = {
+  url: "/photo-example.jpg",
+  pathname: "example",
+  credit: null,
+};
 
 async function getPhotos() {
   try {
@@ -20,7 +25,7 @@ async function getPhotos() {
        read/write token — then fails, because OIDC is off for development. */
     const [{ blobs }, approved] = await Promise.all([
       list({ prefix: "wall/", token: process.env.BLOB_READ_WRITE_TOKEN }),
-      approvedPathnames(),
+      approvedCredits(),
     ]);
 
     /* The wall shows what an admin has approved and nothing else. A photo
@@ -31,7 +36,16 @@ async function getPhotos() {
       .sort(
         (a, b) =>
           new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
-      );
+      )
+      /* The ledger stores the code, not the name, so the name is looked up
+         here — and a code that no longer matches anyone (the placeholder
+         list gets replaced before the wall opens) simply goes uncredited
+         rather than printing a code at someone. */
+      .map((b) => ({
+        url: b.url,
+        pathname: b.pathname,
+        credit: photographerFor(approved.get(b.pathname) ?? "")?.name ?? null,
+      }));
 
     return [EXAMPLE_PHOTO, ...sorted];
   } catch (error) {
