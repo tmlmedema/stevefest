@@ -239,10 +239,10 @@ function JustPlayedCard({ entry }: { entry: TickerEntry }) {
         {entry.band}
       </h3>
 
-      <p className={`merch-status tier-${table.tier}`}>
+      {/* <p className={`merch-status tier-${table.tier}`}>
         <i />
         {table.note}
-      </p>
+      </p> */}
 
       {contacts.length > 0 && (
         <div className="reach-out">

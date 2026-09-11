@@ -47,7 +47,7 @@ async function getPhotos() {
         credit: photographerFor(approved.get(b.pathname) ?? "")?.name ?? null,
       }));
 
-    return [EXAMPLE_PHOTO, ...sorted];
+    return [...sorted, EXAMPLE_PHOTO];
   } catch (error) {
     /* Don't take the whole page down over this, but don't hide it either —
        an empty wall and a broken token look identical from the outside.
