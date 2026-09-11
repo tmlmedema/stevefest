@@ -14,6 +14,22 @@ import {
 
 const ROTATIONS = [-3, 2, -2, 3, -1, 1];
 
+/* How many tiles the wall puts up at a time.
+ *
+ * loading="lazy" on each tile only defers the fetch — every photo is still a
+ * DOM node and a request the browser is holding, and by the end of the fest
+ * that's a long list to hand someone on a phone at once. This puts up a
+ * screenful or two, then adds more as they scroll.
+ *
+ * A whole number of rows at every breakpoint (the grid runs 2, 3 or 4 across)
+ * so a batch never ends mid-row. */
+const BATCH = 24;
+
+/* How far below the fold the next batch starts loading. Roughly a screen's
+   worth, so the tiles have arrived by the time they're scrolled to rather
+   than appearing under the reader. */
+const LOOKAHEAD = "800px";
+
 /* The share sheet is worth offering on a phone or tablet and nowhere else,
    so this has to be sure before it says yes. Chrome and Edge answer outright
    with userAgentData.mobile; everywhere else (Safari, Firefox) it takes all
@@ -75,6 +91,11 @@ export default function PhotoGrid({
      below hands over as soon as it has something to hand over. */
   const [waiting, setWaiting] = useState(false);
 
+  /* How much of the wall is on the page so far, and the marker that sits
+     under it waiting to come into view. */
+  const [shown, setShown] = useState(BATCH);
+  const more = useRef<HTMLDivElement>(null);
+
   /* Rendered when the lightbox opens, not when Download is pressed. iOS only
      allows navigator.share while the tap's user activation is still live, and
      framePhoto's image loads and toBlob are long enough to lose it — by the
@@ -128,6 +149,32 @@ export default function PhotoGrid({
     addEventListener("keydown", onKey);
     return () => removeEventListener("keydown", onKey);
   }, [active]);
+
+  /* Adds the next batch when the marker below the grid comes within reach.
+     Re-runs on `shown` because each batch moves the marker down the page —
+     the observer has to be pointed at where it is now, not where it was. */
+  useEffect(() => {
+    const marker = more.current;
+    if (!marker) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShown((n) => Math.min(n + BATCH, photos.length));
+        }
+      },
+      { rootMargin: LOOKAHEAD }
+    );
+
+    observer.observe(marker);
+    return () => observer.disconnect();
+  }, [shown, photos.length]);
+
+  /* An upload drops a new photo in at the top, and the wall shouldn't roll
+     itself back up to a single batch underneath the visitor when it does. */
+  useEffect(() => {
+    setShown((n) => Math.min(Math.max(n, BATCH), photos.length));
+  }, [photos.length]);
 
   /* Escape closes the upload form too — but not mid-upload, where it would
      look like a cancel it can't actually perform. */
@@ -341,7 +388,7 @@ export default function PhotoGrid({
           </button>
         )}
 
-        {photos.map((p, i) => (
+        {photos.slice(0, shown).map((p, i) => (
           <button
             type="button"
             className="polaroid"
@@ -350,7 +397,7 @@ export default function PhotoGrid({
             onClick={() => setActive(p)}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={p.url} alt="" loading="lazy" />
+            <img src={p.url} alt="" loading="lazy" decoding="async" />
             {/* Decoration, not a control — it advertises the download
                 waiting in the lightbox. The tile itself is the button. */}
             <span className="polaroid-save" aria-hidden="true">
@@ -362,6 +409,13 @@ export default function PhotoGrid({
           </button>
         ))}
       </div>
+
+      {/* Outside the grid so it isn't laid out as a cell of it. Rendered only
+          while there's more to come, which is what stops the observer from
+          firing against an exhausted wall. */}
+      {shown < photos.length && (
+        <div ref={more} className="wall-more" aria-hidden="true" />
+      )}
 
       {adminOverride && (
         <p className="wall-admin-note">

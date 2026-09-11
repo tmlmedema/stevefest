@@ -347,6 +347,10 @@ a.sup:hover{transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(20,16,15,.22
   color:var(--ink); background:var(--yellow); display:inline-block;
   padding:.4rem .7rem; margin-top:1.6rem;
 }
+/* The marker that asks for the next batch of tiles. Nothing to look at —
+   it just needs a little height, because an element with none sits exactly
+   on the boundary and some browsers are slow to call that intersecting. */
+.wall-more{height:1px}
 
 .photo-grid{
   display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
