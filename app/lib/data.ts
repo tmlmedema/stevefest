@@ -561,6 +561,7 @@ export const ROSTER: Band[] = [
     n: "Narwhal Express",
     active: true,
     isMerching: false,
+    t: "317-796-7209",
     s: "none",
     base: "Indianapolis, IN",
     kind: "Anti-fa punk/alt-rock band out of Indy.",
