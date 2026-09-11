@@ -65,8 +65,11 @@ export type WallState = {
   opensAt: Date | null;
 };
 
+/* Date and time both: the window now opens partway through the first day, so
+   "it opens September 11" on September 11 would tell a visitor nothing. */
 const WHEN = new Intl.DateTimeFormat("en-US", {
   dateStyle: "long",
+  timeStyle: "short",
   timeZone: ZONE,
 });
 

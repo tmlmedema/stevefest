@@ -755,15 +755,20 @@ export const OVER = "2026-09-14T00:00:00";
 /* When the photo wall accepts uploads from the public. Outside this window
    only signed-in admins can add to it — see app/lib/wall.ts.
 
-   Set to the three festival days: all of Friday the 11th through the end of
-   Sunday the 13th. Set either to null to shut that end of the window — both
-   null means admins only, always.
+   Opens an hour before doors on Friday the 11th. Keep it an hour ahead of
+   DOORS above if that time moves.
+
+   No close date on purpose: the wall stays open after the fest so people can
+   post the photos they didn't get around to on the day. Set WALL_CLOSES to a
+   Chicago timestamp when it's time to shut it — after that moment the page
+   says the wall is closed and thanks everyone who posted. Both null means
+   admins only, always.
 
    These are Chicago wall-clock times — write the time you'd read off a clock
    at the deli, and daylight saving is worked out for you. The format is
    YYYY-MM-DDTHH:MM:SS, 24-hour, no offset on the end. */
-export const WALL_OPENS: string | null = "2026-09-11T00:00:00";
-export const WALL_CLOSES: string | null = "2026-09-13T23:59:59";
+export const WALL_OPENS: string | null = "2026-09-11T16:00:00";
+export const WALL_CLOSES: string | null = null;
 
 /* Default set length when a slot doesn't specify one, and the grid's row size — both in minutes. */
 export const DEFAULT_LEN = 45;
