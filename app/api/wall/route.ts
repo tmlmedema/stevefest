@@ -79,7 +79,7 @@ export async function POST(request: Request): Promise<NextResponse> {
              anything else is a client that skipped the compression step. */
           allowedContentTypes: ["image/jpeg"],
           addRandomSuffix: true,
-          /* Compression aims for ~1.5 MB. This is the backstop, not the target. */
+          /* Compression aims for ~380 KB. This is the backstop, not the target. */
           maximumSizeInBytes: 5 * 1024 * 1024,
         };
       },
