@@ -1,4 +1,4 @@
-import { BANDS } from "../lib/data";
+import { BANDS, GIVE_URL } from "../lib/data";
 
 /*
  * The ask. The same panel closes the home, bands and schedule pages, so the
@@ -16,7 +16,7 @@ export default function GiveCta() {
       </p>
       <a
         className="give-btn"
-        href="https://givebutter.com/stevefestii"
+        href={GIVE_URL}
         target="_blank"
         rel="noopener noreferrer"
       >

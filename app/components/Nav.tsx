@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { GIVE_URL } from "../lib/data";
 
 const LINKS = [
   { href: "/", label: "Home" },
@@ -13,7 +14,7 @@ const LINKS = [
   { href: "/photos", label: "Photos" },
   { href: "/#sponsors", label: "Sponsors" },
   {
-    href: "https://givebutter.com/stevefestii",
+    href: GIVE_URL,
     label: "Feed a steve",
     external: true,
     /* Burger menu only. On wide screens the footer link and the home page's

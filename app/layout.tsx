@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Big_Shoulders, Anton, Archivo, Bitter } from "next/font/google";
 import { auth, isAdmin } from "@/auth";
-import { BANDS } from "./lib/data";
+import { BANDS, GIVE_URL } from "./lib/data";
 import Nav from "./components/Nav";
 import "./globals.css";
 
@@ -74,7 +74,7 @@ export default async function RootLayout({
               <span>
                 Sept 11–13, 2026 · Free · All ages ·{" "}
                 <a
-                  href="https://givebutter.com/stevefestii"
+                  href={GIVE_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

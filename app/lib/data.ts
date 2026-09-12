@@ -756,6 +756,10 @@ export const DOORS = "2026-09-11T17:00:00";
 /* When the countdown flips from "happening right now" to "that's a wrap". */
 export const OVER = "2026-09-14T00:00:00";
 
+/* Where every "Feed a steve" link goes — footer, nav, home page and the
+   GiveCta panel all read this, so the donation link has one place to change. */
+export const GIVE_URL = "https://givebutter.com/sfii-tip-jar-ru9g3c";
+
 /* When the photo wall accepts uploads from the public. Outside this window
    only signed-in admins can add to it — see app/lib/wall.ts.
 

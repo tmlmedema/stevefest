@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BANDS, SPONSORS } from "./lib/data";
+import { BANDS, GIVE_URL, SPONSORS } from "./lib/data";
 import Countdown from "./components/Countdown";
 import GiveCta from "./components/GiveCta";
 import PlaylistCta from "./components/PlaylistCta";
@@ -47,7 +47,7 @@ export default function Home() {
           <Link className="hollow" href="/bands">
             Bands &amp; merch
           </Link>
-          <Link className="hollow" href="https://givebutter.com/stevefestii" target="_blank">
+          <Link className="hollow" href={GIVE_URL} target="_blank">
             Feed a steve
           </Link>
         </div>
