@@ -1,11 +1,11 @@
 import { createClient, type Client, type Row } from "@libsql/client";
+import { AUTO_APPROVE } from "./data";
 
 /*
  * The approval ledger.
  *
  * Blob storage holds the photos; this holds the verdict on each one. A photo
- * is on the public wall only if there's a row here saying "approved", so the
- * default for anything new is that nobody sees it but the admins.
+ * is on the public wall only if there's a row here saying "approved".
  *
  * Set TURSO_DATABASE_URL and TURSO_AUTH_TOKEN to point at Turso. With neither
  * set it falls back to a SQLite file in the project, which is the same engine
@@ -14,6 +14,11 @@ import { createClient, type Client, type Row } from "@libsql/client";
  */
 
 export type Status = "pending" | "approved";
+
+/* What a photo's status is when it first lands. AUTO_APPROVE in data.ts is
+   the switch; this is the single place the two upload paths read it from, so
+   they can't end up disagreeing about where new photos go. */
+export const NEW_UPLOAD_STATUS: Status = AUTO_APPROVE ? "approved" : "pending";
 
 export type Upload = {
   pathname: string;
@@ -105,7 +110,7 @@ function toUpload(row: Row): Upload {
 export async function recordUpload(
   pathname: string,
   url: string,
-  status: Status = "pending",
+  status: Status = NEW_UPLOAD_STATUS,
   photographerCode: string | null = null
 ): Promise<void> {
   const c = await db();

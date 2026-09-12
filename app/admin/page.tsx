@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { list } from "@vercel/blob";
 import { auth, isAdmin, signOut } from "@/auth";
 import { allUploads, type Status } from "../lib/db";
+import { AUTO_APPROVE } from "../lib/data";
 import { review, reject } from "./actions";
 import ConfirmButton from "./ConfirmButton";
 
@@ -233,8 +234,8 @@ export default async function Admin({
       {!failed && items.length === 0 && (
         <p className="admin-note">
           Nothing uploaded yet. Whatever people post to{" "}
-          <a href="/photos">the photo wall</a> arrives here for review before
-          anyone else sees it.
+          <a href="/photos">the photo wall</a> turns up here
+          {AUTO_APPROVE ? ", already live, to take down if it shouldn't be." : " for review before anyone else sees it."}
         </p>
       )}
 

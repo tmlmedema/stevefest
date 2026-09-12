@@ -2,7 +2,7 @@ import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 import { NextResponse } from "next/server";
 import { auth, isAdmin } from "@/auth";
 import { canUpload } from "../../lib/wall";
-import { recordUpload } from "../../lib/db";
+import { NEW_UPLOAD_STATUS, recordUpload } from "../../lib/db";
 import { BAD_CODE_MESSAGE, photographerFor } from "../../lib/data";
 
 /* wall/<timestamp>.jpg — no slashes or dots can sneak through \d+, so this
@@ -91,7 +91,7 @@ export async function POST(request: Request): Promise<NextResponse> {
         const code = tokenPayload
           ? ((JSON.parse(tokenPayload) as { code?: string | null }).code ?? null)
           : null;
-        await recordUpload(blob.pathname, blob.url, "pending", code);
+        await recordUpload(blob.pathname, blob.url, NEW_UPLOAD_STATUS, code);
       },
     });
 

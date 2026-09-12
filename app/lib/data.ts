@@ -774,6 +774,17 @@ export const OVER = "2026-09-14T00:00:00";
 export const WALL_OPENS: string | null = "2026-09-11T16:00:00";
 export const WALL_CLOSES: string | null = null;
 
+/* Whether a new upload goes straight onto the public wall.
+ *
+ * True skips the review queue: anything uploaded is live the moment it lands.
+ * The admin page still works the same way — every photo is listed, and "Take
+ * down" pulls one back to pending — it just starts on the other side.
+ *
+ * Set it back to false to go back to reviewing photos before they show. That
+ * only changes what happens to uploads from then on; photos already approved
+ * stay approved until someone takes them down. */
+export const AUTO_APPROVE = true;
+
 /* Default set length when a slot doesn't specify one, and the grid's row size — both in minutes. */
 export const DEFAULT_LEN = 45;
 export const UNIT = 5;

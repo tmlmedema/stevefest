@@ -2,7 +2,7 @@ import { head } from "@vercel/blob";
 import { NextResponse } from "next/server";
 import { auth, isAdmin } from "@/auth";
 import { canUpload } from "../../../lib/wall";
-import { recordUpload } from "../../../lib/db";
+import { NEW_UPLOAD_STATUS, recordUpload } from "../../../lib/db";
 import { BAD_CODE_MESSAGE, photographerFor } from "../../../lib/data";
 
 /*
@@ -50,7 +50,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     const blob = await head(pathname, {
       token: process.env.BLOB_READ_WRITE_TOKEN,
     });
-    await recordUpload(blob.pathname, blob.url, "pending", credited);
+    await recordUpload(blob.pathname, blob.url, NEW_UPLOAD_STATUS, credited);
   } catch {
     return NextResponse.json({ error: "No such upload." }, { status: 404 });
   }

@@ -7,12 +7,19 @@ import { useRouter } from "next/navigation";
 import { compressImage, MAX_INPUT_BYTES } from "../lib/compressImage";
 import { framePhoto } from "../lib/framePhoto";
 import {
+  AUTO_APPROVE,
   BAD_CODE_MESSAGE,
   PHOTOGRAPHER_CODE_LENGTH,
   photographerFor,
 } from "../lib/data";
 
 const ROTATIONS = [-3, 2, -2, 3, -1, 1];
+
+/* Don't promise a review that isn't happening: with AUTO_APPROVE on, the
+   photo is already up by the time this is read. */
+const DONE_MESSAGE = AUTO_APPROVE
+  ? "Steve has collected your photo! It's on the wall now — thanks for your submission."
+  : "Steve has collected your photo! It gets a quick look from an organiser before it lands on the wall — thanks for your submission.";
 
 /* How many tiles the wall puts up at a time.
  *
@@ -431,9 +438,7 @@ export default function PhotoGrid({
           aria-live={status === "done" ? "polite" : "assertive"}
         >
           <p className="toast-text">
-            {status === "done"
-              ? "Steve has collected your photo! It gets a quick look from an organiser before it lands on the wall — thanks for your submission."
-              : error}
+            {status === "done" ? DONE_MESSAGE : error}
           </p>
           <button
             type="button"
