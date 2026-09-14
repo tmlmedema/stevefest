@@ -17,6 +17,7 @@ import {
   recentlyPlayed,
   shopUrlFor,
 } from "../lib/merch";
+import ConcludedPanel from "./ConcludedPanel";
 import GiveCta from "./GiveCta";
 
 /* How often the board re-checks the clock — no need for anything tighter,
@@ -204,27 +205,6 @@ export default function MerchBoard() {
 
       <GiveCta />
     </>
-  );
-}
-
-/* The sign-off, once the closing set of the last day is over. Everything
-   above it — who just played, who's up next — is about a fest that's still
-   running, so it comes down and this goes up in its place. The day tabs
-   stay, because a band's shop links are still worth something on Monday. */
-function ConcludedPanel() {
-  return (
-    <section className="merch-section">
-      <div className="sheet merch-concluded">
-        <p className="merch-concluded-copy">
-          Steve Fest has concluded. Thank you for participating in this
-          extraordinary event. We look forward to seeing you all next year
-          for&hellip;
-        </p>
-        <p className="merch-concluded-next">
-          Steve Fest 3: Next time it&apos;s personal!
-        </p>
-      </div>
-    </section>
   );
 }
 

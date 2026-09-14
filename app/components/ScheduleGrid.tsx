@@ -10,7 +10,9 @@ import {
   nameStyle,
   sponsorByName,
 } from "../lib/data";
+import { festHasConcluded } from "../lib/merch";
 import { defaultDayIndex } from "../lib/schedule";
+import ConcludedPanel from "./ConcludedPanel";
 
 const toMin = (t: string) =>
   +t.split(":")[0] * 60 + +t.split(":")[1];
@@ -50,11 +52,15 @@ function SponsorName({ name }: { name: string }) {
 
 export default function ScheduleGrid() {
   /* Opens on the first day so the server and the browser agree on the first
-     paint, then moves to today if today is one of the three. */
+     paint, then moves to the day that matters once we can read the visitor's
+     clock. Same reason `concluded` starts false: the sign-off is a question
+     about the clock, and the server doesn't have the visitor's. */
   const [dayIx, setDayIx] = useState(0);
+  const [concluded, setConcluded] = useState(false);
 
   useEffect(() => {
     setDayIx(defaultDayIndex());
+    setConcluded(festHasConcluded());
   }, []);
 
   const d = DAYS[dayIx];
@@ -82,6 +88,8 @@ export default function ScheduleGrid() {
           </button>
         ))}
       </div>
+
+      {concluded && <ConcludedPanel />}
 
       {/* Reads off the day being shown, so switching tabs switches the
           credit. Days without a sponsor simply don't get the line. */}

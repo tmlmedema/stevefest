@@ -4,9 +4,10 @@ import { ZONE } from "./wall";
 /*
  * Which day the schedule opens on.
  *
- * During the fest that's the day it actually is at the deli; any other time
- * it's the first day, so someone reading this in August lands on Friday
- * rather than the middle of the weekend.
+ * During the fest that's the day it actually is at the deli. Before it, the
+ * first day, so someone reading this in August lands on Friday rather than
+ * the middle of the weekend. After it, the last day, so the fest closes on
+ * the page the way it closed in life.
  */
 
 /* "YYYY-MM-DD" as read off a clock in Chicago at that instant. en-CA is the
@@ -23,9 +24,12 @@ export function chicagoDate(now: Date = new Date()): string {
 export function defaultDayIndex(now: Date = new Date()): number {
   const today = chicagoDate(now);
   const i = DAYS.findIndex((d) => d.iso === today);
-  /* Not a fest day — before it, or after it until we decide what after
-     should look like. Either way, open on Friday. */
-  return i === -1 ? 0 : i;
+  if (i !== -1) return i;
+  /* Not a fest day. Ahead of it, Friday is the one to open on — that's where
+     the weekend starts. Behind it, the closing day is: it's the last thing
+     that happened, and it's what the sign-off above the grid is about. */
+  const last = DAYS.length - 1;
+  return today > DAYS[last].iso ? last : 0;
 }
 
 /* Minutes since midnight, read off a clock in Chicago at that instant —

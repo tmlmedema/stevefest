@@ -14,7 +14,8 @@
 @page{size:11in 17in; margin:.4in}
 
 @media print{
-  .tape, .days, .give, .ask-row, .page-shell > .wrap{display:none !important}
+  .tape, .days, .merch-concluded, .give, .ask-row,
+  .page-shell > .wrap{display:none !important}
   body{background:#fff; color:var(--ink); font-size:12pt}
   .view{padding:0}
   .page-top{padding:0}

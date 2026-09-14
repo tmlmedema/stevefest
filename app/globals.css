@@ -182,7 +182,7 @@ h2.head{
 }
 .count-note:empty{display:none}
 .count-note{
-  text-align:center; font-family:var(--mono); font-size:.76rem; letter-spacing:.08em;
+  text-align:center; font-family:var(--mono); font-size:1.125rem; letter-spacing:.08em;
   color:var(--paper-dim); margin:1.1rem 0 0;
 }
 .count-note.live{color:var(--yellow)}
