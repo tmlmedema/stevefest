@@ -33,7 +33,7 @@ Open http://localhost:3000. Edits show up in the browser as you save.
 
 ## How to change things
 
-Everything you'd normally want to edit lives in one file: **`app/lib/data.ts`**.
+Everything you'd normally want to edit lives in one file: **`src/app/lib/data.ts`**.
 Open it in any plain text editor. Do not use Word.
 
 ### To fix a band name or blurb
@@ -90,23 +90,25 @@ last change.
 ## What's where
 
 ```
-app/
-  page.tsx              Home page
-  schedule/page.tsx     Schedule page
-  bands/page.tsx        Bands page
-  layout.tsx            The bit every page shares: fonts, nav, footer
-  globals.css           All the styling
-  photos/page.tsx       Photo wall
-  admin/                Admin panel (sign-in page + upload listing)
-  api/wall/route.ts     Signs the browser's upload, if the wall is open to you
-  api/auth/             Google sign-in, handled by Auth.js
-  lib/data.ts           THE BAND LIST AND RUNNING ORDER — edit here
-  lib/compressImage.ts  Shrinks a photo in the browser before it's uploaded
-  lib/framePhoto.ts     Draws the polaroid frame for the download button
-  components/           The moving parts: countdown, lineup, schedule grid
-auth.ts                 Who's allowed into /admin
-proxy.ts                Turns anyone else away at the door
+src/
+  app/
+    page.tsx              Home page
+    schedule/page.tsx     Schedule page
+    bands/page.tsx        Bands page
+    layout.tsx            The bit every page shares: fonts, nav, footer
+    globals.css           All the styling
+    photos/page.tsx       Photo wall
+    admin/                Admin panel (sign-in page + upload listing)
+    api/wall/route.ts     Signs the browser's upload, if the wall is open to you
+    api/auth/             Google sign-in, handled by Auth.js
+    lib/data.ts           THE BAND LIST AND RUNNING ORDER — edit here
+    lib/compressImage.ts  Shrinks a photo in the browser before it's uploaded
+    lib/framePhoto.ts     Draws the polaroid frame for the download button
+    components/           The moving parts: countdown, lineup, schedule grid
+  auth.ts                 Who's allowed into /admin
+  proxy.ts                Turns anyone else away at the door
 public/assets/          Logos
+scripts/                One-off maintenance jobs, run by hand
 legacy/                 The original single-file version of this site
 ```
 

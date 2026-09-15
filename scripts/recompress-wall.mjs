@@ -1,7 +1,7 @@
 /*
  * One-off pass that re-compresses photos already in Blob storage.
  *
- * app/lib/compressImage.ts shrinks photos in the browser on the way in, but
+ * src/app/lib/compressImage.ts shrinks photos in the browser on the way in, but
  * it only ever sees new uploads. Anything that landed under an older, laxer
  * setting stays as it was — this is how those get brought down to the same
  * size the wall asks for now.
@@ -27,7 +27,7 @@ import { join } from "node:path";
 import { list, put } from "@vercel/blob";
 import sharp from "sharp";
 
-/* Kept deliberately in step with app/lib/compressImage.ts — if the wall's
+/* Kept deliberately in step with src/app/lib/compressImage.ts — if the wall's
    target moves, both move together or the two paths disagree. */
 const DIMENSION_STEPS = [1600, 1280, 1024];
 const TARGET_BYTES = 380 * 1024;

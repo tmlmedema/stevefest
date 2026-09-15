@@ -15,7 +15,7 @@ export default [
       ".next/**",
       "node_modules/**",
       "legacy/**",
-      "app/_archived/**",
+      "src/app/_archived/**",
       "next-env.d.ts",
     ],
   },
