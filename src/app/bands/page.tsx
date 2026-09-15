@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import BandShelf from "../components/BandShelf";
-import GiveCta from "../components/GiveCta";
+import BandShelf from "@/lib/components/BandShelf";
+import GiveCta from "@/lib/components/GiveCta";
 
 export const metadata: Metadata = {
   title: "Bands — Steve Fest II",

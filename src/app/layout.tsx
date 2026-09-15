@@ -3,8 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Big_Shoulders, Anton, Archivo, Bitter } from "next/font/google";
 import { auth, isAdmin } from "@/auth";
-import { BANDS, GIVE_URL } from "./lib/data";
-import Nav from "./components/Nav";
+import { BANDS, GIVE_URL } from "@/lib/db/data";
+import Nav from "@/lib/components/Nav";
 import "./globals.css";
 
 const shoulders = Big_Shoulders({

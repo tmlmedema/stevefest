@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BANDS, GIVE_URL, SPONSORS } from "./lib/data";
-import Countdown from "./components/Countdown";
-import GiveCta from "./components/GiveCta";
-import PlaylistCta from "./components/PlaylistCta";
-import Lineup from "./components/Lineup";
+import { BANDS, GIVE_URL, SPONSORS } from "@/lib/db/data";
+import Countdown from "@/lib/components/Countdown";
+import GiveCta from "@/lib/components/GiveCta";
+import PlaylistCta from "@/lib/components/PlaylistCta";
+import Lineup from "@/lib/components/Lineup";
 
 export default function Home() {
   return (

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { list } from "@vercel/blob";
-import PhotoGrid from "../components/PhotoGrid";
+import PhotoGrid from "@/lib/components/PhotoGrid";
 import { auth, isAdmin } from "@/auth";
-import { canUpload, closedNotice, publicWallState } from "../lib/wall";
-import { approvedCredits } from "../lib/db";
-import { photographerFor } from "../lib/data";
+import { canUpload, closedNotice, publicWallState } from "@/lib/helpers/wall";
+import { approvedCredits } from "@/lib/db/db";
+import { photographerFor } from "@/lib/db/data";
 
 export const metadata: Metadata = {
   title: "Steve Was There. Were You? — Steve Fest II",

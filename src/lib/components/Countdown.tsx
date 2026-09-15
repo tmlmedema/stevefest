@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DOORS, OVER } from "../lib/data";
+import { DOORS, OVER } from "@/lib/db/data";
 
 const LABELS = ["Days", "Hours", "Min", "Sec"];
 const BARS = ["var(--yellow)", "var(--orange)", "var(--pink)", "var(--green)"];

@@ -1,9 +1,9 @@
 import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 import { NextResponse } from "next/server";
 import { auth, isAdmin } from "@/auth";
-import { canUpload } from "../../lib/wall";
-import { NEW_UPLOAD_STATUS, recordUpload } from "../../lib/db";
-import { BAD_CODE_MESSAGE, photographerFor } from "../../lib/data";
+import { canUpload } from "@/lib/helpers/wall";
+import { NEW_UPLOAD_STATUS, recordUpload } from "@/lib/db/db";
+import { BAD_CODE_MESSAGE, photographerFor } from "@/lib/db/data";
 
 /* wall/<timestamp>.jpg — no slashes or dots can sneak through \d+, so this
    also rules out traversal and uploads outside the wall/ prefix. */

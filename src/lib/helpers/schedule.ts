@@ -1,4 +1,4 @@
-import { DAYS } from "./data";
+import { DAYS } from "@/lib/db/data";
 import { ZONE } from "./wall";
 
 /*

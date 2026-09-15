@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation";
 import { list } from "@vercel/blob";
 import { auth, isAdmin, signOut } from "@/auth";
-import { allUploads, type Status } from "../lib/db";
-import { AUTO_APPROVE } from "../lib/data";
+import { allUploads, type Status } from "@/lib/db/db";
+import { AUTO_APPROVE } from "@/lib/db/data";
 import { review, reject } from "./actions";
-import ConfirmButton from "./ConfirmButton";
+import ConfirmButton from "@/lib/components/ConfirmButton";
 
 export const dynamic = "force-dynamic";
 

@@ -1,4 +1,4 @@
-import { WALL_OPENS, WALL_CLOSES } from "./data";
+import { WALL_OPENS, WALL_CLOSES } from "@/lib/db/data";
 
 /*
  * Who may add to the photo wall, and when.

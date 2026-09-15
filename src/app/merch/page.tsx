@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import MerchBoard from "../components/MerchBoard";
+import MerchBoard from "@/lib/components/MerchBoard";
 
 export const metadata: Metadata = {
   title: "Merch — Steve Fest II",

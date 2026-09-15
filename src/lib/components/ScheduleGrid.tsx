@@ -9,9 +9,9 @@ import {
   byName,
   nameStyle,
   sponsorByName,
-} from "../lib/data";
-import { festHasConcluded } from "../lib/merch";
-import { defaultDayIndex } from "../lib/schedule";
+} from "@/lib/db/data";
+import { festHasConcluded } from "@/lib/helpers/merch";
+import { defaultDayIndex } from "@/lib/helpers/schedule";
 import ConcludedPanel from "./ConcludedPanel";
 
 const toMin = (t: string) =>

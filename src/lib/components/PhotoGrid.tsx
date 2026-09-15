@@ -4,14 +4,14 @@ import Image from "next/image";
 import { upload } from "@vercel/blob/client";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { compressImage, MAX_INPUT_BYTES } from "../lib/compressImage";
-import { framePhoto } from "../lib/framePhoto";
+import { compressImage, MAX_INPUT_BYTES } from "@/lib/helpers/compressImage";
+import { framePhoto } from "@/lib/helpers/framePhoto";
 import {
   AUTO_APPROVE,
   BAD_CODE_MESSAGE,
   PHOTOGRAPHER_CODE_LENGTH,
   photographerFor,
-} from "../lib/data";
+} from "@/lib/db/data";
 
 const ROTATIONS = [-3, 2, -2, 3, -1, 1];
 

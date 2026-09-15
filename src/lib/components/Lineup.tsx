@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef } from "react";
-import { BANDS, nameStyle } from "../lib/data";
+import { BANDS, nameStyle } from "@/lib/db/data";
 
 export default function Lineup() {
   const box = useRef<HTMLDivElement>(null);

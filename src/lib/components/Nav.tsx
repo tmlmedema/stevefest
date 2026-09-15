@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { GIVE_URL } from "../lib/data";
+import { GIVE_URL } from "@/lib/db/data";
 
 const LINKS = [
   { href: "/", label: "Home" },

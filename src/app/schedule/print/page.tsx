@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DAYS, DEFAULT_LEN, STAGES, UNIT, nameStyle } from "../../lib/data";
+import { DAYS, DEFAULT_LEN, STAGES, UNIT, nameStyle } from "@/lib/db/data";
 import PrintButton from "./PrintButton";
 import "./print.css";
 

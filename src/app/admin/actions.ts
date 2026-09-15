@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { auth, isAdmin } from "@/auth";
 import { del } from "@vercel/blob";
-import { setStatus, recordUpload, removeUpload, type Status } from "../lib/db";
+import { setStatus, recordUpload, removeUpload, type Status } from "@/lib/db/db";
 
 /*
  * Server actions are POST endpoints with a friendlier syntax — anyone can call

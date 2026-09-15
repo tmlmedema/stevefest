@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DAYS, STAGES, nameStyle } from "../lib/data";
+import { DAYS, STAGES, nameStyle } from "@/lib/db/data";
 import {
   MerchContact,
   TickerEntry,
@@ -16,7 +16,7 @@ import {
   openingDayIndex,
   recentlyPlayed,
   shopUrlFor,
-} from "../lib/merch";
+} from "@/lib/helpers/merch";
 import ConcludedPanel from "./ConcludedPanel";
 import GiveCta from "./GiveCta";
 

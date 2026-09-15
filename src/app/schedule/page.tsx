@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import ScheduleGrid from "../components/ScheduleGrid";
-import GiveCta from "../components/GiveCta";
+import ScheduleGrid from "@/lib/components/ScheduleGrid";
+import GiveCta from "@/lib/components/GiveCta";
 import "./print.css";
 
 export const metadata: Metadata = {

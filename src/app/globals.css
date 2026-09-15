@@ -1035,14 +1035,9 @@ footer a:hover, footer a:focus-visible{color:var(--paper)}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none !important; animation:none !important}}
 
-/* ---------- MERCH ALT — same layout ideas, real site's own look ---------- */
-/* Reuses .sheet/.merch-card/.g-head/.day-btn/.merch-btn/.lineup-head etc.
-   directly rather than a parallel style system, so this matches /schedule
-   and the real /merch page exactly. Only new here: the small stage glyph
-   in each g-head and the compact cart-icon row style for "Shop today's
-   lineup" — no photo/thumbnail slots, since there are no photos to show. */
-.stage-glyph{display:inline-flex; vertical-align:-3px; margin-right:.4rem}
-.alt-section-head{margin-top:2.6rem}
+/* ---------- MERCH "UP NEXT" BOARD ---------- */
+/* Built alongside a since-removed /merch-alt layout study, which is why the
+   class names still read `alt-`. These rules are the real /merch page's now. */
 
 .alt-upnext{
   display:flex; align-items:center; gap:1.4rem; flex-wrap:wrap;
@@ -1066,21 +1061,4 @@ footer a:hover, footer a:focus-visible{color:var(--paper)}
   .merch-upnext-board .alt-upnext-item .n{font-size:clamp(1.8rem,3.2vw,2.4rem)}
   .merch-upnext-board .alt-upnext-item .s{font-size:.78rem}
 }
-
-.alt-lineup{display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:.9rem}
-@media (max-width:860px){ .alt-lineup{grid-template-columns:1fr} }
-.alt-lineup-col{background:var(--paper); border:3px solid var(--ink); box-shadow:6px 6px 0 rgba(0,0,0,.4)}
-.alt-lineup-list{display:flex; flex-direction:column}
-.alt-lineup-row{
-  display:flex; align-items:flex-start; gap:.7rem; padding:.8rem .9rem;
-  border-top:3px solid #EFEDF1; color:var(--ink);
-}
-.alt-lineup-list .alt-lineup-row:first-child{border-top:none}
-.alt-lineup-info{display:flex; flex-direction:column; gap:.15rem; flex:1; min-width:0}
-.alt-lineup-info strong{
-  font-family:var(--display); font-weight:900; text-transform:uppercase; font-size:.92rem; line-height:1.1;
-}
-.alt-lineup-info span{font-family:var(--mono); font-size:.66rem; color:#6E6873}
-.alt-cart{flex:none; color:var(--ink); margin-top:.3rem; text-decoration:none}
-.alt-cart:hover{color:var(--pink)}
 

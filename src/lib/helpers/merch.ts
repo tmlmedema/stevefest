@@ -1,4 +1,4 @@
-import { Band, DAYS, DEFAULT_LEN, Day, STAGES, byName } from "./data";
+import { Band, DAYS, DEFAULT_LEN, Day, STAGES, byName } from "@/lib/db/data";
 import { chicagoDate, chicagoMinutes } from "./schedule";
 
 /* =======================================================================

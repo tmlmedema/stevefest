@@ -761,7 +761,7 @@ export const OVER = "2026-09-14T00:00:00";
 export const GIVE_URL = "https://givebutter.com/sfii-tip-jar-ru9g3c";
 
 /* When the photo wall accepts uploads from the public. Outside this window
-   only signed-in admins can add to it — see src/app/lib/wall.ts.
+   only signed-in admins can add to it — see src/lib/helpers/wall.ts.
 
    Opens an hour before doors on Friday the 11th. Keep it an hour ahead of
    DOORS above if that time moves.

@@ -1,6 +1,6 @@
 "use client";
 
-import { DAYS } from "../../lib/data";
+import { DAYS } from "@/lib/db/data";
 
 /* Printing one day sets a flag on <body> that the print rules read, so the
    other two sheets drop out of the run. It's cleared as soon as the dialog

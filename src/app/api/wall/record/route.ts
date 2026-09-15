@@ -1,9 +1,9 @@
 import { head } from "@vercel/blob";
 import { NextResponse } from "next/server";
 import { auth, isAdmin } from "@/auth";
-import { canUpload } from "../../../lib/wall";
-import { NEW_UPLOAD_STATUS, recordUpload } from "../../../lib/db";
-import { BAD_CODE_MESSAGE, photographerFor } from "../../../lib/data";
+import { canUpload } from "@/lib/helpers/wall";
+import { NEW_UPLOAD_STATUS, recordUpload } from "@/lib/db/db";
+import { BAD_CODE_MESSAGE, photographerFor } from "@/lib/db/data";
 
 /*
  * The browser says "that upload finished" so the photo shows up for review

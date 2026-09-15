@@ -1,4 +1,4 @@
-import { BANDS, GIVE_URL } from "../lib/data";
+import { BANDS, GIVE_URL } from "@/lib/db/data";
 
 /*
  * The ask. The same panel closes the home, bands and schedule pages, so the

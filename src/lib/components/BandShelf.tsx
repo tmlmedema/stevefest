@@ -1,4 +1,4 @@
-import { BANDS, nameStyle } from "../lib/data";
+import { BANDS, nameStyle } from "@/lib/db/data";
 
 const SORTED_BANDS = [...BANDS].sort((a, b) => a.n.localeCompare(b.n));
 
